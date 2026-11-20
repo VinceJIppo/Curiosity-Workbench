@@ -21,8 +21,10 @@ export function suggestTypes(title: string, text: string, index: number): SlideT
     const hay = r.titleOnly ? title : `${title}\n${text}`;
     if (r.re.test(hay)) out.push(r.type);
   }
-  if (!out.length && index === 1) out.push('title');
   if (out.includes('legal')) return ['legal'];
+  // The first slide of a partner deck is its cover; an agenda lists topics without covering them.
+  if (index === 1) return ['title'];
+  if (out.includes('agenda')) return ['agenda'];
   return out.length ? out.slice(0, 2) : ['other'];
 }
 

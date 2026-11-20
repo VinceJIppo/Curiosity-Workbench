@@ -51,6 +51,7 @@ Playwright is not a dependency; `verify-browser.mjs` finds a local or global ins
 | --- | --- | --- |
 | `preact` | UI. 10 KB, React API, JSX | Hooks only, no compat layer |
 | `papaparse` | CSV parsing with quotes, BOM, odd line endings | URL streamer stripped at build |
+| `fflate` | Read and write PPTX (zip) for sales play pitch kits; also the slide library file. About 8 KB of sync code | Only sync APIs are imported, so no worker code ships |
 | `xlsx` (SheetJS CE 0.20.3) | XLSX import with sheet choice | Installed from the SheetJS CDN tarball as their docs say, not the stale npm package |
 | `vite`, `vite-plugin-singlefile`, `@preact/preset-vite` | Build to one file | dev only |
 | `typescript`, `vitest`, `@types/*` | Types and tests | dev only |
@@ -72,6 +73,8 @@ src/
                         bindings.ts (semantic keys), calc.ts, types.ts
     import/             parse.ts (CSV, XLSX, JSON), mapping.ts (auto-map, validate,
                         templates, apply), quality.ts (data quality panel)
+    pitch/              ooxml.ts (PowerPoint XML helpers), pptx.ts (read a deck, build a
+                        co-branded pitch, package check), tags.ts (slide types, products)
     format.ts           display rounding and sanitizeText
   app/                  shell: App.tsx, store.ts (undo/redo), persist.ts (IndexedDB
                         autosave, file save/open), router.ts, engine.ts (memoized runs),
@@ -173,6 +176,24 @@ Implement `ChangeType<P>` (see `src/core/engine/changes.ts`). Built-in types go 
 `BUILTIN_CHANGE_TYPES`; module types go in the module manifest's `changeTypes`.
 Use `ctx.A(key)` for numbers, never literals. Create people with ids derived from
 `ctx.change.id` so runs stay deterministic.
+
+## Sales plays and pitch kits (module `plays`)
+Reps build a short redesign-branded deck for a customer call from OEM partner decks.
+- **Co-branded, never white-labeled.** redesign title and closing slides wrap the
+  OEM's slides. OEM slides keep their content, branding, trademarks and notices,
+  and gain a small pill with "Source: OEM, deck (date). Presented by redesign." plus
+  the logo, in a corner chosen per deck. Slides tagged `legal` are always included.
+  Do not add features that strip or hide OEM attribution.
+- **No fetching.** Someone downloads current decks from the partner portal and
+  imports them. Decks carry a content date; older than `staleMonths` shows as stale.
+- **Storage.** Deck files live in IndexedDB (`putBlob`, key `deck:<id>`), not in the
+  workspace file. The workspace holds slide metadata, tags, plays and the product
+  catalog in `ws.modules.plays`. Share decks with Export slide library (a zip with
+  `manifest.json` and `decks/<id>.pptx`).
+- Slide text in kept slides passes through `sanitizeText()` (naming rules).
+- `src/samples/pptx.ts` makes a synthetic partner deck for tests and "Load sample decks".
+- Rendering check: `tests/pitch.test.ts` writes `verify-output/sample-pitch.pptx`;
+  open it with python-pptx or render it with `soffice --headless --convert-to pdf`.
 
 ## Brand
 Black `#222222` on white. Lime `#C3FDAF` only as a single highlight: the active nav

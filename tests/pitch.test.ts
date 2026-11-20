@@ -100,3 +100,26 @@ describe('building a co-branded pitch', () => {
     writeFileSync('verify-output/sample-pitch.pptx', out.bytes);
   });
 });
+
+describe('play selection', async () => {
+  const { pickSlides, defaultPlays, isStale } = await import('../src/modules/plays/data');
+  const { readDeck: rd } = await import('../src/core/pitch/pptx');
+  const info = rd(deck);
+  const meta = {
+    id: 'd1', oem: 'Palo Alto Networks', name: 'Sample', fileName: 'x.pptx', contentDate: '2026-11', importedAt: '', size: 0, stampCorner: 'bottom-right' as const,
+    slides: info.slides.map((s) => ({ index: s.index, title: s.title, excerpt: '', types: suggestTypes(s.title, s.text, s.index), products: detectProducts(`${s.title}\n${s.text}`, DEFAULT_CATALOG['Palo Alto Networks']) })),
+  };
+  it('a 15-minute call gets messaging then architecture for the product, plus legal', () => {
+    const r = pickSlides(meta, 'Cortex XDR', defaultPlays()[0]);
+    expect(r.chosen).toEqual([3, 4]);
+    expect(r.legal).toEqual([7]);
+  });
+  it('never picks another product', () => {
+    const r = pickSlides(meta, 'Cortex XDR', { ...defaultPlays()[0], types: ['messaging', 'architecture', 'use case', 'other'], maxSlides: 20 });
+    expect(r.chosen).not.toContain(6);
+  });
+  it('flags stale decks', () => {
+    expect(isStale({ ...meta, contentDate: '2026-01' }, 6, new Date('2026-11-20'))).toBe(true);
+    expect(isStale(meta, 6, new Date('2026-11-20'))).toBe(false);
+  });
+});

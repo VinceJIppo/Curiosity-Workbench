@@ -6,21 +6,24 @@ import { moduleMigrations } from '../modules/registry';
 
 const DB = 'cto-workbench';
 const STORE = 'kv';
+const BLOBS = 'blobs';
 
 function openDb(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
-    const req = indexedDB.open(DB, 1);
-    req.onupgradeneeded = () => req.result.createObjectStore(STORE);
+    const req = indexedDB.open(DB, 2);
+    req.onupgradeneeded = () => {
+      for (const s of [STORE, BLOBS]) if (!req.result.objectStoreNames.contains(s)) req.result.createObjectStore(s);
+    };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);
   });
 }
 
-async function idb<T>(mode: IDBTransactionMode, fn: (s: IDBObjectStore) => IDBRequest): Promise<T> {
+async function idb<T>(mode: IDBTransactionMode, fn: (s: IDBObjectStore) => IDBRequest, store = STORE): Promise<T> {
   const db = await openDb();
   return new Promise<T>((resolve, reject) => {
-    const tx = db.transaction(STORE, mode);
-    const req = fn(tx.objectStore(STORE));
+    const tx = db.transaction(store, mode);
+    const req = fn(tx.objectStore(store));
     req.onsuccess = () => resolve(req.result as T);
     req.onerror = () => reject(req.error);
     tx.oncomplete = () => db.close();
@@ -134,4 +137,37 @@ export function pickFile(accept: string): Promise<File | null> {
 
 export function forgetFileHandle() {
   handle = null;
+}
+
+// Large binary files (OEM decks) live outside the workspace document, in this
+// browser only. A memory copy covers browsers that block IndexedDB.
+const memBlobs = new Map<string, Uint8Array>();
+
+export async function putBlob(key: string, data: Uint8Array): Promise<boolean> {
+  memBlobs.set(key, data);
+  try {
+    await idb('readwrite', (s) => s.put(data, key), BLOBS);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function getBlob(key: string): Promise<Uint8Array | null> {
+  try {
+    const v = await idb<Uint8Array | ArrayBuffer | undefined>('readonly', (s) => s.get(key), BLOBS);
+    if (v) return v instanceof Uint8Array ? v : new Uint8Array(v);
+  } catch {
+    /* fall back to memory */
+  }
+  return memBlobs.get(key) ?? null;
+}
+
+export async function deleteBlob(key: string): Promise<void> {
+  memBlobs.delete(key);
+  try {
+    await idb('readwrite', (s) => s.delete(key), BLOBS);
+  } catch {
+    /* nothing to delete */
+  }
 }

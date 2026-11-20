@@ -136,6 +136,27 @@ await page.waitForTimeout(200);
 const imported = await page.evaluate(() => document.body.innerText.includes('Imported 1 rows'));
 check('import wizard imports a CSV and saves a mapping', imported);
 
+// Sales plays: load sample decks, import a deck file, build a co-branded pitch
+await page.goto(`${FILE}#/plays/library`);
+await page.getByTestId('load-sample-decks').click();
+await page.waitForSelector('text=Sample Cortex XDR deck (synthetic)');
+check('sample decks load into the slide library', true);
+writeFileSync(`${OUT}/upload-deck.pptx`, readFileSync(`${OUT}/sample-source-deck.pptx`));
+await page.getByTestId('open-import-deck').click();
+const [fcDeck] = await Promise.all([page.waitForEvent('filechooser'), page.getByTestId('pick-deck').click()]);
+await fcDeck.setFiles(`${OUT}/upload-deck.pptx`);
+await page.getByTestId('import-deck').click();
+await page.waitForSelector('text=upload-deck');
+check('a PPTX imports through the file picker', true);
+await page.goto(`${FILE}#/plays/builder`);
+await page.waitForSelector('[data-testid="build-pitch"]');
+await page.getByPlaceholder('Account name').fill('Sample Customer 01');
+await page.screenshot({ path: `${OUT}/09-pitch-builder.png`, fullPage: true });
+const [pitch] = await Promise.all([page.waitForEvent('download'), page.getByTestId('build-pitch').click()]);
+const pitchPath = `${OUT}/${pitch.suggestedFilename()}`;
+await pitch.saveAs(pitchPath);
+check('pitch builder downloads a PPTX', pitch.suggestedFilename().endsWith('-redesign.pptx') && readFileSync(pitchPath).length > 2000, pitch.suggestedFilename());
+
 // Snapshot
 await page.goto(`${FILE}#/workspace/snapshots`);
 await page.getByPlaceholder('pre-CEO review').fill('pre-CEO review');

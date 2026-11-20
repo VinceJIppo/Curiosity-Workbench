@@ -77,6 +77,26 @@ every calculation without code changes.
 Compare puts 2 to 4 scenarios side by side. Every chart exports PNG (16:9), SVG and
 CSV. "Print summary" and "Print comparison" give a clean page for Save as PDF.
 
+## Sales plays: co-branded pitch decks
+
+Sales plays turn current OEM partner decks into a short redesign-branded deck for
+a customer call, for example a 15-minute Cortex XDR conversation.
+
+1. Download the current deck from the Palo Alto Networks or Broadcom partner portal
+   as .pptx. Use decks the partner program lets you share with customers.
+2. Sales plays > Slide library > Import a deck. Pick the OEM and the deck's date.
+   The app tags each slide (architecture, messaging, use case, legal, ...) and finds
+   product names. Fix any tags it gets wrong.
+3. Pitch builder: pick the OEM, product and play, adjust the slides, enter the
+   customer, and download the PPTX.
+
+The result is co-branded: a redesign title slide and a "How redesign helps" slide
+wrap the OEM's slides. OEM slides keep their content and notices and gain a small
+"Source: OEM. Presented by redesign." line with the logo. Legal notice slides are
+always kept. Decks older than 6 months (a setting) are flagged as stale. Deck files
+stay in this browser; share them with Export slide library, not the workspace file.
+Try it with Load sample decks, which adds two synthetic decks.
+
 ## Brand assets (optional)
 
 - Licensed fonts: put Martina Plantijn and AF Atelier Sans files in `assets/fonts`
@@ -105,6 +125,8 @@ in Chromium offline and walks the full flow.
 - Autosave lives in this browser's storage. Clearing site data clears it. Save to a
   file for anything you need to keep.
 - Built for laptops 1280 px and wider.
+- Pitch kits read .pptx only (not PDF), build from one source deck at a time, and
+  show slide titles and text rather than thumbnails.
 - Chart colors follow the brand palette, which is hard to tell apart for some
   color vision types; charts add dash patterns, direct labels and legends to
   compensate.

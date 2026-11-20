@@ -4,7 +4,8 @@ import './styles.css';
 import { App } from './app/App';
 import { initStore } from './app/store';
 import { loadAutosave } from './app/persist';
-import { allModules } from './modules/registry';
+import { allModules, moduleMigrations } from './modules/registry';
+import { migrateWorkspace } from './core/schema/migrate';
 import { sampleWorkspace } from './samples/seed';
 
 async function boot() {
@@ -15,7 +16,7 @@ async function boot() {
   }
   allModules(); // registers module entity types
   const saved = await loadAutosave();
-  initStore(saved ?? sampleWorkspace(new Date().toISOString()));
+  initStore(saved ?? migrateWorkspace(sampleWorkspace(new Date().toISOString()), moduleMigrations()));
   render(<App />, document.getElementById('app')!);
 }
 
