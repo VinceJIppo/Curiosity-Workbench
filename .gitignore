@@ -1,0 +1,9 @@
+node_modules/
+dist/
+/data
+*.workspace.json
+assets/fonts/*
+!assets/fonts/README.md
+.DS_Store
+test-results/
+verify-output/
