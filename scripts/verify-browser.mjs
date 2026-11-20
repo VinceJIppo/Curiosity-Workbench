@@ -168,6 +168,37 @@ const pitchPath = `${OUT}/${pitch.suggestedFilename()}`;
 await pitch.saveAs(pitchPath);
 check('pitch builder downloads a PPTX', pitch.suggestedFilename().endsWith('-redesign.pptx') && readFileSync(pitchPath).length > 2000, pitch.suggestedFilename());
 
+// Knowledge: seed, import a pack, approve, export for Claude
+await page.goto(`${FILE}#/plays/knowledge`);
+await page.getByTestId('seed-knowledge').click();
+await page.waitForSelector('[data-testid="knowledge-table"]');
+const seededRows = await page.locator('[data-testid="knowledge-table"] tbody tr').count();
+check('knowledge seeds from the library', seededRows > 10, `${seededRows} items`);
+writeFileSync(`${OUT}/knowledge-pack.json`, JSON.stringify({
+  kind: 'cto-workbench-knowledge-pack', version: 1, source: 'Browser check',
+  nodes: [
+    { ref: 'p', kind: 'product', oem: 'Palo Alto Networks', text: 'Cortex XDR' },
+    { ref: 'c', kind: 'capability', oem: 'Palo Alto Networks', text: 'Correlates alerts into incidents (sample)', evidence: [{ deck: 'Sample Cortex XDR overview (synthetic)', slide: 4 }] },
+  ],
+  edges: [{ from: 'p', rel: 'has', to: 'c' }],
+}));
+const [fcPack] = await Promise.all([page.waitForEvent('filechooser'), page.getByTestId('import-pack').click()]);
+await fcPack.setFiles(`${OUT}/knowledge-pack.json`);
+await page.waitForSelector('text=1 new suggestions');
+check('a knowledge pack imports as suggestions', true);
+await page.getByRole('button', { name: 'Close' }).click();
+await page.locator('[data-testid="knowledge-table"] tr', { hasText: 'Correlates alerts into incidents' }).click();
+await page.waitForSelector('[data-testid="knowledge-detail"]');
+const detail = await page.getByTestId('knowledge-detail').innerText();
+check('knowledge shows its slide evidence and links', /slide 4: Cortex XDR architecture/.test(detail) && /Cortex XDR/.test(detail));
+await page.screenshot({ path: `${OUT}/11-knowledge.png` });
+await page.getByTestId('approve-node').click();
+check('office approves knowledge', (await page.locator('[data-testid="knowledge-detail"] .badge.pass').count()) === 1);
+const [req] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Export for Claude' }).click()]);
+await req.saveAs(`${OUT}/${req.suggestedFilename()}`);
+const reqText = readFileSync(`${OUT}/${req.suggestedFilename()}`, 'utf8');
+check('export for Claude includes instructions and slide text', reqText.includes('cto-workbench-knowledge-pack') && reqText.includes('slide 4: Cortex XDR architecture'), req.suggestedFilename());
+
 // Snapshot
 await page.goto(`${FILE}#/workspace/snapshots`);
 await page.getByPlaceholder('pre-CEO review').fill('pre-CEO review');

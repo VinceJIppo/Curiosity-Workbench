@@ -20,11 +20,11 @@ build it, test it, check it off. See "Add a module" in CLAUDE.md.
 
 ## Sales knowledge (see docs/sales-knowledge-architecture.md)
 
-- [ ] K1 Knowledge model: nodes, edges, provenance, curation screen, persona and pain lists, knowledge pack export and import
+- [x] K1 Knowledge model: nodes, edges, provenance, curation screen, persona and pain lists, knowledge pack export and import
 - [ ] K2 Claim candidates from slide bullets, review queue, provenance links
 - [ ] K3 Persona and pains in the builder, narrative arcs per meeting type, graph-based ranking, talk track in speaker notes
 - [ ] K4 Pitch log, rep edits and outcomes, learning weights
-- [ ] K5 Optional assisted extraction through a knowledge pack made outside the app (after a partner terms check)
+- [x] K5 Export for Claude and import Claude's knowledge pack as suggestions (partner decks may go to Claude)
 
 ## Smaller ideas noticed during Phase 1
 - [ ] Pitch kits: slide thumbnails in the builder (needs a PPTX renderer; today it shows titles and text)

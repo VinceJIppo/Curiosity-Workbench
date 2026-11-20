@@ -16,8 +16,9 @@ import {
   type SlideType,
 } from '../../core/pitch/tags';
 import type { LibDeck } from '../../core/pitch/recommend';
+import { emptyKnowledge, type KnowledgeBase } from '../../core/pitch/knowledge';
 
-export const PLAYS_VERSION = 2;
+export const PLAYS_VERSION = 3;
 
 export interface SlideMeta {
   index: number;
@@ -66,6 +67,8 @@ export interface PlaysData {
   staleMonths: number;
   /** Pacing for turning meeting minutes into a slide count. */
   minutesPerSlide: number;
+  /** Shared sales knowledge, curated by the office. */
+  knowledge: KnowledgeBase;
 }
 
 const SERVICES = ['Assessment and design', 'Deployment and migration', 'Managed services and ongoing support'];
@@ -81,7 +84,7 @@ export function defaultPlays(): Play[] {
 }
 
 export function defaultData(): PlaysData {
-  return { decks: [], catalog: structuredClone(DEFAULT_CATALOG), competitors: structuredClone(DEFAULT_COMPETITORS), plays: defaultPlays(), staleMonths: 6, minutesPerSlide: 3 };
+  return { decks: [], catalog: structuredClone(DEFAULT_CATALOG), competitors: structuredClone(DEFAULT_COMPETITORS), plays: defaultPlays(), staleMonths: 6, minutesPerSlide: 3, knowledge: emptyKnowledge() };
 }
 
 export function getData(ws: Workspace): PlaysData {
@@ -160,5 +163,6 @@ export function migratePlays(from: number, data: unknown): PlaysData {
       return { ...x, slides, category: x.category ?? suggestDeckCategory(x.name ?? '', slides.map((s: SlideMeta) => s.category)) };
     });
   }
+  if (from < 3) d.knowledge = d.knowledge ?? emptyKnowledge();
   return d;
 }

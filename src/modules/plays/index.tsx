@@ -16,6 +16,7 @@ import { Empty, Field, Modal, NumberInput, Select, TextInput, toast } from '../.
 import { hasLogo, logoPng } from '../../ui/logo';
 import { analyzeDeck, blobKey, defaultData, getData, isStale, migratePlays, toLibDecks, PLAYS_VERSION, type DeckMeta, type PlaysData, type Play } from './data';
 import { newId } from '../shared';
+import { Knowledge } from './Knowledge';
 
 const setData = (fn: (d: PlaysData) => void, label: string, coalesce?: string) =>
   update(
@@ -840,6 +841,7 @@ export const playsModule: ModuleManifest = {
   views: [
     { id: 'builder', title: 'Pitch builder', component: Builder },
     { id: 'library', title: 'Slide library', component: Library },
+    { id: 'knowledge', title: 'Knowledge', component: Knowledge },
     { id: 'plays', title: 'Meeting types and catalog', component: Plays },
   ],
 };

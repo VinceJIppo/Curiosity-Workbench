@@ -76,7 +76,8 @@ src/
     pitch/              ooxml.ts (PowerPoint XML helpers), pptx.ts (read decks, build a
                         co-branded pitch from one or more decks, package check),
                         tags.ts (slide types, labels, products, competitors, internal-only),
-                        recommend.ts (scores the library for what the rep wants to show)
+                        recommend.ts (scores the library for what the rep wants to show),
+                        knowledge.ts (shared knowledge graph, packs, Claude hand-off)
     format.ts           display rounding and sanitizeText
   app/                  shell: App.tsx, store.ts (undo/redo), persist.ts (IndexedDB
                         autosave, file save/open), router.ts, engine.ts (memoized runs),
@@ -87,7 +88,7 @@ src/
   modules/              one folder per module + registry.ts
   samples/seed.ts       synthetic sample workspace (the tests' known answers)
 tests/                  vitest: golden, engine, assumptions, expr, import,
-                        workspace, samples, writing, built-file
+                        workspace, samples, writing, pitch, knowledge, built-file
 scripts/                vite plugins (brand assets, CSP, strip network), rename, browser check
 samples/                generated synthetic CSVs and sample-workspace.json
 ```
@@ -208,10 +209,15 @@ Reps build a short redesign-branded deck for a customer call from OEM partner de
   decks with their layouts, masters, themes and media under new part names, and
   registers the masters with fresh ids. Each source deck's legal slides are kept.
 - The builder is four steps: meeting, what to showcase, recommended slides, finish.
-- **Knowledge layer (proposed, not built):** `docs/sales-knowledge-architecture.md`
-  describes semantic, procedural, working and episodic memory for sales plays and the
-  K1 to K5 build steps in `IDEAS.md`. Read it before extending Sales plays.
-- Module data is version 2 (`PLAYS_VERSION`); `migratePlays()` upgrades v1 records and
+- **Knowledge layer:** `docs/sales-knowledge-architecture.md` describes semantic,
+  procedural, working and episodic memory for sales plays and the K1 to K5 steps in
+  `IDEAS.md`. Read it before extending Sales plays. Built so far: the knowledge graph
+  (`core/pitch/knowledge.ts`, stored in `ws.modules.plays.knowledge`, module data
+  version 3), the curation screen (Sales plays > Knowledge), and the Claude hand-off
+  (Export for Claude, Import knowledge pack). The office curates; imports arrive as
+  suggestions; only approved knowledge should drive recommendations. Every node keeps
+  slide evidence; freshness and customer safety are derived from it.
+- Module data is version 3 (`PLAYS_VERSION`); `migratePlays()` upgrades older records and
   old slide library files.
 - Slide text in kept slides passes through `sanitizeText()` (naming rules).
 - `src/samples/pptx.ts` makes synthetic overview, technical and competitive decks for tests and "Load sample decks".

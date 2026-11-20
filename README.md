@@ -105,6 +105,22 @@ into a customer deck; the builder lists them for your prep. Decks older than 6
 months (a setting) are flagged stale. Deck files stay in this browser; share them
 with Export slide library. Try it with Load sample decks (five synthetic decks).
 
+### Shared knowledge (Sales plays > Knowledge)
+
+The office curates what the partner decks say: products, capabilities, pain points,
+personas, proof points, competitors, differentiators, objections and answers, and
+the redesign services that attach. Every item cites the slides it comes from, shows
+how fresh it is, and is marked prep only if it rests on an internal slide.
+
+1. **Seed from library** adds products and competitors found in the decks, plus
+   starter personas and redesign services.
+2. **Export for Claude** downloads instructions plus the slide text for one OEM.
+   Give it to Claude, save the answer as a .json file, and **Import knowledge pack**.
+3. Imports arrive as suggestions. Review each against its slides, then approve,
+   merge duplicates, link related items, or retire.
+
+The design behind this is in `docs/sales-knowledge-architecture.md`.
+
 ## Brand assets (optional)
 
 - Licensed fonts: put Martina Plantijn and AF Atelier Sans files in `assets/fonts`

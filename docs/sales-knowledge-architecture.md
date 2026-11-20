@@ -2,8 +2,16 @@
 
 A shared model of what is inside partner decks, so sales plays work from knowledge
 ("what Cortex XDR does, for whom, with what proof, against whom") instead of from
-slides alone. Status: proposal. Nothing here is built yet beyond what Sales plays
-already does (labels, products, competitors, recommendations).
+slides alone. Status: K1 and the Claude hand-off (K5) are built; K2 to K4 are next.
+
+## Decisions (2026-11)
+
+- **The office curates.** Only the office adds, approves, merges and retires
+  knowledge. A rep suggestion flow may come later.
+- **No rep edition for now.** Knowledge lives in the workspace file
+  (`ws.modules.plays.knowledge`); the office builds or shares pitches.
+- **Partner decks may go to Claude.** The app exports deck text with instructions;
+  Claude returns a knowledge pack; the app imports it as suggestions for review.
 
 ## Why
 
@@ -185,14 +193,15 @@ interface PitchLogEntry {
 
 | Step | What | Depends on |
 | --- | --- | --- |
-| K1 | Knowledge model, curation screen, persona and pain lists, knowledge pack export and import | nothing |
+| K1 (built) | Knowledge model, curation screen, starter personas and redesign services, seed from library, knowledge pack export and import | nothing |
 | K2 | Claim candidates from slide bullets, review queue, provenance links | K1 |
 | K3 | Persona and pains in the builder, narrative arcs, graph-based ranking, talk track in speaker notes | K1, K2 |
 | K4 | Pitch log, rep edits, outcomes, learning weights | K3 |
-| K5 | Optional assisted extraction through a knowledge pack made outside the app | K2, partner terms check |
+| K5 (built) | Export for Claude (instructions plus slide text), import Claude's knowledge pack as suggestions | K1 |
 
-## Open questions
+## Where it lives in code
 
-1. Who curates: the office only, or reps suggest and the office approves?
-2. Do reps need a version without comp data now, or does the office build pitches for them?
-3. Is sending partner deck text to Claude outside the app acceptable under the partner agreements (K5)?
+- `src/core/pitch/knowledge.ts`: node kinds, allowed links, seeding, merge, derived
+  freshness and customer safety, knowledge pack import and export, Claude instructions.
+- `src/modules/plays/Knowledge.tsx`: the curation screen (Sales plays > Knowledge).
+- `tests/knowledge.test.ts`.
