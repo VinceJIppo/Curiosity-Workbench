@@ -13,6 +13,7 @@ build it, test it, check it off. See "Add a module" in CLAUDE.md.
 ## Phase 3
 
 - [ ] OEM playbooks for Palo Alto Networks, Dell, Broadcom/VMware, Microsoft, Rapid7, CrowdStrike and Avant (program and tier, incentives and deal registration, ideal customer profile and triggers, plays by practice, competitive notes, services attach, enablement assets, contacts, KPIs; markdown export)
+- [ ] Pitch kits inside sales plays: import OEM partner decks (PPTX) downloaded from the partner portal, apply redesign branding (theme, fonts, title and closing slides, logo on layouts) while keeping OEM attribution and legal notices, tag slides by product (for example Cortex XDR) and slide type (architecture, messaging), and assemble a short pitch deck for a customer call. Manual import keeps the app offline. Open decision: co-branded vs fully white-labeled (depends on what each partner program allows)
 - [ ] Sales enablement tracker (programs, audience, completion, linked KPIs)
 - [ ] Innovation Lab pipeline (intake, screen, evaluate, brief, decide; quarterly cycle; candidate cards)
 - [ ] Initiative portfolio: every initiative with owner, status, gate, linked scenario and KPIs. Becomes the landing page (set `landingPriority` above 10)
