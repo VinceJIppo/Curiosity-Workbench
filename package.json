@@ -13,6 +13,7 @@
     "verify:browser": "npm run build --silent && node scripts/verify-browser.mjs"
   },
   "dependencies": {
+    "fflate": "^0.8.2",
     "papaparse": "^5.7.1",
     "preact": "^11.2.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
