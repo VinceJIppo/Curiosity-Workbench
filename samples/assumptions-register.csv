@@ -1,0 +1,34 @@
+ID,Label,Value,Low,High,Unit,Status,Source,As of,Used in,Notes,Formula
+R01,Core sellers today,70,53,70,people,Conflict,Sample register (synthetic). Replace with your register import.,2026-11,"Coverage ratios, specialists needed",Proposal uses about 70. The territory roster count is 53. Resolve before CEO review.,
+R02,Specialists today,5,,,people,Measured,Sample register (synthetic). Replace with your register import.,2026-11,Coverage today,,
+R03,Solutions architects today (excluding principal),16,,,people,Measured,Sample register (synthetic). Replace with your register import.,2026-11,Architect coverage,16 SAs plus 1 Account Principal Architect = 17 architects.,
+R04,Wage share of loaded cost,0.7,,,ratio,Stated,Sample register (synthetic). Replace with your register import.,2026-11,"Loaded cost, build vs buy",,
+R05,Default burden,,,,%,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,People cost,Derived so that loaded cost = cash comp / wage share.,1 / R04 - 1
+R06,"Reference coverage, sellers per specialist (Alexander Group average)",4,,,ratio,Stated,Sample register (synthetic). Replace with your register import.,2026-11,Coverage chart reference band,,
+R07,"Field strain line, sellers per specialist",8,,,ratio,Stated,Sample register (synthetic). Replace with your register import.,2026-11,"Coverage chart, specialists needed",,
+R08,"Hiring lag, release to start",3,2,6,months,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Hires without their own lag,,
+R09,Specialist ramp to full productivity,6,4,9,months,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,GP impact,,
+R10,Specialist-touched GP per specialist per year,5000000,4000000,6000000,$/yr,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,GP impact,,
+R11,GP uplift on specialist-touched deals,0.12,0.08,0.15,%,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,"GP impact, break-even",,
+R12,Win rate,0.3,0.25,0.35,%,Measured,Sample register (synthetic). Replace with your register import.,2026-11,GP driver,,
+R13,Services attach rate,0.25,0.2,0.3,%,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,GP driver,,
+R14,Specialist utilization,0.75,0.65,0.85,%,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,GP driver,,
+R15,Director cash comp,196069,161690,230447,$/yr,Stated,Sample register (synthetic). Replace with your register import.,2026-11,"Build vs buy, director hires",Base is the midpoint of the range.,
+R16,Productive hours per FTE month,140,,,hours,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Capacity,,
+R17,Tier 1 requests per month,400,,,requests,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Tier shifts,,
+R18,Tier 2 requests per month,150,120,180,requests,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Tier shifts,,
+R19,Tier 3 requests per month,20,,,requests,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Tier shifts,,
+R20,Hours per Tier 1 request,0.5,,,hours,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Tier shifts,,
+R21,Hours per Tier 2 request,6,4,8,hours,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Tier shifts,,
+R22,Hours per Tier 3 request,40,,,hours,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Tier shifts,,
+R23,Monthly revenue (for % of revenue pricing),15000000,,,$/mo,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Services priced on revenue,,
+R24,Sellers per specialist today,,,,ratio,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Headline coverage,,R01 / R02
+R25,Specialists needed at the strain line,,,,people,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Hiring plan,,ceil(R01 / R07)
+R26,Specialists needed at the reference ratio,,,,people,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Hiring plan,,ceil(R01 / R06)
+R27,Sellers per architect today,,,,ratio,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Architect coverage,,R01 / R03
+R28,Director loaded cost,,,,$/yr,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Build vs buy,,R15 / R04
+R29,Diagnostic engagement price,150000,50000,250000,$,Stated,Sample register (synthetic). Replace with your register import.,2026-11,Buy option,,
+R30,"Fractional revenue leader, monthly retainer",9000,6000,12500,$/mo,Stated,Sample register (synthetic). Replace with your register import.,2026-11,Buy option,"12 months = 72,000 to 150,000.",
+R31,"Benchmark subscription, annual",4000,4000,4000,$/yr,Stated,Sample register (synthetic). Replace with your register import.,2026-11,Buy option,"About 4,000 a year.",
+R32,Specialist cash comp (base + variable),200000,180000,230000,$/yr,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Specialist hires,,
+R33,Avant desk seller cash comp,120000,100000,140000,$/yr,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Avant desk,,

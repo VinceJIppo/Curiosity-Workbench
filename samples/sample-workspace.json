@@ -1,0 +1,3504 @@
+{
+ "schemaVersion": 1,
+ "id": "ws-sample",
+ "name": "Sample workspace (synthetic)",
+ "createdAt": "2026-11-20T00:00:00.000Z",
+ "updatedAt": "2026-11-20T00:00:00.000Z",
+ "settings": {
+  "displayName": "Curiosity and Technology Office",
+  "caseKey": "conservative",
+  "horizonMonths": 36,
+  "viewMonths": 24,
+  "approvalMonth": "2027-01",
+  "gateRetryMonths": 6,
+  "bindings": {
+   "sellers_baseline": "R01",
+   "wage_share": "R04",
+   "burden_pct": "R05",
+   "coverage_reference": "R06",
+   "coverage_strain": "R07",
+   "hire_lag_months": "R08",
+   "ramp_months": "R09",
+   "gp_per_specialist": "R10",
+   "gp_uplift": "R11",
+   "win_rate": "R12",
+   "attach_rate": "R13",
+   "utilization": "R14",
+   "director_comp": "R15",
+   "hours_per_fte_month": "R16",
+   "tier1_requests": "R17",
+   "tier2_requests": "R18",
+   "tier3_requests": "R19",
+   "tier1_hours": "R20",
+   "tier2_hours": "R21",
+   "tier3_hours": "R22",
+   "revenue_monthly": "R23",
+   "specialist_comp": "R32",
+   "avant_desk_comp": "R33"
+  },
+  "coverageGroups": {
+   "sellers": [
+    "Core Seller"
+   ],
+   "specialists": [
+    "Specialist"
+   ],
+   "architects": [
+    "Solutions Architect"
+   ]
+  },
+  "headcountAnchors": {
+   "sellers": "sellers_baseline"
+  }
+ },
+ "assumptions": [
+  {
+   "value": 70,
+   "status": "Conflict",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Coverage ratios, specialists needed",
+   "notes": "Proposal uses about 70. The territory roster count is 53. Resolve before CEO review.",
+   "id": "R01",
+   "label": "Core sellers today",
+   "low": 53,
+   "high": 70,
+   "unit": "people",
+   "conservativeBound": "high",
+   "alternates": [
+    {
+     "value": 53,
+     "source": "Territory alignment roster (sample)",
+     "note": "Roster count"
+    }
+   ]
+  },
+  {
+   "value": 5,
+   "status": "Measured",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Coverage today",
+   "notes": "",
+   "id": "R02",
+   "label": "Specialists today",
+   "unit": "people"
+  },
+  {
+   "value": 16,
+   "status": "Measured",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Architect coverage",
+   "notes": "16 SAs plus 1 Account Principal Architect = 17 architects.",
+   "id": "R03",
+   "label": "Solutions architects today (excluding principal)",
+   "unit": "people"
+  },
+  {
+   "value": 0.7,
+   "status": "Stated",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Loaded cost, build vs buy",
+   "notes": "",
+   "id": "R04",
+   "label": "Wage share of loaded cost",
+   "unit": "ratio"
+  },
+  {
+   "value": null,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "People cost",
+   "notes": "Derived so that loaded cost = cash comp / wage share.",
+   "id": "R05",
+   "label": "Default burden",
+   "unit": "%",
+   "formula": "1 / R04 - 1"
+  },
+  {
+   "value": 4,
+   "status": "Stated",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Coverage chart reference band",
+   "notes": "",
+   "id": "R06",
+   "label": "Reference coverage, sellers per specialist (Alexander Group average)",
+   "unit": "ratio"
+  },
+  {
+   "value": 8,
+   "status": "Stated",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Coverage chart, specialists needed",
+   "notes": "",
+   "id": "R07",
+   "label": "Field strain line, sellers per specialist",
+   "unit": "ratio"
+  },
+  {
+   "value": 3,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Hires without their own lag",
+   "notes": "",
+   "id": "R08",
+   "label": "Hiring lag, release to start",
+   "low": 2,
+   "high": 6,
+   "unit": "months",
+   "conservativeBound": "high"
+  },
+  {
+   "value": 6,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "GP impact",
+   "notes": "",
+   "id": "R09",
+   "label": "Specialist ramp to full productivity",
+   "low": 4,
+   "high": 9,
+   "unit": "months",
+   "conservativeBound": "high"
+  },
+  {
+   "value": 5000000,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "GP impact",
+   "notes": "",
+   "id": "R10",
+   "label": "Specialist-touched GP per specialist per year",
+   "low": 4000000,
+   "high": 6000000,
+   "unit": "$/yr",
+   "conservativeBound": "low"
+  },
+  {
+   "value": 0.12,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "GP impact, break-even",
+   "notes": "",
+   "id": "R11",
+   "label": "GP uplift on specialist-touched deals",
+   "low": 0.08,
+   "high": 0.15,
+   "unit": "%",
+   "conservativeBound": "low"
+  },
+  {
+   "value": 0.3,
+   "status": "Measured",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "GP driver",
+   "notes": "",
+   "id": "R12",
+   "label": "Win rate",
+   "low": 0.25,
+   "high": 0.35,
+   "unit": "%",
+   "conservativeBound": "low"
+  },
+  {
+   "value": 0.25,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "GP driver",
+   "notes": "",
+   "id": "R13",
+   "label": "Services attach rate",
+   "low": 0.2,
+   "high": 0.3,
+   "unit": "%",
+   "conservativeBound": "low"
+  },
+  {
+   "value": 0.75,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "GP driver",
+   "notes": "",
+   "id": "R14",
+   "label": "Specialist utilization",
+   "low": 0.65,
+   "high": 0.85,
+   "unit": "%",
+   "conservativeBound": "low"
+  },
+  {
+   "value": 196069,
+   "status": "Stated",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Build vs buy, director hires",
+   "notes": "Base is the midpoint of the range.",
+   "id": "R15",
+   "label": "Director cash comp",
+   "low": 161690,
+   "high": 230447,
+   "unit": "$/yr",
+   "conservativeBound": "high"
+  },
+  {
+   "value": 140,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Capacity",
+   "notes": "",
+   "id": "R16",
+   "label": "Productive hours per FTE month",
+   "unit": "hours"
+  },
+  {
+   "value": 400,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Tier shifts",
+   "notes": "",
+   "id": "R17",
+   "label": "Tier 1 requests per month",
+   "unit": "requests"
+  },
+  {
+   "value": 150,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Tier shifts",
+   "notes": "",
+   "id": "R18",
+   "label": "Tier 2 requests per month",
+   "low": 120,
+   "high": 180,
+   "unit": "requests",
+   "conservativeBound": "low"
+  },
+  {
+   "value": 20,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Tier shifts",
+   "notes": "",
+   "id": "R19",
+   "label": "Tier 3 requests per month",
+   "unit": "requests"
+  },
+  {
+   "value": 0.5,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Tier shifts",
+   "notes": "",
+   "id": "R20",
+   "label": "Hours per Tier 1 request",
+   "unit": "hours"
+  },
+  {
+   "value": 6,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Tier shifts",
+   "notes": "",
+   "id": "R21",
+   "label": "Hours per Tier 2 request",
+   "low": 4,
+   "high": 8,
+   "unit": "hours",
+   "conservativeBound": "low"
+  },
+  {
+   "value": 40,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Tier shifts",
+   "notes": "",
+   "id": "R22",
+   "label": "Hours per Tier 3 request",
+   "unit": "hours"
+  },
+  {
+   "value": 15000000,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Services priced on revenue",
+   "notes": "",
+   "id": "R23",
+   "label": "Monthly revenue (for % of revenue pricing)",
+   "unit": "$/mo"
+  },
+  {
+   "value": null,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Headline coverage",
+   "notes": "",
+   "id": "R24",
+   "label": "Sellers per specialist today",
+   "unit": "ratio",
+   "formula": "R01 / R02"
+  },
+  {
+   "value": null,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Hiring plan",
+   "notes": "",
+   "id": "R25",
+   "label": "Specialists needed at the strain line",
+   "unit": "people",
+   "formula": "ceil(R01 / R07)"
+  },
+  {
+   "value": null,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Hiring plan",
+   "notes": "",
+   "id": "R26",
+   "label": "Specialists needed at the reference ratio",
+   "unit": "people",
+   "formula": "ceil(R01 / R06)"
+  },
+  {
+   "value": null,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Architect coverage",
+   "notes": "",
+   "id": "R27",
+   "label": "Sellers per architect today",
+   "unit": "ratio",
+   "formula": "R01 / R03"
+  },
+  {
+   "value": null,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Build vs buy",
+   "notes": "",
+   "id": "R28",
+   "label": "Director loaded cost",
+   "unit": "$/yr",
+   "formula": "R15 / R04"
+  },
+  {
+   "value": 150000,
+   "status": "Stated",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Buy option",
+   "notes": "",
+   "id": "R29",
+   "label": "Diagnostic engagement price",
+   "low": 50000,
+   "high": 250000,
+   "unit": "$",
+   "conservativeBound": "high"
+  },
+  {
+   "value": 9000,
+   "status": "Stated",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Buy option",
+   "notes": "12 months = 72,000 to 150,000.",
+   "id": "R30",
+   "label": "Fractional revenue leader, monthly retainer",
+   "low": 6000,
+   "high": 12500,
+   "unit": "$/mo",
+   "conservativeBound": "high"
+  },
+  {
+   "value": 4000,
+   "status": "Stated",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Buy option",
+   "notes": "About 4,000 a year.",
+   "id": "R31",
+   "label": "Benchmark subscription, annual",
+   "low": 4000,
+   "high": 4000,
+   "unit": "$/yr"
+  },
+  {
+   "value": 200000,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Specialist hires",
+   "notes": "",
+   "id": "R32",
+   "label": "Specialist cash comp (base + variable)",
+   "low": 180000,
+   "high": 230000,
+   "unit": "$/yr",
+   "conservativeBound": "high"
+  },
+  {
+   "value": 120000,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Avant desk",
+   "notes": "",
+   "id": "R33",
+   "label": "Avant desk seller cash comp",
+   "low": 100000,
+   "high": 140000,
+   "unit": "$/yr",
+   "conservativeBound": "high"
+  }
+ ],
+ "entities": {
+  "people": [
+   {
+    "practices": [],
+    "base": 210000,
+    "variableTarget": 110000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-rvp-east",
+    "name": "RVP East (sample)",
+    "title": "Regional Vice President",
+    "roleFamily": "RVP"
+   },
+   {
+    "practices": [],
+    "base": 210000,
+    "variableTarget": 110000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-rvp-west",
+    "name": "RVP West (sample)",
+    "title": "Regional Vice President",
+    "roleFamily": "RVP"
+   },
+   {
+    "practices": [],
+    "base": 170000,
+    "variableTarget": 80000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-rd-1",
+    "name": "Regional Director 1 (sample)",
+    "title": "Regional Director",
+    "roleFamily": "Regional Director",
+    "territory": "t1",
+    "managerId": "p-rvp-east"
+   },
+   {
+    "practices": [],
+    "base": 170000,
+    "variableTarget": 80000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-rd-2",
+    "name": "Regional Director 2 (sample)",
+    "title": "Regional Director",
+    "roleFamily": "Regional Director",
+    "territory": "t2",
+    "managerId": "p-rvp-east"
+   },
+   {
+    "practices": [],
+    "base": 170000,
+    "variableTarget": 80000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-rd-3",
+    "name": "Regional Director 3 (sample)",
+    "title": "Regional Director",
+    "roleFamily": "Regional Director",
+    "territory": "t3",
+    "managerId": "p-rvp-east"
+   },
+   {
+    "practices": [],
+    "base": 170000,
+    "variableTarget": 80000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-rd-4",
+    "name": "Regional Director 4 (sample)",
+    "title": "Regional Director",
+    "roleFamily": "Regional Director",
+    "territory": "t4",
+    "managerId": "p-rvp-west"
+   },
+   {
+    "practices": [],
+    "base": 170000,
+    "variableTarget": 80000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-rd-5",
+    "name": "Regional Director 5 (sample)",
+    "title": "Regional Director",
+    "roleFamily": "Regional Director",
+    "territory": "t5",
+    "managerId": "p-rvp-west"
+   },
+   {
+    "practices": [],
+    "base": 170000,
+    "variableTarget": 80000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-rd-6",
+    "name": "Regional Director 6 (sample)",
+    "title": "Regional Director",
+    "roleFamily": "Regional Director",
+    "territory": "t6",
+    "managerId": "p-rvp-west"
+   },
+   {
+    "practices": [],
+    "base": 113000,
+    "variableTarget": 108000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-01",
+    "name": "Seller 01",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 120500,
+    "variableTarget": 117000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-02",
+    "name": "Seller 02",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 100000,
+    "variableTarget": 111000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-03",
+    "name": "Seller 03",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 103000,
+    "variableTarget": 115000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-04",
+    "name": "Seller 04",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [],
+    "base": 121000,
+    "variableTarget": 109000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-05",
+    "name": "Seller 05",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t5",
+    "managerId": "p-rd-5"
+   },
+   {
+    "practices": [],
+    "base": 102500,
+    "variableTarget": 125500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-06",
+    "name": "Seller 06",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t6",
+    "managerId": "p-rd-6"
+   },
+   {
+    "practices": [],
+    "base": 117500,
+    "variableTarget": 102500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-07",
+    "name": "Seller 07",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 101000,
+    "variableTarget": 110000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-08",
+    "name": "Seller 08",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 115500,
+    "variableTarget": 114500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-09",
+    "name": "Seller 09",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 95000,
+    "variableTarget": 109000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-10",
+    "name": "Seller 10",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [],
+    "base": 120000,
+    "variableTarget": 92000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-11",
+    "name": "Seller 11",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t5",
+    "managerId": "p-rd-5"
+   },
+   {
+    "practices": [],
+    "base": 113000,
+    "variableTarget": 91500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-12",
+    "name": "Seller 12",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t6",
+    "managerId": "p-rd-6"
+   },
+   {
+    "practices": [],
+    "base": 103000,
+    "variableTarget": 92500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-13",
+    "name": "Seller 13",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 100500,
+    "variableTarget": 121500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-14",
+    "name": "Seller 14",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 111000,
+    "variableTarget": 91000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-15",
+    "name": "Seller 15",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 100000,
+    "variableTarget": 123500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-16",
+    "name": "Seller 16",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [],
+    "base": 109500,
+    "variableTarget": 122500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-17",
+    "name": "Seller 17",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t5",
+    "managerId": "p-rd-5"
+   },
+   {
+    "practices": [],
+    "base": 104500,
+    "variableTarget": 108000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-18",
+    "name": "Seller 18",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t6",
+    "managerId": "p-rd-6"
+   },
+   {
+    "practices": [],
+    "base": 96000,
+    "variableTarget": 92000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-19",
+    "name": "Seller 19",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 111500,
+    "variableTarget": 114000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-20",
+    "name": "Seller 20",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 102500,
+    "variableTarget": 116000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-21",
+    "name": "Seller 21",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 101500,
+    "variableTarget": 102000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-22",
+    "name": "Seller 22",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [],
+    "base": 117000,
+    "variableTarget": 124500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-23",
+    "name": "Seller 23",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t5",
+    "managerId": "p-rd-5"
+   },
+   {
+    "practices": [],
+    "base": 110000,
+    "variableTarget": 98000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-24",
+    "name": "Seller 24",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t6",
+    "managerId": "p-rd-6"
+   },
+   {
+    "practices": [],
+    "base": 103500,
+    "variableTarget": 101500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-25",
+    "name": "Seller 25",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 97000,
+    "variableTarget": 116500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-26",
+    "name": "Seller 26",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 115500,
+    "variableTarget": 117500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-27",
+    "name": "Seller 27",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 123000,
+    "variableTarget": 93500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-28",
+    "name": "Seller 28",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [],
+    "base": 123500,
+    "variableTarget": 107000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-29",
+    "name": "Seller 29",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t5",
+    "managerId": "p-rd-5"
+   },
+   {
+    "practices": [],
+    "base": 123500,
+    "variableTarget": 95500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-30",
+    "name": "Seller 30",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t6",
+    "managerId": "p-rd-6"
+   },
+   {
+    "practices": [],
+    "base": 98500,
+    "variableTarget": 90500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-31",
+    "name": "Seller 31",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 106000,
+    "variableTarget": 109500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-32",
+    "name": "Seller 32",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 113500,
+    "variableTarget": 126000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-33",
+    "name": "Seller 33",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 97500,
+    "variableTarget": 119000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-34",
+    "name": "Seller 34",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [],
+    "base": 123000,
+    "variableTarget": 101000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-35",
+    "name": "Seller 35",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t5",
+    "managerId": "p-rd-5"
+   },
+   {
+    "practices": [],
+    "base": 116000,
+    "variableTarget": 97000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-36",
+    "name": "Seller 36",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t6",
+    "managerId": "p-rd-6"
+   },
+   {
+    "practices": [],
+    "base": 110500,
+    "variableTarget": 123000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-37",
+    "name": "Seller 37",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 98500,
+    "variableTarget": 130000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-38",
+    "name": "Seller 38",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 112000,
+    "variableTarget": 126500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-39",
+    "name": "Seller 39",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 108000,
+    "variableTarget": 113000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-40",
+    "name": "Seller 40",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [],
+    "base": 105000,
+    "variableTarget": 114000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-41",
+    "name": "Seller 41",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t5",
+    "managerId": "p-rd-5"
+   },
+   {
+    "practices": [],
+    "base": 104500,
+    "variableTarget": 119000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-42",
+    "name": "Seller 42",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t6",
+    "managerId": "p-rd-6"
+   },
+   {
+    "practices": [],
+    "base": 104000,
+    "variableTarget": 108000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-43",
+    "name": "Seller 43",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 120500,
+    "variableTarget": 118000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-44",
+    "name": "Seller 44",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 125000,
+    "variableTarget": 125500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-45",
+    "name": "Seller 45",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 108000,
+    "variableTarget": 112000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-46",
+    "name": "Seller 46",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [],
+    "base": 104000,
+    "variableTarget": 94000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-47",
+    "name": "Seller 47",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t5",
+    "managerId": "p-rd-5"
+   },
+   {
+    "practices": [],
+    "base": 116000,
+    "variableTarget": 102500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-48",
+    "name": "Seller 48",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t6",
+    "managerId": "p-rd-6"
+   },
+   {
+    "practices": [],
+    "base": 118500,
+    "variableTarget": 126000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-49",
+    "name": "Seller 49",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 98000,
+    "variableTarget": 109000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-50",
+    "name": "Seller 50",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 119500,
+    "variableTarget": 95000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-51",
+    "name": "Seller 51",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 124000,
+    "variableTarget": 97000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-52",
+    "name": "Seller 52",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [],
+    "base": 116500,
+    "variableTarget": 118000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-53",
+    "name": "Seller 53",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t5",
+    "managerId": "p-rd-5"
+   },
+   {
+    "practices": [],
+    "base": 101500,
+    "variableTarget": 106500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-54",
+    "name": "Seller 54",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t6",
+    "managerId": "p-rd-6"
+   },
+   {
+    "practices": [],
+    "base": 100000,
+    "variableTarget": 116000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-55",
+    "name": "Seller 55",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 105000,
+    "variableTarget": 98500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-56",
+    "name": "Seller 56",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 114000,
+    "variableTarget": 125500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-57",
+    "name": "Seller 57",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 105000,
+    "variableTarget": 121500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-58",
+    "name": "Seller 58",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [],
+    "base": 107000,
+    "variableTarget": 95500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-59",
+    "name": "Seller 59",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t5",
+    "managerId": "p-rd-5"
+   },
+   {
+    "practices": [],
+    "base": 121000,
+    "variableTarget": 105000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-60",
+    "name": "Seller 60",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t6",
+    "managerId": "p-rd-6"
+   },
+   {
+    "practices": [],
+    "base": 95500,
+    "variableTarget": 119500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-61",
+    "name": "Seller 61",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 114000,
+    "variableTarget": 125000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-62",
+    "name": "Seller 62",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 122000,
+    "variableTarget": 98500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-63",
+    "name": "Seller 63",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 113000,
+    "variableTarget": 109500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-64",
+    "name": "Seller 64",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [],
+    "base": 100500,
+    "variableTarget": 92000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-65",
+    "name": "Seller 65",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t5",
+    "managerId": "p-rd-5"
+   },
+   {
+    "practices": [],
+    "base": 116000,
+    "variableTarget": 118500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-66",
+    "name": "Seller 66",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t6",
+    "managerId": "p-rd-6"
+   },
+   {
+    "practices": [],
+    "base": 103500,
+    "variableTarget": 101000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-67",
+    "name": "Seller 67",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t1",
+    "managerId": "p-rd-1"
+   },
+   {
+    "practices": [],
+    "base": 105000,
+    "variableTarget": 91000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-68",
+    "name": "Seller 68",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t2",
+    "managerId": "p-rd-2"
+   },
+   {
+    "practices": [],
+    "base": 101500,
+    "variableTarget": 129500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-69",
+    "name": "Seller 69",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t3",
+    "managerId": "p-rd-3"
+   },
+   {
+    "practices": [],
+    "base": 112000,
+    "variableTarget": 129500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-seller-70",
+    "name": "Seller 70",
+    "title": "Account Executive",
+    "roleFamily": "Core Seller",
+    "territory": "t4",
+    "managerId": "p-rd-4"
+   },
+   {
+    "practices": [
+     "services"
+    ],
+    "base": 150000,
+    "variableTarget": 60000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-vince",
+    "name": "Vince Ippolito",
+    "title": "Regional Sales Manager, Services",
+    "roleFamily": "Specialist",
+    "team": "Specialty Sales"
+   },
+   {
+    "practices": [
+     "cybersecurity",
+     "oem-pan",
+     "oem-crowdstrike",
+     "oem-rapid7"
+    ],
+    "base": 145000,
+    "variableTarget": 60000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-spec-cyber",
+    "name": "Cybersecurity Specialist (sample)",
+    "title": "Cybersecurity Specialist",
+    "roleFamily": "Specialist",
+    "team": "Specialty Sales"
+   },
+   {
+    "practices": [
+     "networking",
+     "avant"
+    ],
+    "base": 140000,
+    "variableTarget": 60000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-spec-net",
+    "name": "Networking Specialist (sample)",
+    "title": "Networking Specialist",
+    "roleFamily": "Specialist",
+    "team": "Specialty Sales"
+   },
+   {
+    "practices": [
+     "microsoft"
+    ],
+    "base": 140000,
+    "variableTarget": 55000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-spec-msft",
+    "name": "Microsoft Specialist (sample)",
+    "title": "Microsoft Specialist",
+    "roleFamily": "Specialist",
+    "team": "Specialty Sales"
+   },
+   {
+    "practices": [
+     "services",
+     "oem-dell",
+     "oem-vmware"
+    ],
+    "base": 145000,
+    "variableTarget": 55000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-spec-dc",
+    "name": "Datacenter Specialist (sample)",
+    "title": "Datacenter Specialist",
+    "roleFamily": "Specialist",
+    "team": "Specialty Sales"
+   },
+   {
+    "practices": [
+     "services"
+    ],
+    "base": 200000,
+    "variableTarget": 30000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-kurt",
+    "name": "Kurt Page",
+    "title": "Account Principal Architect",
+    "roleFamily": "Account Principal Architect",
+    "team": "Solutions Architecture"
+   },
+   {
+    "practices": [
+     "services"
+    ],
+    "base": 155000,
+    "variableTarget": 17500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-01",
+    "name": "Solutions Architect 01",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t1",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "cybersecurity"
+    ],
+    "base": 167000,
+    "variableTarget": 19500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-02",
+    "name": "Solutions Architect 02",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t2",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "networking"
+    ],
+    "base": 162000,
+    "variableTarget": 21500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-03",
+    "name": "Solutions Architect 03",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t3",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "microsoft"
+    ],
+    "base": 162500,
+    "variableTarget": 25500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-04",
+    "name": "Solutions Architect 04",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t4",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "services"
+    ],
+    "base": 162000,
+    "variableTarget": 20000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-05",
+    "name": "Solutions Architect 05",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t5",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "cybersecurity"
+    ],
+    "base": 177000,
+    "variableTarget": 20000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-06",
+    "name": "Solutions Architect 06",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t6",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "networking"
+    ],
+    "base": 165000,
+    "variableTarget": 24000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-07",
+    "name": "Solutions Architect 07",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t1",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "microsoft"
+    ],
+    "base": 166500,
+    "variableTarget": 24000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-08",
+    "name": "Solutions Architect 08",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t2",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "services"
+    ],
+    "base": 157000,
+    "variableTarget": 20000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-09",
+    "name": "Solutions Architect 09",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t3",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "cybersecurity"
+    ],
+    "base": 159000,
+    "variableTarget": 20000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-10",
+    "name": "Solutions Architect 10",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t4",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "networking"
+    ],
+    "base": 170000,
+    "variableTarget": 18500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-11",
+    "name": "Solutions Architect 11",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t5",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "microsoft"
+    ],
+    "base": 155000,
+    "variableTarget": 25500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-12",
+    "name": "Solutions Architect 12",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t6",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "services"
+    ],
+    "base": 159500,
+    "variableTarget": 17000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-13",
+    "name": "Solutions Architect 13",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t1",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "cybersecurity"
+    ],
+    "base": 159500,
+    "variableTarget": 15500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-14",
+    "name": "Solutions Architect 14",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t2",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "networking"
+    ],
+    "base": 167500,
+    "variableTarget": 18000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-15",
+    "name": "Solutions Architect 15",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t3",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [
+     "microsoft"
+    ],
+    "base": 164500,
+    "variableTarget": 20500,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sa-16",
+    "name": "Solutions Architect 16",
+    "title": "Solutions Architect",
+    "roleFamily": "Solutions Architect",
+    "territory": "t4",
+    "team": "Solutions Architecture",
+    "managerId": "p-kurt"
+   },
+   {
+    "practices": [],
+    "base": 150000,
+    "variableTarget": 30000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-sam",
+    "name": "Sam Aguilar",
+    "title": "Placeholder role (replace from roster)",
+    "roleFamily": "SalesOps",
+    "team": "Sales Operations"
+   },
+   {
+    "practices": [],
+    "base": 170000,
+    "variableTarget": 40000,
+    "fte": 1,
+    "status": "current",
+    "synthetic": true,
+    "id": "p-ryan",
+    "name": "Ryan McKee",
+    "title": "Placeholder role (replace from roster)",
+    "roleFamily": "Director",
+    "team": "Alliances"
+   }
+  ],
+  "territories": [
+   {
+    "id": "t1",
+    "name": "Territory 1",
+    "rvp": "RVP East (sample)",
+    "regionalDirectors": [
+     "Regional Director 1 (sample)"
+    ]
+   },
+   {
+    "id": "t2",
+    "name": "Territory 2",
+    "rvp": "RVP East (sample)",
+    "regionalDirectors": [
+     "Regional Director 2 (sample)"
+    ]
+   },
+   {
+    "id": "t3",
+    "name": "Territory 3",
+    "rvp": "RVP East (sample)",
+    "regionalDirectors": [
+     "Regional Director 3 (sample)"
+    ]
+   },
+   {
+    "id": "t4",
+    "name": "Territory 4",
+    "rvp": "RVP West (sample)",
+    "regionalDirectors": [
+     "Regional Director 4 (sample)"
+    ]
+   },
+   {
+    "id": "t5",
+    "name": "Territory 5",
+    "rvp": "RVP West (sample)",
+    "regionalDirectors": [
+     "Regional Director 5 (sample)"
+    ]
+   },
+   {
+    "id": "t6",
+    "name": "Territory 6",
+    "rvp": "RVP West (sample)",
+    "regionalDirectors": [
+     "Regional Director 6 (sample)"
+    ]
+   }
+  ],
+  "practices": [
+   {
+    "id": "services",
+    "name": "Services",
+    "type": "practice"
+   },
+   {
+    "id": "cybersecurity",
+    "name": "Cybersecurity",
+    "type": "practice"
+   },
+   {
+    "id": "networking",
+    "name": "Networking",
+    "type": "practice"
+   },
+   {
+    "id": "microsoft",
+    "name": "Microsoft",
+    "type": "practice"
+   },
+   {
+    "id": "avant",
+    "name": "Avant",
+    "type": "pod"
+   },
+   {
+    "id": "oem-pan",
+    "name": "Palo Alto Networks",
+    "type": "OEM line"
+   },
+   {
+    "id": "oem-dell",
+    "name": "Dell",
+    "type": "OEM line"
+   },
+   {
+    "id": "oem-vmware",
+    "name": "Broadcom/VMware",
+    "type": "OEM line"
+   },
+   {
+    "id": "oem-microsoft",
+    "name": "Microsoft (OEM)",
+    "type": "OEM line"
+   },
+   {
+    "id": "oem-rapid7",
+    "name": "Rapid7",
+    "type": "OEM line"
+   },
+   {
+    "id": "oem-crowdstrike",
+    "name": "CrowdStrike",
+    "type": "OEM line"
+   }
+  ],
+  "accounts": [
+   {
+    "id": "acct-01",
+    "name": "Sample Customer 01",
+    "territory": "t1",
+    "owner": "Seller 01",
+    "tier": 1,
+    "segment": "Commercial"
+   },
+   {
+    "id": "acct-02",
+    "name": "Sample Customer 02",
+    "territory": "t2",
+    "owner": "Seller 02",
+    "tier": 1,
+    "segment": "Enterprise"
+   },
+   {
+    "id": "acct-03",
+    "name": "Sample Customer 03",
+    "territory": "t3",
+    "owner": "Seller 03",
+    "tier": 3,
+    "segment": "Public sector"
+   },
+   {
+    "id": "acct-04",
+    "name": "Sample Customer 04",
+    "territory": "t4",
+    "owner": "Seller 04",
+    "tier": 2,
+    "segment": "Commercial"
+   },
+   {
+    "id": "acct-05",
+    "name": "Sample Customer 05",
+    "territory": "t5",
+    "owner": "Seller 05",
+    "tier": 2,
+    "segment": "Enterprise"
+   },
+   {
+    "id": "acct-06",
+    "name": "Sample Customer 06",
+    "territory": "t6",
+    "owner": "Seller 06",
+    "tier": 3,
+    "segment": "Public sector"
+   },
+   {
+    "id": "acct-07",
+    "name": "Sample Customer 07",
+    "territory": "t1",
+    "owner": "Seller 07",
+    "tier": 2,
+    "segment": "Commercial"
+   },
+   {
+    "id": "acct-08",
+    "name": "Sample Customer 08",
+    "territory": "t2",
+    "owner": "Seller 08",
+    "tier": 2,
+    "segment": "Enterprise"
+   },
+   {
+    "id": "acct-09",
+    "name": "Sample Customer 09",
+    "territory": "t3",
+    "owner": "Seller 09",
+    "tier": 1,
+    "segment": "Public sector"
+   },
+   {
+    "id": "acct-10",
+    "name": "Sample Customer 10",
+    "territory": "t4",
+    "owner": "Seller 10",
+    "tier": 2,
+    "segment": "Commercial"
+   },
+   {
+    "id": "acct-11",
+    "name": "Sample Customer 11",
+    "territory": "t5",
+    "owner": "Seller 11",
+    "tier": 2,
+    "segment": "Enterprise"
+   },
+   {
+    "id": "acct-12",
+    "name": "Sample Customer 12",
+    "territory": "t6",
+    "owner": "Seller 12",
+    "tier": 2,
+    "segment": "Public sector"
+   },
+   {
+    "id": "acct-13",
+    "name": "Sample Customer 13",
+    "territory": "t1",
+    "owner": "Seller 13",
+    "tier": 2,
+    "segment": "Commercial"
+   },
+   {
+    "id": "acct-14",
+    "name": "Sample Customer 14",
+    "territory": "t2",
+    "owner": "Seller 14",
+    "tier": 1,
+    "segment": "Enterprise"
+   },
+   {
+    "id": "acct-15",
+    "name": "Sample Customer 15",
+    "territory": "t3",
+    "owner": "Seller 15",
+    "tier": 1,
+    "segment": "Public sector"
+   },
+   {
+    "id": "acct-16",
+    "name": "Sample Customer 16",
+    "territory": "t4",
+    "owner": "Seller 16",
+    "tier": 2,
+    "segment": "Commercial"
+   },
+   {
+    "id": "acct-17",
+    "name": "Sample Customer 17",
+    "territory": "t5",
+    "owner": "Seller 17",
+    "tier": 2,
+    "segment": "Enterprise"
+   },
+   {
+    "id": "acct-18",
+    "name": "Sample Customer 18",
+    "territory": "t6",
+    "owner": "Seller 18",
+    "tier": 2,
+    "segment": "Public sector"
+   },
+   {
+    "id": "acct-19",
+    "name": "Sample Customer 19",
+    "territory": "t1",
+    "owner": "Seller 19",
+    "tier": 3,
+    "segment": "Commercial"
+   },
+   {
+    "id": "acct-20",
+    "name": "Sample Customer 20",
+    "territory": "t2",
+    "owner": "Seller 20",
+    "tier": 3,
+    "segment": "Enterprise"
+   },
+   {
+    "id": "acct-21",
+    "name": "Sample Customer 21",
+    "territory": "t3",
+    "owner": "Seller 21",
+    "tier": 3,
+    "segment": "Public sector"
+   },
+   {
+    "id": "acct-22",
+    "name": "Sample Customer 22",
+    "territory": "t4",
+    "owner": "Seller 22",
+    "tier": 1,
+    "segment": "Commercial"
+   },
+   {
+    "id": "acct-23",
+    "name": "Sample Customer 23",
+    "territory": "t5",
+    "owner": "Seller 23",
+    "tier": 1,
+    "segment": "Enterprise"
+   },
+   {
+    "id": "acct-24",
+    "name": "Sample Customer 24",
+    "territory": "t6",
+    "owner": "Seller 24",
+    "tier": 2,
+    "segment": "Public sector"
+   },
+   {
+    "id": "acct-25",
+    "name": "Sample Customer 25",
+    "territory": "t1",
+    "owner": "Seller 25",
+    "tier": 1,
+    "segment": "Commercial"
+   },
+   {
+    "id": "acct-26",
+    "name": "Sample Customer 26",
+    "territory": "t2",
+    "owner": "Seller 26",
+    "tier": 1,
+    "segment": "Enterprise"
+   },
+   {
+    "id": "acct-27",
+    "name": "Sample Customer 27",
+    "territory": "t3",
+    "owner": "Seller 27",
+    "tier": 2,
+    "segment": "Public sector"
+   },
+   {
+    "id": "acct-28",
+    "name": "Sample Customer 28",
+    "territory": "t4",
+    "owner": "Seller 28",
+    "tier": 2,
+    "segment": "Commercial"
+   },
+   {
+    "id": "acct-29",
+    "name": "Sample Customer 29",
+    "territory": "t5",
+    "owner": "Seller 29",
+    "tier": 3,
+    "segment": "Enterprise"
+   },
+   {
+    "id": "acct-30",
+    "name": "Sample Customer 30",
+    "territory": "t6",
+    "owner": "Seller 30",
+    "tier": 2,
+    "segment": "Public sector"
+   }
+  ],
+  "revenueFacts": [
+   {
+    "id": "rv-1",
+    "line": "services",
+    "period": "FY26 Q1",
+    "revenue": 3035000,
+    "gp": 787558,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-2",
+    "line": "cybersecurity",
+    "period": "FY26 Q1",
+    "revenue": 3270000,
+    "gp": 1005906,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-3",
+    "line": "networking",
+    "period": "FY26 Q1",
+    "revenue": 1740000,
+    "gp": 451662,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-4",
+    "line": "microsoft",
+    "period": "FY26 Q1",
+    "revenue": 2851000,
+    "gp": 718470,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-5",
+    "line": "avant",
+    "period": "FY26 Q1",
+    "revenue": 2760000,
+    "gp": 774266,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-6",
+    "line": "services",
+    "period": "FY26 Q2",
+    "revenue": 1982000,
+    "gp": 409832,
+    "specialistTouched": true,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-7",
+    "line": "cybersecurity",
+    "period": "FY26 Q2",
+    "revenue": 2688000,
+    "gp": 635832,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-8",
+    "line": "networking",
+    "period": "FY26 Q2",
+    "revenue": 1882000,
+    "gp": 507316,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-9",
+    "line": "microsoft",
+    "period": "FY26 Q2",
+    "revenue": 2755000,
+    "gp": 844786,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-10",
+    "line": "avant",
+    "period": "FY26 Q2",
+    "revenue": 3806000,
+    "gp": 866404,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-11",
+    "line": "services",
+    "period": "FY26 Q3",
+    "revenue": 2255000,
+    "gp": 424921,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-12",
+    "line": "cybersecurity",
+    "period": "FY26 Q3",
+    "revenue": 4433000,
+    "gp": 995322,
+    "specialistTouched": true,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-13",
+    "line": "networking",
+    "period": "FY26 Q3",
+    "revenue": 3731000,
+    "gp": 865898,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-14",
+    "line": "microsoft",
+    "period": "FY26 Q3",
+    "revenue": 3230000,
+    "gp": 991047,
+    "specialistTouched": true,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-15",
+    "line": "avant",
+    "period": "FY26 Q3",
+    "revenue": 4049000,
+    "gp": 1227021,
+    "specialistTouched": true,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-16",
+    "line": "services",
+    "period": "FY26 Q4",
+    "revenue": 1576000,
+    "gp": 301817,
+    "specialistTouched": false,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-17",
+    "line": "cybersecurity",
+    "period": "FY26 Q4",
+    "revenue": 2992000,
+    "gp": 774678,
+    "specialistTouched": true,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-18",
+    "line": "networking",
+    "period": "FY26 Q4",
+    "revenue": 3006000,
+    "gp": 872140,
+    "specialistTouched": true,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-19",
+    "line": "microsoft",
+    "period": "FY26 Q4",
+    "revenue": 3432000,
+    "gp": 640978,
+    "specialistTouched": true,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rv-20",
+    "line": "avant",
+    "period": "FY26 Q4",
+    "revenue": 3404000,
+    "gp": 1115341,
+    "specialistTouched": true,
+    "source": "Synthetic sample"
+   }
+  ],
+  "opportunities": [],
+  "effortLogs": [
+   {
+    "id": "e-1",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 01",
+    "opportunityType": "VMware",
+    "effort": 2,
+    "revenue6mo": 88197,
+    "gp6mo": 34963,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-2",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 02",
+    "opportunityType": "Cybersecurity",
+    "effort": 5,
+    "revenue6mo": 297192,
+    "gp6mo": 56070,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-3",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 03",
+    "opportunityType": "Professional Services",
+    "effort": 7,
+    "revenue6mo": 680442,
+    "gp6mo": 142734,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-4",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 04",
+    "opportunityType": "Networking",
+    "effort": 1,
+    "revenue6mo": 82521,
+    "gp6mo": 11131,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-5",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 05",
+    "opportunityType": "Datacenter Colocation",
+    "effort": 2,
+    "revenue6mo": 198255,
+    "gp6mo": 41184,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-6",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 06",
+    "opportunityType": "Other",
+    "effort": 7,
+    "revenue6mo": 591353,
+    "gp6mo": 61809,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-7",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 07",
+    "opportunityType": "VMware",
+    "effort": 6,
+    "revenue6mo": 475874,
+    "gp6mo": 136703,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-8",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 08",
+    "opportunityType": "Cybersecurity",
+    "effort": 4,
+    "revenue6mo": 363025,
+    "gp6mo": 45811,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-9",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 09",
+    "opportunityType": "Professional Services",
+    "effort": 3,
+    "revenue6mo": 260962,
+    "gp6mo": 31074,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-10",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 10",
+    "opportunityType": "Networking",
+    "effort": 10,
+    "revenue6mo": 622803,
+    "gp6mo": 156301,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-11",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 11",
+    "opportunityType": "Datacenter Colocation",
+    "effort": 12,
+    "revenue6mo": 1030867,
+    "gp6mo": 257074,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-12",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 12",
+    "opportunityType": "Other",
+    "effort": 12,
+    "revenue6mo": 944936,
+    "gp6mo": 242087,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-13",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 13",
+    "opportunityType": "VMware",
+    "effort": 10,
+    "revenue6mo": 530338,
+    "gp6mo": 126628,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-14",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 14",
+    "opportunityType": "Cybersecurity",
+    "effort": 7,
+    "revenue6mo": 656141,
+    "gp6mo": 155943,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-15",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 15",
+    "opportunityType": "Professional Services",
+    "effort": 11,
+    "revenue6mo": 865897,
+    "gp6mo": 140506,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-16",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 16",
+    "opportunityType": "Networking",
+    "effort": 12,
+    "revenue6mo": 626664,
+    "gp6mo": 166978,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-17",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 17",
+    "opportunityType": "Datacenter Colocation",
+    "effort": 11,
+    "revenue6mo": 546374,
+    "gp6mo": 200200,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-18",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 18",
+    "opportunityType": "Other",
+    "effort": 12,
+    "revenue6mo": 1038427,
+    "gp6mo": 96898,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-19",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 19",
+    "opportunityType": "VMware",
+    "effort": 8,
+    "revenue6mo": 574469,
+    "gp6mo": 154143,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-20",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 20",
+    "opportunityType": "Cybersecurity",
+    "effort": 5,
+    "revenue6mo": 287782,
+    "gp6mo": 43948,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-21",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 21",
+    "opportunityType": "Professional Services",
+    "effort": 1,
+    "revenue6mo": 52120,
+    "gp6mo": 17717,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-22",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 22",
+    "opportunityType": "Networking",
+    "effort": 2,
+    "revenue6mo": 149016,
+    "gp6mo": 44121,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-23",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 23",
+    "opportunityType": "Datacenter Colocation",
+    "effort": 9,
+    "revenue6mo": 458960,
+    "gp6mo": 95354,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-24",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 24",
+    "opportunityType": "Other",
+    "effort": 10,
+    "revenue6mo": 730853,
+    "gp6mo": 126074,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-25",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 25",
+    "opportunityType": "VMware",
+    "effort": 2,
+    "revenue6mo": 179659,
+    "gp6mo": 37966,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-26",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 26",
+    "opportunityType": "Cybersecurity",
+    "effort": 11,
+    "revenue6mo": 906448,
+    "gp6mo": 91839,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-27",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 27",
+    "opportunityType": "Professional Services",
+    "effort": 3,
+    "revenue6mo": 239275,
+    "gp6mo": 52381,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-28",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 28",
+    "opportunityType": "Networking",
+    "effort": 4,
+    "revenue6mo": 259589,
+    "gp6mo": 46401,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-29",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 29",
+    "opportunityType": "Datacenter Colocation",
+    "effort": 4,
+    "revenue6mo": 293385,
+    "gp6mo": 91687,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-30",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 30",
+    "opportunityType": "Other",
+    "effort": 1,
+    "revenue6mo": 82325,
+    "gp6mo": 15370,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-31",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 01",
+    "opportunityType": "VMware",
+    "effort": 2,
+    "revenue6mo": 195825,
+    "gp6mo": 33393,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-32",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 02",
+    "opportunityType": "Cybersecurity",
+    "effort": 9,
+    "revenue6mo": 888038,
+    "gp6mo": 179057,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-33",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 03",
+    "opportunityType": "Professional Services",
+    "effort": 11,
+    "revenue6mo": 564533,
+    "gp6mo": 98268,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-34",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 04",
+    "opportunityType": "Networking",
+    "effort": 10,
+    "revenue6mo": 772746,
+    "gp6mo": 168162,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-35",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 05",
+    "opportunityType": "Datacenter Colocation",
+    "effort": 9,
+    "revenue6mo": 741071,
+    "gp6mo": 152706,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-36",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 06",
+    "opportunityType": "Other",
+    "effort": 8,
+    "revenue6mo": 427306,
+    "gp6mo": 152832,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-37",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 07",
+    "opportunityType": "VMware",
+    "effort": 3,
+    "revenue6mo": 294973,
+    "gp6mo": 56342,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-38",
+    "person": "Cybersecurity Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 08",
+    "opportunityType": "Cybersecurity",
+    "effort": 2,
+    "revenue6mo": 97398,
+    "gp6mo": 43701,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-39",
+    "person": "Networking Specialist (sample)",
+    "period": "FY26 H1",
+    "account": "Sample Customer 09",
+    "opportunityType": "Professional Services",
+    "effort": 3,
+    "revenue6mo": 199322,
+    "gp6mo": 26841,
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "e-40",
+    "person": "Vince Ippolito",
+    "period": "FY26 H1",
+    "account": "Sample Customer 10",
+    "opportunityType": "Networking",
+    "effort": 4,
+    "revenue6mo": 162791,
+    "gp6mo": 81889,
+    "source": "Synthetic sample"
+   }
+  ],
+  "externalServices": [
+   {
+    "id": "svc-diagnostic",
+    "vendor": "Diagnostic firm (sample)",
+    "name": "Sales org diagnostic",
+    "category": "diagnostic",
+    "pricingModel": "fixed",
+    "low": 50000,
+    "base": 150000,
+    "high": 250000,
+    "priceRef": "R29",
+    "termMonths": null,
+    "startMonth": null,
+    "source": "Quote range (sample)"
+   },
+   {
+    "id": "svc-fractional",
+    "vendor": "Fractional leader (sample)",
+    "name": "Fractional revenue leader",
+    "category": "fractional leader",
+    "pricingModel": "monthly retainer",
+    "low": 6000,
+    "base": 9000,
+    "high": 12500,
+    "priceRef": "R30",
+    "termMonths": 12,
+    "startMonth": null,
+    "source": "Estimate (sample)"
+   },
+   {
+    "id": "svc-benchmark",
+    "vendor": "Benchmark provider (sample)",
+    "name": "Benchmark subscription",
+    "category": "benchmark subscription",
+    "pricingModel": "annual subscription",
+    "low": 4000,
+    "base": 4000,
+    "high": 4000,
+    "priceRef": "R31",
+    "termMonths": null,
+    "startMonth": null,
+    "source": "List price (sample)"
+   },
+   {
+    "id": "svc-recruiter",
+    "vendor": "Recruiting firm (sample)",
+    "name": "Specialist search",
+    "category": "recruiting",
+    "pricingModel": "fixed",
+    "low": 30000,
+    "base": 40000,
+    "high": 50000,
+    "termMonths": null,
+    "startMonth": null,
+    "source": "Estimate (sample)"
+   }
+  ],
+  "initiatives": [],
+  "kpis": [
+   {
+    "id": "k-coverage",
+    "name": "Sellers per specialist",
+    "definition": "Core sellers divided by specialists",
+    "formula": "sellersPerSpecialist",
+    "unit": "ratio",
+    "target": 8,
+    "cadence": "monthly",
+    "owner": "Curiosity and Technology Office",
+    "direction": "lower"
+   },
+   {
+    "id": "k-touched-gp",
+    "name": "Specialist-touched GP",
+    "definition": "GP on deals a specialist touched",
+    "unit": "$",
+    "cadence": "quarterly",
+    "owner": "Curiosity and Technology Office",
+    "direction": "higher"
+   }
+  ],
+  "vendors": [
+   {
+    "id": "v-pan",
+    "name": "Palo Alto Networks",
+    "kind": "OEM"
+   },
+   {
+    "id": "v-dell",
+    "name": "Dell",
+    "kind": "OEM"
+   },
+   {
+    "id": "v-broadcom",
+    "name": "Broadcom/VMware",
+    "kind": "OEM",
+    "programs": "VMware Protection and Recovery"
+   },
+   {
+    "id": "v-msft",
+    "name": "Microsoft",
+    "kind": "OEM"
+   },
+   {
+    "id": "v-rapid7",
+    "name": "Rapid7",
+    "kind": "OEM"
+   },
+   {
+    "id": "v-crowdstrike",
+    "name": "CrowdStrike",
+    "kind": "OEM"
+   },
+   {
+    "id": "v-avant",
+    "name": "Avant",
+    "kind": "TSD"
+   }
+  ]
+ },
+ "scenarios": [
+  {
+   "id": "baseline",
+   "name": "Baseline",
+   "description": "Current roster and assumptions. 5 specialists, about 70 core sellers (Conflict: 53 on the roster), 17 architects, 6 territories.",
+   "changes": [],
+   "gates": [],
+   "locked": true
+  },
+  {
+   "id": "option-a",
+   "name": "Option A: pods now",
+   "description": "Four practice pods (services, cybersecurity, networking, Microsoft) plus an Avant pod. Specialist hires toward the 1:8 line.",
+   "changes": [
+    {
+     "id": "a-pods",
+     "type": "podAssign",
+     "month": 0,
+     "tags": [
+      "pods"
+     ],
+     "params": {
+      "roleFamily": "Specialist",
+      "suffix": " pod"
+     }
+    },
+    {
+     "id": "a-avant",
+     "type": "hire",
+     "month": 0,
+     "tags": [
+      "avant"
+     ],
+     "params": {
+      "title": "Avant pod seller",
+      "roleFamily": "Inside Seller",
+      "count": 1,
+      "practices": [
+       "avant"
+      ],
+      "team": "Avant pod",
+      "base": 0,
+      "variableTarget": 0,
+      "compAssumption": "avant_desk_comp",
+      "fte": 1
+     }
+    },
+    {
+     "id": "a-h1",
+     "type": "hire",
+     "month": 0,
+     "tags": [
+      "hiring"
+     ],
+     "params": {
+      "title": "Cybersecurity Specialist",
+      "roleFamily": "Specialist",
+      "count": 1,
+      "practices": [
+       "cybersecurity"
+      ],
+      "team": "Cybersecurity pod",
+      "base": 0,
+      "variableTarget": 0,
+      "compAssumption": "specialist_comp",
+      "fte": 1
+     }
+    },
+    {
+     "id": "a-h2",
+     "type": "hire",
+     "month": 0,
+     "tags": [
+      "hiring"
+     ],
+     "params": {
+      "title": "Networking Specialist",
+      "roleFamily": "Specialist",
+      "count": 1,
+      "practices": [
+       "networking"
+      ],
+      "team": "Networking pod",
+      "base": 0,
+      "variableTarget": 0,
+      "compAssumption": "specialist_comp",
+      "fte": 1
+     }
+    },
+    {
+     "id": "a-h3",
+     "type": "hire",
+     "month": 3,
+     "tags": [
+      "hiring"
+     ],
+     "params": {
+      "title": "Microsoft Specialist",
+      "roleFamily": "Specialist",
+      "count": 1,
+      "practices": [
+       "microsoft"
+      ],
+      "team": "Microsoft pod",
+      "base": 0,
+      "variableTarget": 0,
+      "compAssumption": "specialist_comp",
+      "fte": 1
+     }
+    },
+    {
+     "id": "a-h4",
+     "type": "hire",
+     "month": 3,
+     "tags": [
+      "hiring"
+     ],
+     "params": {
+      "title": "Services Specialist",
+      "roleFamily": "Specialist",
+      "count": 1,
+      "practices": [
+       "services"
+      ],
+      "team": "Services pod",
+      "base": 0,
+      "variableTarget": 0,
+      "compAssumption": "specialist_comp",
+      "fte": 1
+     }
+    }
+   ],
+   "gates": []
+  },
+  {
+   "id": "option-b",
+   "name": "Option B: three-person office",
+   "description": "A three-person office reporting to the CEO (Vince Ippolito, Sam Aguilar, Ryan McKee). Kurt Page becomes Director of Solutions Architecture and his principal seat is backfilled. Troy Sorrento backfills Vince’s specialist seat. Backfills only in year one.",
+   "changes": [
+    {
+     "id": "b-vince",
+     "type": "move",
+     "month": 0,
+     "tags": [
+      "office"
+     ],
+     "params": {
+      "personId": "p-vince",
+      "roleFamily": "Office",
+      "title": "Curiosity and Technology Office",
+      "team": "Curiosity and Technology Office"
+     }
+    },
+    {
+     "id": "b-sam",
+     "type": "move",
+     "month": 0,
+     "tags": [
+      "office"
+     ],
+     "params": {
+      "personId": "p-sam",
+      "roleFamily": "Office",
+      "title": "Curiosity and Technology Office",
+      "team": "Curiosity and Technology Office"
+     }
+    },
+    {
+     "id": "b-ryan",
+     "type": "move",
+     "month": 0,
+     "tags": [
+      "office"
+     ],
+     "params": {
+      "personId": "p-ryan",
+      "roleFamily": "Office",
+      "title": "Curiosity and Technology Office",
+      "team": "Curiosity and Technology Office"
+     }
+    },
+    {
+     "id": "b-kurt",
+     "type": "move",
+     "month": 0,
+     "tags": [
+      "office"
+     ],
+     "params": {
+      "personId": "p-kurt",
+      "roleFamily": "Director",
+      "title": "Director of Solutions Architecture",
+      "team": "Solutions Architecture"
+     }
+    },
+    {
+     "id": "b-kurt-bf",
+     "type": "backfill",
+     "month": 0,
+     "tags": [
+      "office"
+     ],
+     "params": {
+      "personId": "p-kurt",
+      "name": "Principal architect backfill"
+     }
+    },
+    {
+     "id": "b-troy",
+     "type": "backfill",
+     "month": 0,
+     "tags": [
+      "office"
+     ],
+     "params": {
+      "personId": "p-vince",
+      "name": "Troy Sorrento",
+      "lagMonths": 6
+     }
+    }
+   ],
+   "gates": []
+  },
+  {
+   "id": "option-c",
+   "name": "Option C: office first, then pods",
+   "description": "Option B for months 0 to 12, then Option A’s pods. Specialists 4 to 5 by month 6, +2 released at the month 12 gate (7 by month 18), +2 released at the month 18 gate (9 by month 24). Avant stays with specialists for 12 months, then moves to a dedicated desk.",
+   "inherits": [
+    {
+     "scenarioId": "option-b",
+     "fromMonth": 0,
+     "toMonth": 12
+    },
+    {
+     "scenarioId": "option-a",
+     "fromMonth": 12,
+     "toMonth": null,
+     "tags": [
+      "pods"
+     ],
+     "carryEarlier": true
+    }
+   ],
+   "changes": [
+    {
+     "id": "c-g1-cyber",
+     "type": "hire",
+     "month": 12,
+     "tags": [
+      "hiring"
+     ],
+     "params": {
+      "title": "Cybersecurity Specialist",
+      "roleFamily": "Specialist",
+      "count": 1,
+      "practices": [
+       "cybersecurity"
+      ],
+      "team": "Cybersecurity pod",
+      "base": 0,
+      "variableTarget": 0,
+      "compAssumption": "specialist_comp",
+      "fte": 1,
+      "lagMonths": 6
+     },
+     "gateId": "g12"
+    },
+    {
+     "id": "c-g1-net",
+     "type": "hire",
+     "month": 12,
+     "tags": [
+      "hiring"
+     ],
+     "params": {
+      "title": "Networking Specialist",
+      "roleFamily": "Specialist",
+      "count": 1,
+      "practices": [
+       "networking"
+      ],
+      "team": "Networking pod",
+      "base": 0,
+      "variableTarget": 0,
+      "compAssumption": "specialist_comp",
+      "fte": 1,
+      "lagMonths": 6
+     },
+     "gateId": "g12"
+    },
+    {
+     "id": "c-g2-msft",
+     "type": "hire",
+     "month": 18,
+     "tags": [
+      "hiring"
+     ],
+     "params": {
+      "title": "Microsoft Specialist",
+      "roleFamily": "Specialist",
+      "count": 1,
+      "practices": [
+       "microsoft"
+      ],
+      "team": "Microsoft pod",
+      "base": 0,
+      "variableTarget": 0,
+      "compAssumption": "specialist_comp",
+      "fte": 1,
+      "lagMonths": 6
+     },
+     "gateId": "g18"
+    },
+    {
+     "id": "c-g2-svc",
+     "type": "hire",
+     "month": 18,
+     "tags": [
+      "hiring"
+     ],
+     "params": {
+      "title": "Services Specialist",
+      "roleFamily": "Specialist",
+      "count": 1,
+      "practices": [
+       "services"
+      ],
+      "team": "Services pod",
+      "base": 0,
+      "variableTarget": 0,
+      "compAssumption": "specialist_comp",
+      "fte": 1,
+      "lagMonths": 6
+     },
+     "gateId": "g18"
+    },
+    {
+     "id": "c-avant",
+     "type": "hire",
+     "month": 12,
+     "tags": [
+      "avant"
+     ],
+     "params": {
+      "title": "Avant desk seller",
+      "roleFamily": "Inside Seller",
+      "count": 1,
+      "practices": [
+       "avant"
+      ],
+      "team": "Avant desk",
+      "base": 0,
+      "variableTarget": 0,
+      "compAssumption": "avant_desk_comp",
+      "fte": 1,
+      "lagMonths": 0
+     }
+    },
+    {
+     "id": "c-avant-move",
+     "type": "move",
+     "month": 12,
+     "tags": [
+      "avant"
+     ],
+     "params": {
+      "personId": "p-spec-net",
+      "practices": [
+       "networking"
+      ]
+     }
+    }
+   ],
+   "gates": [
+    {
+     "id": "g12",
+     "name": "Month 12 gate",
+     "month": 12,
+     "kind": "manual",
+     "manualOutcomes": {},
+     "retryMonths": 6
+    },
+    {
+     "id": "g18",
+     "name": "Month 18 gate",
+     "month": 18,
+     "kind": "manual",
+     "manualOutcomes": {},
+     "retryMonths": 6
+    }
+   ]
+  },
+  {
+   "id": "buy",
+   "name": "Buy instead of build",
+   "description": "A diagnostic, a fractional revenue leader and a benchmark subscription in place of two director hires.",
+   "changes": [
+    {
+     "id": "buy-diag",
+     "type": "serviceStart",
+     "month": 0,
+     "tags": [
+      "buy"
+     ],
+     "params": {
+      "serviceId": "svc-diagnostic"
+     }
+    },
+    {
+     "id": "buy-frac",
+     "type": "serviceStart",
+     "month": 0,
+     "tags": [
+      "buy"
+     ],
+     "params": {
+      "serviceId": "svc-fractional",
+      "termMonths": 12
+     }
+    },
+    {
+     "id": "buy-bench",
+     "type": "serviceStart",
+     "month": 0,
+     "tags": [
+      "buy"
+     ],
+     "params": {
+      "serviceId": "svc-benchmark"
+     }
+    }
+   ],
+   "gates": []
+  }
+ ],
+ "baselineScenarioId": "baseline",
+ "datasets": [],
+ "mappingTemplates": [],
+ "modules": {},
+ "moduleVersions": {},
+ "snapshots": [],
+ "changeLog": [
+  {
+   "at": "2026-11-20T00:00:00.000Z",
+   "action": "Created sample workspace"
+  }
+ ]
+}

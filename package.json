@@ -6,10 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build && node scripts/rename-output.mjs",
-    "test": "vitest run",
+    "test": "npm run build --silent && vitest run",
     "test:unit": "vitest run --exclude tests/built-file.test.ts",
     "typecheck": "tsc --noEmit",
-    "verify:browser": "node scripts/verify-browser.mjs"
+    "samples": "UPDATE_SAMPLES=1 vitest run tests/samples.test.ts",
+    "verify:browser": "npm run build --silent && node scripts/verify-browser.mjs"
   },
   "dependencies": {
     "papaparse": "^5.7.1",

@@ -1,0 +1,103 @@
+Employee ID,Employee Name,Job Title,Role Family,Territory,Team,Practices,Manager ID,Base Salary,Variable Target,FTE,Status
+p-rvp-east,RVP East (sample),Regional Vice President,RVP,,,,,210000,110000,1,current
+p-rvp-west,RVP West (sample),Regional Vice President,RVP,,,,,210000,110000,1,current
+p-rd-1,Regional Director 1 (sample),Regional Director,Regional Director,Territory 1,,,p-rvp-east,170000,80000,1,current
+p-rd-2,Regional Director 2 (sample),Regional Director,Regional Director,Territory 2,,,p-rvp-east,170000,80000,1,current
+p-rd-3,Regional Director 3 (sample),Regional Director,Regional Director,Territory 3,,,p-rvp-east,170000,80000,1,current
+p-rd-4,Regional Director 4 (sample),Regional Director,Regional Director,Territory 4,,,p-rvp-west,170000,80000,1,current
+p-rd-5,Regional Director 5 (sample),Regional Director,Regional Director,Territory 5,,,p-rvp-west,170000,80000,1,current
+p-rd-6,Regional Director 6 (sample),Regional Director,Regional Director,Territory 6,,,p-rvp-west,170000,80000,1,current
+p-seller-01,Seller 01,Account Executive,Core Seller,Territory 1,,,p-rd-1,113000,108000,1,current
+p-seller-02,Seller 02,Account Executive,Core Seller,Territory 2,,,p-rd-2,120500,117000,1,current
+p-seller-03,Seller 03,Account Executive,Core Seller,Territory 3,,,p-rd-3,100000,111000,1,current
+p-seller-04,Seller 04,Account Executive,Core Seller,Territory 4,,,p-rd-4,103000,115000,1,current
+p-seller-05,Seller 05,Account Executive,Core Seller,Territory 5,,,p-rd-5,121000,109000,1,current
+p-seller-06,Seller 06,Account Executive,Core Seller,Territory 6,,,p-rd-6,102500,125500,1,current
+p-seller-07,Seller 07,Account Executive,Core Seller,Territory 1,,,p-rd-1,117500,102500,1,current
+p-seller-08,Seller 08,Account Executive,Core Seller,Territory 2,,,p-rd-2,101000,110000,1,current
+p-seller-09,Seller 09,Account Executive,Core Seller,Territory 3,,,p-rd-3,115500,114500,1,current
+p-seller-10,Seller 10,Account Executive,Core Seller,Territory 4,,,p-rd-4,95000,109000,1,current
+p-seller-11,Seller 11,Account Executive,Core Seller,Territory 5,,,p-rd-5,120000,92000,1,current
+p-seller-12,Seller 12,Account Executive,Core Seller,Territory 6,,,p-rd-6,113000,91500,1,current
+p-seller-13,Seller 13,Account Executive,Core Seller,Territory 1,,,p-rd-1,103000,92500,1,current
+p-seller-14,Seller 14,Account Executive,Core Seller,Territory 2,,,p-rd-2,100500,121500,1,current
+p-seller-15,Seller 15,Account Executive,Core Seller,Territory 3,,,p-rd-3,111000,91000,1,current
+p-seller-16,Seller 16,Account Executive,Core Seller,Territory 4,,,p-rd-4,100000,123500,1,current
+p-seller-17,Seller 17,Account Executive,Core Seller,Territory 5,,,p-rd-5,109500,122500,1,current
+p-seller-18,Seller 18,Account Executive,Core Seller,Territory 6,,,p-rd-6,104500,108000,1,current
+p-seller-19,Seller 19,Account Executive,Core Seller,Territory 1,,,p-rd-1,96000,92000,1,current
+p-seller-20,Seller 20,Account Executive,Core Seller,Territory 2,,,p-rd-2,111500,114000,1,current
+p-seller-21,Seller 21,Account Executive,Core Seller,Territory 3,,,p-rd-3,102500,116000,1,current
+p-seller-22,Seller 22,Account Executive,Core Seller,Territory 4,,,p-rd-4,101500,102000,1,current
+p-seller-23,Seller 23,Account Executive,Core Seller,Territory 5,,,p-rd-5,117000,124500,1,current
+p-seller-24,Seller 24,Account Executive,Core Seller,Territory 6,,,p-rd-6,110000,98000,1,current
+p-seller-25,Seller 25,Account Executive,Core Seller,Territory 1,,,p-rd-1,103500,101500,1,current
+p-seller-26,Seller 26,Account Executive,Core Seller,Territory 2,,,p-rd-2,97000,116500,1,current
+p-seller-27,Seller 27,Account Executive,Core Seller,Territory 3,,,p-rd-3,115500,117500,1,current
+p-seller-28,Seller 28,Account Executive,Core Seller,Territory 4,,,p-rd-4,123000,93500,1,current
+p-seller-29,Seller 29,Account Executive,Core Seller,Territory 5,,,p-rd-5,123500,107000,1,current
+p-seller-30,Seller 30,Account Executive,Core Seller,Territory 6,,,p-rd-6,123500,95500,1,current
+p-seller-31,Seller 31,Account Executive,Core Seller,Territory 1,,,p-rd-1,98500,90500,1,current
+p-seller-32,Seller 32,Account Executive,Core Seller,Territory 2,,,p-rd-2,106000,109500,1,current
+p-seller-33,Seller 33,Account Executive,Core Seller,Territory 3,,,p-rd-3,113500,126000,1,current
+p-seller-34,Seller 34,Account Executive,Core Seller,Territory 4,,,p-rd-4,97500,119000,1,current
+p-seller-35,Seller 35,Account Executive,Core Seller,Territory 5,,,p-rd-5,123000,101000,1,current
+p-seller-36,Seller 36,Account Executive,Core Seller,Territory 6,,,p-rd-6,116000,97000,1,current
+p-seller-37,Seller 37,Account Executive,Core Seller,Territory 1,,,p-rd-1,110500,123000,1,current
+p-seller-38,Seller 38,Account Executive,Core Seller,Territory 2,,,p-rd-2,98500,130000,1,current
+p-seller-39,Seller 39,Account Executive,Core Seller,Territory 3,,,p-rd-3,112000,126500,1,current
+p-seller-40,Seller 40,Account Executive,Core Seller,Territory 4,,,p-rd-4,108000,113000,1,current
+p-seller-41,Seller 41,Account Executive,Core Seller,Territory 5,,,p-rd-5,105000,114000,1,current
+p-seller-42,Seller 42,Account Executive,Core Seller,Territory 6,,,p-rd-6,104500,119000,1,current
+p-seller-43,Seller 43,Account Executive,Core Seller,Territory 1,,,p-rd-1,104000,108000,1,current
+p-seller-44,Seller 44,Account Executive,Core Seller,Territory 2,,,p-rd-2,120500,118000,1,current
+p-seller-45,Seller 45,Account Executive,Core Seller,Territory 3,,,p-rd-3,125000,125500,1,current
+p-seller-46,Seller 46,Account Executive,Core Seller,Territory 4,,,p-rd-4,108000,112000,1,current
+p-seller-47,Seller 47,Account Executive,Core Seller,Territory 5,,,p-rd-5,104000,94000,1,current
+p-seller-48,Seller 48,Account Executive,Core Seller,Territory 6,,,p-rd-6,116000,102500,1,current
+p-seller-49,Seller 49,Account Executive,Core Seller,Territory 1,,,p-rd-1,118500,126000,1,current
+p-seller-50,Seller 50,Account Executive,Core Seller,Territory 2,,,p-rd-2,98000,109000,1,current
+p-seller-51,Seller 51,Account Executive,Core Seller,Territory 3,,,p-rd-3,119500,95000,1,current
+p-seller-52,Seller 52,Account Executive,Core Seller,Territory 4,,,p-rd-4,124000,97000,1,current
+p-seller-53,Seller 53,Account Executive,Core Seller,Territory 5,,,p-rd-5,116500,118000,1,current
+p-seller-54,Seller 54,Account Executive,Core Seller,Territory 6,,,p-rd-6,101500,106500,1,current
+p-seller-55,Seller 55,Account Executive,Core Seller,Territory 1,,,p-rd-1,100000,116000,1,current
+p-seller-56,Seller 56,Account Executive,Core Seller,Territory 2,,,p-rd-2,105000,98500,1,current
+p-seller-57,Seller 57,Account Executive,Core Seller,Territory 3,,,p-rd-3,114000,125500,1,current
+p-seller-58,Seller 58,Account Executive,Core Seller,Territory 4,,,p-rd-4,105000,121500,1,current
+p-seller-59,Seller 59,Account Executive,Core Seller,Territory 5,,,p-rd-5,107000,95500,1,current
+p-seller-60,Seller 60,Account Executive,Core Seller,Territory 6,,,p-rd-6,121000,105000,1,current
+p-seller-61,Seller 61,Account Executive,Core Seller,Territory 1,,,p-rd-1,95500,119500,1,current
+p-seller-62,Seller 62,Account Executive,Core Seller,Territory 2,,,p-rd-2,114000,125000,1,current
+p-seller-63,Seller 63,Account Executive,Core Seller,Territory 3,,,p-rd-3,122000,98500,1,current
+p-seller-64,Seller 64,Account Executive,Core Seller,Territory 4,,,p-rd-4,113000,109500,1,current
+p-seller-65,Seller 65,Account Executive,Core Seller,Territory 5,,,p-rd-5,100500,92000,1,current
+p-seller-66,Seller 66,Account Executive,Core Seller,Territory 6,,,p-rd-6,116000,118500,1,current
+p-seller-67,Seller 67,Account Executive,Core Seller,Territory 1,,,p-rd-1,103500,101000,1,current
+p-seller-68,Seller 68,Account Executive,Core Seller,Territory 2,,,p-rd-2,105000,91000,1,current
+p-seller-69,Seller 69,Account Executive,Core Seller,Territory 3,,,p-rd-3,101500,129500,1,current
+p-seller-70,Seller 70,Account Executive,Core Seller,Territory 4,,,p-rd-4,112000,129500,1,current
+p-vince,Vince Ippolito,"Regional Sales Manager, Services",Specialist,,Specialty Sales,services,,150000,60000,1,current
+p-spec-cyber,Cybersecurity Specialist (sample),Cybersecurity Specialist,Specialist,,Specialty Sales,cybersecurity; oem-pan; oem-crowdstrike; oem-rapid7,,145000,60000,1,current
+p-spec-net,Networking Specialist (sample),Networking Specialist,Specialist,,Specialty Sales,networking; avant,,140000,60000,1,current
+p-spec-msft,Microsoft Specialist (sample),Microsoft Specialist,Specialist,,Specialty Sales,microsoft,,140000,55000,1,current
+p-spec-dc,Datacenter Specialist (sample),Datacenter Specialist,Specialist,,Specialty Sales,services; oem-dell; oem-vmware,,145000,55000,1,current
+p-kurt,Kurt Page,Account Principal Architect,Account Principal Architect,,Solutions Architecture,services,,200000,30000,1,current
+p-sa-01,Solutions Architect 01,Solutions Architect,Solutions Architect,Territory 1,Solutions Architecture,services,p-kurt,155000,17500,1,current
+p-sa-02,Solutions Architect 02,Solutions Architect,Solutions Architect,Territory 2,Solutions Architecture,cybersecurity,p-kurt,167000,19500,1,current
+p-sa-03,Solutions Architect 03,Solutions Architect,Solutions Architect,Territory 3,Solutions Architecture,networking,p-kurt,162000,21500,1,current
+p-sa-04,Solutions Architect 04,Solutions Architect,Solutions Architect,Territory 4,Solutions Architecture,microsoft,p-kurt,162500,25500,1,current
+p-sa-05,Solutions Architect 05,Solutions Architect,Solutions Architect,Territory 5,Solutions Architecture,services,p-kurt,162000,20000,1,current
+p-sa-06,Solutions Architect 06,Solutions Architect,Solutions Architect,Territory 6,Solutions Architecture,cybersecurity,p-kurt,177000,20000,1,current
+p-sa-07,Solutions Architect 07,Solutions Architect,Solutions Architect,Territory 1,Solutions Architecture,networking,p-kurt,165000,24000,1,current
+p-sa-08,Solutions Architect 08,Solutions Architect,Solutions Architect,Territory 2,Solutions Architecture,microsoft,p-kurt,166500,24000,1,current
+p-sa-09,Solutions Architect 09,Solutions Architect,Solutions Architect,Territory 3,Solutions Architecture,services,p-kurt,157000,20000,1,current
+p-sa-10,Solutions Architect 10,Solutions Architect,Solutions Architect,Territory 4,Solutions Architecture,cybersecurity,p-kurt,159000,20000,1,current
+p-sa-11,Solutions Architect 11,Solutions Architect,Solutions Architect,Territory 5,Solutions Architecture,networking,p-kurt,170000,18500,1,current
+p-sa-12,Solutions Architect 12,Solutions Architect,Solutions Architect,Territory 6,Solutions Architecture,microsoft,p-kurt,155000,25500,1,current
+p-sa-13,Solutions Architect 13,Solutions Architect,Solutions Architect,Territory 1,Solutions Architecture,services,p-kurt,159500,17000,1,current
+p-sa-14,Solutions Architect 14,Solutions Architect,Solutions Architect,Territory 2,Solutions Architecture,cybersecurity,p-kurt,159500,15500,1,current
+p-sa-15,Solutions Architect 15,Solutions Architect,Solutions Architect,Territory 3,Solutions Architecture,networking,p-kurt,167500,18000,1,current
+p-sa-16,Solutions Architect 16,Solutions Architect,Solutions Architect,Territory 4,Solutions Architecture,microsoft,p-kurt,164500,20500,1,current
+p-sam,Sam Aguilar,Placeholder role (replace from roster),SalesOps,,Sales Operations,,,150000,30000,1,current
+p-ryan,Ryan McKee,Placeholder role (replace from roster),Director,,Alliances,,,170000,40000,1,current

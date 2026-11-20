@@ -1,12 +1,11 @@
 // Display formatting. Rounding happens here and only here.
 
-const EM_DASH = '—';
+const EM_DASH = '\u2014';
 
 /** Applies the writing rules to any text we export or display from user data. */
 export function sanitizeText(s: string): string {
   return s
-    .split(EM_DASH)
-    .join(', ')
+    .replace(new RegExp(`\\s*${EM_DASH}\\s*`, 'g'), ', ')
     .replace(/VMware Live Site Recovery|VMware Live Recovery|Live Site Recovery/g, 'VMware Protection and Recovery');
 }
 

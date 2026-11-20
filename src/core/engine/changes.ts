@@ -149,7 +149,10 @@ const move: ChangeType<MoveParams> = {
     { key: 'variableTarget', label: 'New variable (blank keeps)', kind: 'money', optional: true },
   ],
   defaults: () => ({ personId: '' }),
-  describe: (p, ws) => `${personName(ws, p.personId)} to ${p.title || p.roleFamily || 'new seat'}`,
+  describe: (p, ws) => {
+    const what = p.title || p.roleFamily || p.team || (p.practices && list(p.practices).length ? `practices ${list(p.practices).join(', ')}` : '') || p.territory || 'new seat';
+    return `${personName(ws, p.personId)} to ${what}`;
+  },
   apply(state, p, ctx) {
     const person = getPerson(state, p.personId, ctx.warn);
     if (!person) return;
