@@ -29,16 +29,52 @@ export interface SampleDeckOptions {
   extraLine?: string;
 }
 
-export function makeSampleDeck(o: SampleDeckOptions): Uint8Array {
-  const band = rect(2, 'Partner band', { x: 0, y: H - 0.45 * IN, w: W, h: 0.45 * IN }, '1F2937', { paras: [`${o.partner} partner content (sample)`], st: { size: 10, color: 'FFFFFF' } });
-  const master = `${XML_HEAD}<p:sldMaster xmlns:a="${NS_A}" xmlns:r="${NS_R}" xmlns:p="${NS_P}"><p:cSld><p:bg><p:bgPr><a:solidFill><a:srgbClr val="F3F4F6"/></a:solidFill><a:effectLst/></p:bgPr></p:bg><p:spTree>${SP_TREE_HEAD}${band}</p:spTree></p:cSld><p:clrMap bg1="lt1" tx1="dk1" bg2="lt2" tx2="dk2" accent1="accent1" accent2="accent2" accent3="accent3" accent4="accent4" accent5="accent5" accent6="accent6" hlink="hlink" folHlink="folHlink"/><p:sldLayoutIdLst><p:sldLayoutId id="2147483649" r:id="rId1"/><p:sldLayoutId id="2147483650" r:id="rId2"/></p:sldLayoutIdLst></p:sldMaster>`;
-  const layout = (name: string, type: string) => `${XML_HEAD}<p:sldLayout xmlns:a="${NS_A}" xmlns:r="${NS_R}" xmlns:p="${NS_P}" type="${type}" preserve="1"><p:cSld name="${name}"><p:spTree>${SP_TREE_HEAD}</p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sldLayout>`;
+export interface SimpleSlide {
+  title: string;
+  lines: string[];
+}
 
+/** A synthetic competitive battlecard: one slide per competitor, one marked internal only. */
+export function makeCompetitiveDeck(o: { partner: string; product: string; competitors: [string, string] }): Uint8Array {
+  return makeSimpleDeck(o.partner, [
+    { title: `${o.product} competitive battlecard (sample deck)`, lines: ['Synthetic battlecard for testing', 'No real partner content'] },
+    { title: `${o.product} vs ${o.competitors[0]}`, lines: [`Placeholder comparison with ${o.competitors[0]}`, 'Placeholder proof point', 'Placeholder question to ask the customer'] },
+    { title: `Displacing ${o.competitors[1]}`, lines: [`Placeholder reasons customers switch from ${o.competitors[1]}`, 'Placeholder migration path'] },
+    { title: 'Objection handling', lines: ['Placeholder objection and answer', 'Placeholder pricing objection and answer'] },
+    { title: 'Competitive landmines', lines: ['Partner confidential. Internal use only.', `Placeholder traps to set against ${o.competitors[0]}`] },
+    { title: 'Legal notice', lines: [`Sample notice. ${o.partner} and its product names are trademarks of their owner (sample).`] },
+  ]);
+}
+
+/** A synthetic technical deep dive. */
+export function makeTechnicalDeck(o: { partner: string; product: string }): Uint8Array {
+  return makeSimpleDeck(o.partner, [
+    { title: `${o.product} technical deep dive (sample deck)`, lines: ['Synthetic technical deck for testing', 'No real partner content'] },
+    { title: 'Deployment model and sizing', lines: [`Placeholder ${o.product} agent and data source requirements`, 'Placeholder sizing guidance'] },
+    { title: 'Integrations and APIs', lines: [`Placeholder ${o.product} integrations with SIEM and ticketing`, 'Placeholder API coverage'] },
+    { title: 'Ransomware detection and response', lines: [`Placeholder walkthrough of how ${o.product} stops a ransomware attack`] },
+    { title: 'Roadmap', lines: ['Placeholder future release themes'] },
+    { title: 'Forward-looking statements', lines: [`Sample legal notice. ${o.partner} product names are trademarks of their owner (sample).`] },
+  ]);
+}
+
+function makeSimpleDeck(partner: string, list: SimpleSlide[]): Uint8Array {
+  return packDeck(
+    partner,
+    list.map((x) => slide(titleShape(2, x.title) + body(3, x.lines))),
+  );
+}
+
+export function makeSampleDeck(o: SampleDeckOptions): Uint8Array {
+  return packDeck(o.partner, sampleSlides(o));
+}
+
+function sampleSlides(o: SampleDeckOptions): string[] {
   const boxes = ['Endpoints', 'Network', 'Cloud', 'Identity'].map((t, i) => rect(10 + i, `Source ${t}`, { x: (0.6 + i * 3.1) * IN, y: 1.8 * IN, w: 2.8 * IN, h: 0.9 * IN }, 'DBEAFE', { paras: [t], st: { size: 16, color: '1F2937' } })).join('');
   const core = rect(20, 'Core', { x: 0.6 * IN, y: 3.2 * IN, w: 12 * IN, h: 1.1 * IN }, '2563EB', { paras: [`${o.product} analytics and response (placeholder)`], st: { size: 20, color: 'FFFFFF' } });
   const out = rect(21, 'Outcomes', { x: 0.6 * IN, y: 4.8 * IN, w: 12 * IN, h: 0.9 * IN }, 'E5E7EB', { paras: ['Integrations with SIEM, ticketing and identity tools (placeholder)'], st: { size: 16, color: '1F2937' } });
 
-  const slides = [
+  return [
     slide(titleShape(2, `${o.product} overview (sample deck)`) + body(3, ['Synthetic partner deck for testing the pitch builder', 'No real partner content'], 2)),
     slide(titleShape(2, 'Agenda') + body(3, ['Why it matters', 'Architecture', 'Use cases', 'Next steps'])),
     slide(titleShape(2, `Why ${o.product}`) + body(3, ['Placeholder value message one', 'Placeholder value message two', 'Placeholder differentiator', ...(o.extraLine ? [o.extraLine] : [])])),
@@ -47,6 +83,12 @@ export function makeSampleDeck(o: SampleDeckOptions): Uint8Array {
     slide(titleShape(2, `${o.otherProduct} overview`) + body(3, ['A different product in the same deck', 'Should not be picked for this pitch'])),
     slide(titleShape(2, 'Forward-looking statements') + body(3, [`Sample legal notice. ${o.partner} and its product names are trademarks of their owner (sample).`, 'This slide must stay in any deck built from this one.'])),
   ];
+}
+
+function packDeck(partner: string, slides: string[]): Uint8Array {
+  const band = rect(2, 'Partner band', { x: 0, y: H - 0.45 * IN, w: W, h: 0.45 * IN }, '1F2937', { paras: [`${partner} partner content (sample)`], st: { size: 10, color: 'FFFFFF' } });
+  const master = `${XML_HEAD}<p:sldMaster xmlns:a="${NS_A}" xmlns:r="${NS_R}" xmlns:p="${NS_P}"><p:cSld><p:bg><p:bgPr><a:solidFill><a:srgbClr val="F3F4F6"/></a:solidFill><a:effectLst/></p:bgPr></p:bg><p:spTree>${SP_TREE_HEAD}${band}</p:spTree></p:cSld><p:clrMap bg1="lt1" tx1="dk1" bg2="lt2" tx2="dk2" accent1="accent1" accent2="accent2" accent3="accent3" accent4="accent4" accent5="accent5" accent6="accent6" hlink="hlink" folHlink="folHlink"/><p:sldLayoutIdLst><p:sldLayoutId id="2147483649" r:id="rId1"/><p:sldLayoutId id="2147483650" r:id="rId2"/></p:sldLayoutIdLst></p:sldMaster>`;
+  const layout = (name: string, type: string) => `${XML_HEAD}<p:sldLayout xmlns:a="${NS_A}" xmlns:r="${NS_R}" xmlns:p="${NS_P}" type="${type}" preserve="1"><p:cSld name="${name}"><p:spTree>${SP_TREE_HEAD}</p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sldLayout>`;
 
   const files: Record<string, Uint8Array> = {};
   const ct = [

@@ -82,20 +82,28 @@ CSV. "Print summary" and "Print comparison" give a clean page for Save as PDF.
 Sales plays turn current OEM partner decks into a short redesign-branded deck for
 a customer call, for example a 15-minute Cortex XDR conversation.
 
-1. Download the current deck from the Palo Alto Networks or Broadcom partner portal
-   as .pptx. Use decks the partner program lets you share with customers.
-2. Sales plays > Slide library > Import a deck. Pick the OEM and the deck's date.
-   The app tags each slide (architecture, messaging, use case, legal, ...) and finds
-   product names. Fix any tags it gets wrong.
-3. Pitch builder: pick the OEM, product and play, adjust the slides, enter the
-   customer, and download the PPTX.
+**Build the library.** Download current decks from the Palo Alto Networks or
+Broadcom partner portal as .pptx (only decks the partner program lets you share
+with customers). In Sales plays > Slide library, import each one with its OEM and
+date. Every deck and slide gets a label: **General messaging**, **Technical product
+info** or **Competitive info**. The app suggests labels, products, competitors and
+"internal only" slides; check them under Labels.
+
+**Build a pitch** in four steps:
+1. **Meeting:** customer, OEM, meeting type, and the products to feature.
+2. **What to showcase:** how much of each label (none, light, some, heavy), which
+   competitor, the meeting length, and focus words such as "ransomware".
+3. **Recommended slides:** the best slides from the whole library, with the reason
+   each was picked. Tick, untick and reorder.
+4. **Finish:** title, closing slide, download the PPTX.
 
 The result is co-branded: a redesign title slide and a "How redesign helps" slide
 wrap the OEM's slides. OEM slides keep their content and notices and gain a small
-"Source: OEM. Presented by redesign." line with the logo. Legal notice slides are
-always kept. Decks older than 6 months (a setting) are flagged as stale. Deck files
-stay in this browser; share them with Export slide library, not the workspace file.
-Try it with Load sample decks, which adds two synthetic decks.
+"Source: OEM, deck (date). Presented by redesign." line with the logo. Each source
+deck's legal notice slides are always kept. Slides the OEM marks internal never go
+into a customer deck; the builder lists them for your prep. Decks older than 6
+months (a setting) are flagged stale. Deck files stay in this browser; share them
+with Export slide library. Try it with Load sample decks (five synthetic decks).
 
 ## Brand assets (optional)
 
@@ -125,8 +133,10 @@ in Chromium offline and walks the full flow.
 - Autosave lives in this browser's storage. Clearing site data clears it. Save to a
   file for anything you need to keep.
 - Built for laptops 1280 px and wider.
-- Pitch kits read .pptx only (not PDF), build from one source deck at a time, and
-  show slide titles and text rather than thumbnails.
+- Pitch kits read .pptx only (not PDF) and show slide titles and text rather than
+  thumbnails. Labels and recommendations are keyword based, so check the labels on
+  each new deck. Slides from decks with a different slide shape (4:3 vs 16:9) can
+  look stretched; the builder warns.
 - Chart colors follow the brand palette, which is hard to tell apart for some
   color vision types; charts add dash patterns, direct labels and legends to
   compensate.

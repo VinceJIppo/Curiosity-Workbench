@@ -20,7 +20,9 @@ build it, test it, check it off. See "Add a module" in CLAUDE.md.
 
 ## Smaller ideas noticed during Phase 1
 - [ ] Pitch kits: slide thumbnails in the builder (needs a PPTX renderer; today it shows titles and text)
-- [ ] Pitch kits: mix slides from more than one source deck in one pitch
+- [x] Pitch kits: mix slides from more than one source deck in one pitch
+- [x] Pitch kits: label decks and slides (general messaging, technical product info, competitive info) and recommend slides in a step-by-step builder
+- [ ] Pitch kits: learn from reps' edits (slides they untick or add) to improve recommendations
 
 - [ ] Assumption history: keep prior values per row with dates, show drift since the last snapshot
 - [ ] Scenario notes and a decision log per scenario for the CEO review

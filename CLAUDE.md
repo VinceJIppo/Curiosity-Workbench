@@ -73,8 +73,10 @@ src/
                         bindings.ts (semantic keys), calc.ts, types.ts
     import/             parse.ts (CSV, XLSX, JSON), mapping.ts (auto-map, validate,
                         templates, apply), quality.ts (data quality panel)
-    pitch/              ooxml.ts (PowerPoint XML helpers), pptx.ts (read a deck, build a
-                        co-branded pitch, package check), tags.ts (slide types, products)
+    pitch/              ooxml.ts (PowerPoint XML helpers), pptx.ts (read decks, build a
+                        co-branded pitch from one or more decks, package check),
+                        tags.ts (slide types, labels, products, competitors, internal-only),
+                        recommend.ts (scores the library for what the rep wants to show)
     format.ts           display rounding and sanitizeText
   app/                  shell: App.tsx, store.ts (undo/redo), persist.ts (IndexedDB
                         autosave, file save/open), router.ts, engine.ts (memoized runs),
@@ -190,9 +192,28 @@ Reps build a short redesign-branded deck for a customer call from OEM partner de
   workspace file. The workspace holds slide metadata, tags, plays and the product
   catalog in `ws.modules.plays`. Share decks with Export slide library (a zip with
   `manifest.json` and `decks/<id>.pptx`).
+- **Labels.** Every deck and content slide carries one of three labels: General
+  messaging, Technical product info, Competitive info (`Category` in `tags.ts`).
+  Covers, agendas and legal notices are `structural`. Labels are suggested on import
+  and edited in Slide library > Labels.
+- **Recommendations.** `recommend()` is pure: it scores every slide for the OEM against
+  the products, the label mix (0 to 3 per label), a competitor, focus words and deck age,
+  splits the slide budget (minutes / minutes per slide) across labels, keeps the best
+  copy of duplicate slides, and returns picks, alternates and reasons. Story order:
+  messaging, technical, competitive.
+- **Internal-only slides** (OEM wording like "internal use only", "partner confidential")
+  are flagged on import and never go into a customer deck; the builder lists them for
+  prep only. Competitive slides that name a redesign partner OEM carry a warning.
+- **Mixed decks.** `buildPitch(sources, picks, legal, brand)` copies slides from other
+  decks with their layouts, masters, themes and media under new part names, and
+  registers the masters with fresh ids. Each source deck's legal slides are kept.
+- The builder is four steps: meeting, what to showcase, recommended slides, finish.
+- Module data is version 2 (`PLAYS_VERSION`); `migratePlays()` upgrades v1 records and
+  old slide library files.
 - Slide text in kept slides passes through `sanitizeText()` (naming rules).
-- `src/samples/pptx.ts` makes a synthetic partner deck for tests and "Load sample decks".
-- Rendering check: `tests/pitch.test.ts` writes `verify-output/sample-pitch.pptx`;
+- `src/samples/pptx.ts` makes synthetic overview, technical and competitive decks for tests and "Load sample decks".
+- Rendering check: `tests/pitch.test.ts` writes `verify-output/sample-pitch.pptx` and
+  `sample-pitch-mixed.pptx`;
   open it with python-pptx or render it with `soffice --headless --convert-to pdf`.
 
 ## Brand
