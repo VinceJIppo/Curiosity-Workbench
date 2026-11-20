@@ -18,6 +18,14 @@ build it, test it, check it off. See "Add a module" in CLAUDE.md.
 - [ ] Innovation Lab pipeline (intake, screen, evaluate, brief, decide; quarterly cycle; candidate cards)
 - [ ] Initiative portfolio: every initiative with owner, status, gate, linked scenario and KPIs. Becomes the landing page (set `landingPriority` above 10)
 
+## Sales knowledge (see docs/sales-knowledge-architecture.md)
+
+- [ ] K1 Knowledge model: nodes, edges, provenance, curation screen, persona and pain lists, knowledge pack export and import
+- [ ] K2 Claim candidates from slide bullets, review queue, provenance links
+- [ ] K3 Persona and pains in the builder, narrative arcs per meeting type, graph-based ranking, talk track in speaker notes
+- [ ] K4 Pitch log, rep edits and outcomes, learning weights
+- [ ] K5 Optional assisted extraction through a knowledge pack made outside the app (after a partner terms check)
+
 ## Smaller ideas noticed during Phase 1
 - [ ] Pitch kits: slide thumbnails in the builder (needs a PPTX renderer; today it shows titles and text)
 - [x] Pitch kits: mix slides from more than one source deck in one pitch

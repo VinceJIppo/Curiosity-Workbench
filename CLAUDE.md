@@ -208,6 +208,9 @@ Reps build a short redesign-branded deck for a customer call from OEM partner de
   decks with their layouts, masters, themes and media under new part names, and
   registers the masters with fresh ids. Each source deck's legal slides are kept.
 - The builder is four steps: meeting, what to showcase, recommended slides, finish.
+- **Knowledge layer (proposed, not built):** `docs/sales-knowledge-architecture.md`
+  describes semantic, procedural, working and episodic memory for sales plays and the
+  K1 to K5 build steps in `IDEAS.md`. Read it before extending Sales plays.
 - Module data is version 2 (`PLAYS_VERSION`); `migratePlays()` upgrades v1 records and
   old slide library files.
 - Slide text in kept slides passes through `sanitizeText()` (naming rules).

@@ -11,7 +11,7 @@ function walk(dir: string): string[] {
   });
 }
 
-const files = [...walk('src'), ...walk('samples'), 'README.md', 'CLAUDE.md', 'IDEAS.md'].filter((f) => /\.(tsx?|css|md|csv|json|html)$/.test(f));
+const files = [...walk('src'), ...walk('samples'), ...walk('docs'), 'README.md', 'CLAUDE.md', 'IDEAS.md'].filter((f) => /\.(tsx?|css|md|csv|json|html)$/.test(f));
 
 describe('writing rules', () => {
   it('no em dashes anywhere in source, samples or docs', () => {
