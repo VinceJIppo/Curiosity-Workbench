@@ -209,6 +209,11 @@ Reps build a short redesign-branded deck for a customer call from OEM partner de
   decks with their layouts, masters, themes and media under new part names, and
   registers the masters with fresh ids. Each source deck's legal slides are kept.
 - The builder is four steps: meeting, what to showcase, recommended slides, finish.
+- **Direction (2026-11-21): curated plays, not assembled decks.** Partner decks hold
+  vendor claims, not knowledge, and slide-by-slide assembly gives no story. Next work
+  is redesign template support, office-authored play decks, play freshness flags,
+  rep personalization and play briefs (see `IDEAS.md`). The knowledge graph steps
+  K2 to K4 are paused; do not build graph-driven deck assembly without asking.
 - **Knowledge layer:** `docs/sales-knowledge-architecture.md` describes semantic,
   procedural, working and episodic memory for sales plays and the K1 to K5 steps in
   `IDEAS.md`. Read it before extending Sales plays. Built so far: the knowledge graph

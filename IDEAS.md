@@ -18,20 +18,29 @@ build it, test it, check it off. See "Add a module" in CLAUDE.md.
 - [ ] Innovation Lab pipeline (intake, screen, evaluate, brief, decide; quarterly cycle; candidate cards)
 - [ ] Initiative portfolio: every initiative with owner, status, gate, linked scenario and KPIs. Becomes the landing page (set `landingPriority` above 10)
 
-## Sales knowledge (see docs/sales-knowledge-architecture.md)
+## Sales plays: curated plays (direction since 2026-11-21, see docs/sales-knowledge-architecture.md)
 
-- [x] K1 Knowledge model: nodes, edges, provenance, curation screen, persona and pain lists, knowledge pack export and import
-- [ ] K2 Claim candidates from slide bullets, review queue, provenance links
-- [ ] Base redesign template deck: build every pitch on redesign's own .pptx template (master, fonts, logo, title, agenda, about redesign, section dividers, services, next steps) and fit OEM slides into it
-- [ ] K3 Persona and pains in the builder, narrative arcs per meeting type, graph-based ranking, talk track in speaker notes
-- [ ] K4 Pitch log, rep edits and outcomes, learning weights
-- [x] K5 Export for Claude and import Claude's knowledge pack as suggestions (partner decks may go to Claude)
+- [ ] Pilot: prepare two or three real meetings three ways (assembled deck, OEM short deck with redesign title and closing, office-built play) and ask reps which they would use
+- [ ] redesign template support: upload redesign's .pptx template and standard slides (title, agenda, about redesign, section dividers, services, next steps); every pitch builds on it and OEM slides are fitted into it
+- [ ] Play decks: the office authors 6 to 10 plays on the template, each a fixed storyline with chosen OEM slides and optional modules (competitor, persona proof)
+- [ ] Play freshness: flag a play when a source OEM deck is replaced or goes stale, and show which slides to recheck
+- [ ] Rep personalization: pick a play, add the customer, swap optional modules, download
+- [ ] Play briefs: one page per play (discovery questions, objections and answers, key proof, redesign services attach), drafted by Claude, approved quarterly, written into speaker notes
+- [ ] Near-duplicate slide check across decks (same statistic or title in two decks)
+- [ ] Outcomes: link plays to Salesforce opportunities and win/loss notes (with Phase 2 effort to revenue)
+
+### Sales knowledge graph (paused)
+
+- [x] K1 Knowledge model: nodes, edges, provenance, curation screen, persona and pain lists, knowledge pack export and import (kept as a searchable index)
+- [x] K5 Export for Claude and import Claude's knowledge pack as suggestions
+- [ ] K2 Claim candidates from slide bullets (paused)
+- [ ] K3 Graph-based ranking and narrative arcs (paused; replaced by curated plays)
+- [ ] K4 Pitch log and learning weights (paused; replaced by outcomes from Salesforce)
 
 ## Smaller ideas noticed during Phase 1
 - [ ] Pitch kits: slide thumbnails in the builder (needs a PPTX renderer; today it shows titles and text)
 - [x] Pitch kits: mix slides from more than one source deck in one pitch
 - [x] Pitch kits: label decks and slides (general messaging, technical product info, competitive info) and recommend slides in a step-by-step builder
-- [ ] Pitch kits: learn from reps' edits (slides they untick or add) to improve recommendations
 
 - [ ] Assumption history: keep prior values per row with dates, show drift since the last snapshot
 - [ ] Scenario notes and a decision log per scenario for the CEO review

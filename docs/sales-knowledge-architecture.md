@@ -2,7 +2,51 @@
 
 A shared model of what is inside partner decks, so sales plays work from knowledge
 ("what Cortex XDR does, for whom, with what proof, against whom") instead of from
-slides alone. Status: K1 and the Claude hand-off (K5) are built; K2 to K4 are next.
+slides alone. Status: K1 and the Claude hand-off (K5) are built. **K2 to K4 are
+paused** by the direction change below; the rest of this document is kept as the
+record of the original proposal.
+
+## Direction change (2026-11-21): curated plays, not assembled decks
+
+A first real test (10 Palo Alto decks, a 373-item knowledge pack, and a generated
+Acme pitch) showed two limits:
+
+- **Partner decks hold vendor claims, not knowledge.** Capabilities and proof are
+  the OEM's marketing, sometimes inconsistent across decks (alert grouping cuts
+  triage "98%" in one deck and "75%" in another) and sometimes years old. Pains and
+  personas are inferred from vendor wording. What actually works with redesign's
+  customers (objections heard, why deals are won or lost, what lands) is not in the
+  decks. It lives in people, call notes and Salesforce.
+- **Assembling decks slide by slide produces no story.** OEM slides are written for
+  the OEM's own narrative; mixing them gives clashing styles, repeated statistics
+  and no arc. Better scoring does not fix this; a story needs an author.
+
+New direction:
+
+1. **Curated play decks.** The office authors a small set (6 to 10) of play decks
+   on the redesign template, each with a redesign storyline: customer problem,
+   redesign point of view, how the OEM product fits, proof, redesign services, next
+   step. A person picks the 3 to 6 OEM slides deliberately. Claude can draft; the
+   office approves.
+2. **The tool keeps plays current.** Each play records the OEM slides it uses; when
+   the source deck is replaced or goes stale, the play is flagged for review.
+3. **Reps personalize, they do not assemble.** Pick a play, add the customer, swap
+   optional modules (a competitor slide for the incumbent, a proof point for the
+   persona).
+4. **Play briefs replace the knowledge graph as the working layer.** One page per
+   play: discovery questions, likely objections and answers, key proof, how redesign
+   services attach. Claude drafts from the decks; the office approves quarterly.
+   Briefs feed rep prep and speaker notes.
+5. **Real knowledge comes from outcomes.** Later, link plays to Salesforce
+   opportunities and win/loss notes (with the Phase 2 effort-to-revenue work).
+
+Kept: the slide library, dates and stale flags, internal-only protection, legal
+slides, co-branding, slide fitting and merging, slide search, and the Claude hand-off.
+The knowledge graph (K1) stays as a searchable index of the packs, not a driver of decks.
+
+**Validation before more building:** prepare two or three real upcoming meetings
+three ways (the tool's assembled deck, the OEM's own short deck with a redesign
+title and closing, and one office-built play deck) and ask reps which they would use.
 
 ## Decisions (2026-11)
 
