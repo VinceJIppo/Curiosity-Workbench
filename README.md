@@ -135,6 +135,27 @@ The design behind this is in `docs/sales-knowledge-architecture.md`.
 - **Investment case:** high risks with a proposed investment and a linked scenario,
   showing the scenario's 24-month cost, GP and payback. Export CSV or print.
 
+## Innovation research
+
+A panel of virtual researchers (cybersecurity, automation, AI, virtualization and
+customer experience) works a CIO's brief against a catalog of startups, starting with
+the Dell Technologies Capital portfolio.
+
+1. **Startup catalog:** Load Dell Technologies Capital portfolio (155 companies from
+   its public page; exited ones are never recommended). Mark companies verified once
+   checked.
+2. **CIO briefs:** enter the customer and the top 3 to 5 initiatives and challenges.
+   Each initiative is routed to the right researchers automatically; click to change.
+3. **Research:** each researcher shows an offline shortlist right away. Export the
+   research packet (the customer is anonymized by default), give it to Claude, and
+   import its JSON answer. Names come back, every startup is checked against the
+   catalog, and you approve the ones worth introducing.
+4. **Innovation brief:** a customer-ready page with each researcher's view and the
+   approved companies. Print to PDF or download as Markdown.
+
+The app itself never connects to Claude; a live mode can be added later as a separate,
+opt-in build.
+
 ## Brand assets (optional)
 
 - Licensed fonts: put Martina Plantijn and AF Atelier Sans files in `assets/fonts`

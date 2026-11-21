@@ -12,6 +12,10 @@ build it, test it, check it off. See "Add a module" in CLAUDE.md.
 
 ## Phase 3
 
+- [x] Innovation research: virtual researchers (cybersecurity, automation, AI, virtualization, customer experience), CIO briefs, anonymized research packets for Claude, research pack import and review, customer innovation brief, Dell Technologies Capital catalog
+- [ ] Innovation research live mode: a separate, opt-in build that calls Claude from the app (API key, explicit consent per brief)
+- [ ] Innovation catalog: fill the 11 active Dell Technologies Capital companies without a description, refresh the catalog quarterly, add other funds
+
 - [x] Strategy and growth: OEM scorecard, large pursuits tracker (practices involved, gaps), gap analysis into a risk register, investment case linked to scenarios
 - [ ] Pursuits from Salesforce: import large opportunities directly and keep the tracker in sync
 

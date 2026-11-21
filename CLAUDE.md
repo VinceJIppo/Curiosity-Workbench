@@ -78,6 +78,9 @@ src/
                         tags.ts (slide types, labels, products, competitors, internal-only),
                         recommend.ts (scores the library for what the rep wants to show),
                         knowledge.ts (shared knowledge graph, packs, Claude hand-off)
+    growth/growth.ts    OEM scorecard, pursuits, gap suggestions, risk register
+    research/research.ts innovation research: routing, pre-screen, masking, packets, packs
+  catalogs/             public reference catalogs (Dell Technologies Capital portfolio)
     format.ts           display rounding and sanitizeText
   app/                  shell: App.tsx, store.ts (undo/redo), persist.ts (IndexedDB
                         autosave, file save/open), router.ts, engine.ts (memoized runs),
@@ -252,6 +255,32 @@ OEM scorecard, large pursuits tracker, gaps and risk register, investment case.
   R42 by binding) and can write an actual into the register as Measured, keeping the
   old value as an alternate. The investment case links risks to scenarios and shows
   each scenario's 24-month cost, GP and payback from the engine.
+
+## Innovation research (module `innovation`)
+A panel of virtual domain researchers (cybersecurity, automation, AI, virtualization,
+customer experience) works CIO briefs (3 to 5 initiatives) against a startup catalog.
+- **Hand-off now, live later.** The app stays offline: it routes each initiative to
+  researchers (keywords, or the office overrides), pre-screens the catalog, and
+  exports a research packet; Claude plays the panel and returns a research pack
+  (`cto-workbench-research-pack`), which the app validates against the catalog.
+  `ResearchRunner` in `core/research/research.ts` is the seam for a later, opt-in
+  live build; do not add network calls to the main build.
+- **Anonymized by default.** Customer, contact and listed sensitive terms become
+  tokens ([CUSTOMER], [CONTACT], [TERM1]) in packets; the masking used at export is
+  stored on the brief and restored on import.
+- **Office review.** Imported startup picks arrive as suggestions; only approved
+  picks appear on the customer-facing innovation brief (print or Markdown).
+  Unverified catalog entries carry a note.
+- **Catalog.** `src/catalogs/dtc-portfolio.ts`: the Dell Technologies Capital
+  portfolio compiled from its public page on 2026-11-21 (155 companies, 74 active,
+  63 with a one-line description from the company's own site). Public reference
+  data, allowed in the repo with source and date. Websites are stored as bare domains
+  so the built file carries no external URLs. Exited companies are kept but never
+  recommended. Focus areas map to researchers; descriptions about customers, contact
+  centers or support add the customer experience researcher. Other catalogs import
+  as entity type `startup`.
+- Briefs, findings and researcher settings live in `ws.modules.innovation`; the
+  catalog in the `startups` collection.
 
 ## Brand
 Black `#222222` on white. Lime `#C3FDAF` only as a single highlight: the active nav

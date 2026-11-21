@@ -186,6 +186,36 @@ const inv = await page.getByTestId('investment-table').innerText();
 check('investment case pulls scenario cost, GP and payback', /Option C/.test(inv) && /\$/.test(inv));
 await page.screenshot({ path: `${OUT}/14-investment.png`, fullPage: true });
 
+// Innovation research: catalog, brief, packet, pack, approval, customer output
+await page.goto(`${FILE}#/innovation/catalog`);
+await page.getByTestId('load-dtc').click();
+await page.waitForSelector('text=Loaded 155 companies');
+check('Dell Technologies Capital catalog loads', true);
+await page.goto(`${FILE}#/innovation/briefs`);
+await page.getByTestId('sample-brief').click();
+await page.waitForSelector('[data-testid="brief-editor"]');
+await page.screenshot({ path: `${OUT}/15-brief.png`, fullPage: true });
+await page.getByRole('button', { name: 'Research this brief' }).click();
+await page.waitForSelector('[data-testid="initiative-i1"]');
+const i1 = await page.getByTestId('initiative-i1').innerText();
+check('offline shortlist suggests portfolio companies for ransomware', /Halcyon/.test(i1) && /Cybersecurity researcher/.test(i1));
+const [pkt] = await Promise.all([page.waitForEvent('download'), page.getByTestId('export-packet').click()]);
+await pkt.saveAs(`${OUT}/${pkt.suggestedFilename()}`);
+const pktText = readFileSync(`${OUT}/${pkt.suggestedFilename()}`, 'utf8');
+check('research packet is anonymized and lists the catalog', pktText.includes('[CUSTOMER]') && !/Sample Customer 05|Northstar/.test(pktText) && pktText.includes('[dtc-halcyon] Halcyon'), pkt.suggestedFilename());
+const briefId = /"briefId": "([^"]+)"/.exec(pktText)[1];
+writeFileSync(`${OUT}/research-pack.json`, JSON.stringify({ kind: 'cto-workbench-research-pack', version: 1, briefId, findings: [{ initiativeId: 'i1', domain: 'cybersecurity', summary: '[CUSTOMER] needs ransomware prevention that a two-person SOC can run.', approach: 'Pair prevention with immutable backup.', startups: [{ startupId: 'dtc-halcyon', fit: 'high', why: 'Purpose-built anti-ransomware with a managed operations center suits [CUSTOMER].', risks: 'Overlap with the current EDR.', questions: ['How does it coexist with the EDR?'], sources: ['catalog'] }], openQuestions: ['Which EDR runs today?'], confidence: 'medium' }] }));
+const [fcR] = await Promise.all([page.waitForEvent('filechooser'), page.getByTestId('import-research').click()]);
+await fcR.setFiles(`${OUT}/research-pack.json`);
+await page.waitForSelector('text=1 findings');
+await page.getByRole('button', { name: 'Close' }).click();
+await page.getByTestId('approve-startup').first().click();
+await page.screenshot({ path: `${OUT}/16-research.png`, fullPage: true });
+await page.getByRole('button', { name: 'Innovation brief' }).click();
+const out = await page.getByTestId('innovation-output').innerText();
+check('innovation brief shows approved startups with the real customer name', /Innovation brief for Sample Customer 05/.test(out) && /Halcyon/.test(out) && /Sample Customer 05 needs ransomware/.test(out));
+await page.screenshot({ path: `${OUT}/17-innovation-brief.png`, fullPage: true });
+
 // Knowledge: seed, import a pack, approve, export for Claude
 await page.goto(`${FILE}#/plays/knowledge`);
 await page.getByTestId('seed-knowledge').click();
