@@ -56,6 +56,11 @@ export const MONTH_METRICS: Record<string, { label: string; unit: string }> = {
   totalCost: { label: 'Total cost', unit: '$' },
   incCost: { label: 'Incremental cost vs baseline', unit: '$' },
   gpUplift: { label: 'GP uplift from specialists', unit: '$' },
+  effectiveness: { label: 'Specialist effectiveness from the office', unit: 'ratio' },
+  officeGP: { label: 'Specialist GP from office effectiveness', unit: '$' },
+  pursuitsGP: { label: 'GP from large pursuits', unit: '$' },
+  pursuitsCost: { label: 'Time spent on large pursuits (allocated cost)', unit: '$' },
+  gpImpact: { label: 'GP impact (specialists plus pursuits)', unit: '$' },
   incGP: { label: 'Incremental GP vs baseline', unit: '$' },
   cumNet: { label: 'Cumulative net (GP less cost)', unit: '$' },
   hoursFreed: { label: 'Hours freed by tier shifts', unit: 'hours' },
@@ -100,8 +105,37 @@ export function explainMonth(ws: Workspace, result: ScenarioResult, key: string,
       const b = result.baseline?.rows[row.month];
       return mk(key, label, v, '$', 'scenario total cost - baseline total cost', [{ label: 'Scenario total', value: row.totalCost, unit: '$' }, { label: 'Baseline total', value: b?.totalCost ?? NaN, unit: '$' }]);
     }
+    case 'effectiveness':
+      return mk(key, label, v, 'ratio', '(1 + office lift, once the office has run past the delay) x (1 + campaign lift) ^ full years since launch', [
+        { label: 'Office lift in force', value: row.officeLift },
+        { label: 'Campaign factor', value: row.campaignFactor },
+        assumptionInput(res, 'office_lift'),
+        assumptionInput(res, 'office_lift_delay_months'),
+        assumptionInput(res, 'campaign_lift'),
+      ], ['Applies only in scenarios with a "Launch strategy office" change.']);
+    case 'officeGP':
+      return mk(key, label, v, '$', 'specialist GP uplift before the office x (effectiveness - 1)', [
+        { label: 'Effectiveness', value: row.effectiveness },
+        { label: 'Specialist GP uplift with the office', value: row.gpUplift, unit: '$' },
+        assumptionInput(res, 'office_lift'),
+        assumptionInput(res, 'campaign_lift'),
+      ]);
+    case 'pursuitsGP':
+      return mk(key, label, v, '$', 'deals per year / 12 x GP per large deal x (min(1, base win rate x (1 + win lift)) x (1 + deal growth) - base win rate), from the sales cycle month on', [
+        assumptionInput(res, 'pursuits_deals_per_year'),
+        assumptionInput(res, 'large_deal_gp'),
+        assumptionInput(res, 'large_deal_win_rate'),
+        assumptionInput(res, 'pursuits_win_lift'),
+        assumptionInput(res, 'pursuits_deal_growth'),
+        assumptionInput(res, 'pursuits_cycle_months'),
+      ], ['The win lift counts deals that would otherwise be lost; the growth counts larger wins on the deals the team touches.']);
+    case 'pursuitsCost':
+      return mk(key, label, v, '$', 'office loaded cost x share of time on pursuits + loaded cost of anyone on the "Large pursuits" team', [assumptionInput(res, 'pursuits_time_share')], ['An allocation of cost already in the totals; used only for the pursuits payback.']);
+    case 'gpImpact':
+      return mk(key, label, v, '$', 'specialist GP uplift + large pursuits GP', [{ label: 'Specialist GP uplift', value: row.gpUplift, unit: '$' }, { label: 'Large pursuits GP', value: row.pursuitsGP, unit: '$' }]);
     case 'gpUplift':
-      return mk(key, label, v, '$', 'ramped specialists x touched GP per specialist / 12 x uplift x driver factor', [
+      return mk(key, label, v, '$', 'ramped specialists x touched GP per specialist / 12 x uplift x driver factor x office effectiveness', [
+        { label: 'Office effectiveness', value: row.effectiveness },
         { label: 'Ramped specialists', value: row.effSpecialists },
         assumptionInput(res, 'gp_per_specialist'),
         assumptionInput(res, 'gp_uplift'),
@@ -113,7 +147,7 @@ export function explainMonth(ws: Workspace, result: ScenarioResult, key: string,
       ]);
     case 'incGP': {
       const b = result.baseline?.rows[row.month];
-      return mk(key, label, v, '$', 'scenario GP uplift - baseline GP uplift', [{ label: 'Scenario GP uplift', value: row.gpUplift, unit: '$' }, { label: 'Baseline GP uplift', value: b?.gpUplift ?? NaN, unit: '$' }, assumptionInput(res, 'gp_uplift'), assumptionInput(res, 'gp_per_specialist')]);
+      return mk(key, label, v, '$', 'scenario GP impact - baseline GP impact (specialist uplift with office effectiveness, plus large pursuits)', [{ label: 'Scenario specialist GP', value: row.gpUplift, unit: '$' }, { label: 'Scenario large pursuits GP', value: row.pursuitsGP, unit: '$' }, { label: 'Baseline GP impact', value: b?.gpImpact ?? NaN, unit: '$' }, assumptionInput(res, 'gp_uplift'), assumptionInput(res, 'gp_per_specialist'), assumptionInput(res, 'office_lift')]);
     }
     case 'cumNet':
       return mk(key, label, v, '$', 'cumulative incremental GP - cumulative incremental cost', [{ label: 'Cumulative incremental GP', value: row.cumIncGP, unit: '$' }, { label: 'Cumulative incremental cost', value: row.cumIncCost, unit: '$' }]);
@@ -141,6 +175,10 @@ export const SUMMARY_METRICS: Record<string, { label: string; unit: string }> = 
   roiView: { label: 'ROI over view window', unit: '%' },
   breakEvenGP: { label: 'Break-even incremental GP', unit: '$' },
   breakEvenTouchedGP: { label: 'Break-even specialist-touched GP', unit: '$' },
+  officeGP2y: { label: '24-month specialist GP from the office', unit: '$' },
+  pursuitsGP2y: { label: '24-month GP from large pursuits', unit: '$' },
+  pursuitsPaybackMonth: { label: 'Large pursuits payback month', unit: 'month' },
+  pursuitsBreakEvenDealGP: { label: 'Break-even GP per large deal', unit: '$' },
   coverageAtView: { label: 'Sellers per specialist at end of view', unit: 'ratio' },
   architectCoverageAtView: { label: 'Sellers per architect at end of view', unit: 'ratio' },
 };
@@ -164,6 +202,14 @@ export function explainSummary(ws: Workspace, result: ScenarioResult, key: strin
     case 'cost2y':
     case 'cost3y':
       return mk(key, meta.label, v, '$', `sum of total cost, months 0 to ${key === 'cost2y' ? 23 : 35}`, [{ label: 'Total cost', value: sumOf('totalCost', key === 'cost2y' ? 24 : 36), unit: '$' }, assumptionInput(res, 'burden_pct')]);
+    case 'officeGP2y':
+      return mk(key, meta.label, v, '$', 'sum of months 0 to 23: specialist GP uplift before the office x (effectiveness - 1)', [assumptionInput(res, 'office_lift'), assumptionInput(res, 'office_lift_delay_months'), assumptionInput(res, 'campaign_lift'), assumptionInput(res, 'gp_per_specialist'), assumptionInput(res, 'gp_uplift')]);
+    case 'pursuitsGP2y':
+      return mk(key, meta.label, v, '$', 'sum of months 0 to 23 of large pursuits GP', [assumptionInput(res, 'pursuits_deals_per_year'), assumptionInput(res, 'large_deal_gp'), assumptionInput(res, 'large_deal_win_rate'), assumptionInput(res, 'pursuits_win_lift'), assumptionInput(res, 'pursuits_deal_growth'), assumptionInput(res, 'pursuits_cycle_months')]);
+    case 'pursuitsPaybackMonth':
+      return mk(key, meta.label, v, 'month', 'first month cumulative large pursuits GP covers cumulative time spent on pursuits and stays ahead', [{ label: '24-month pursuits GP', value: s.pursuitsGP2y, unit: '$' }, { label: '24-month time spent (allocated)', value: s.pursuitsCost2y, unit: '$' }, assumptionInput(res, 'pursuits_time_share'), assumptionInput(res, 'large_deal_gp')], v == null ? ['No payback inside the horizon at these assumptions. See break-even GP per large deal.'] : undefined);
+    case 'pursuitsBreakEvenDealGP':
+      return mk(key, meta.label, v, '$', '24 months of time spent on pursuits / (sum of deals per month x (focused win rate x (1 + growth) - base win rate))', [{ label: '24-month time spent (allocated)', value: s.pursuitsCost2y, unit: '$' }, assumptionInput(res, 'large_deal_gp', 'GP per large deal assumed today'), assumptionInput(res, 'pursuits_deals_per_year'), assumptionInput(res, 'large_deal_win_rate'), assumptionInput(res, 'pursuits_win_lift'), assumptionInput(res, 'pursuits_deal_growth'), assumptionInput(res, 'pursuits_time_share')]);
     case 'incGP2y':
       return mk(key, meta.label, v, '$', 'sum of months 0 to 23: scenario GP uplift - baseline GP uplift', [assumptionInput(res, 'gp_per_specialist'), assumptionInput(res, 'gp_uplift'), assumptionInput(res, 'ramp_months')]);
     case 'paybackMonth':

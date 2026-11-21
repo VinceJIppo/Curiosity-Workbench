@@ -34,7 +34,17 @@
    "tier3_hours": "R22",
    "revenue_monthly": "R23",
    "specialist_comp": "R32",
-   "avant_desk_comp": "R33"
+   "avant_desk_comp": "R33",
+   "office_lift": "R35",
+   "office_lift_delay_months": "R36",
+   "campaign_lift": "R37",
+   "pursuits_deals_per_year": "R38",
+   "pursuits_win_lift": "R39",
+   "pursuits_deal_growth": "R40",
+   "large_deal_win_rate": "R41",
+   "large_deal_gp": "R42",
+   "pursuits_time_share": "R43",
+   "pursuits_cycle_months": "R44"
   },
   "coverageGroups": {
    "sellers": [
@@ -459,6 +469,128 @@
    "low": 180000,
    "high": 230000,
    "unit": "$/yr",
+   "conservativeBound": "high"
+  },
+  {
+   "value": 0.3,
+   "status": "Assumed",
+   "source": "Office planning input, 2026-11-21",
+   "asOf": "2026-11",
+   "usedIn": "Office program, GP impact",
+   "notes": "Specialists are 30% more effective once the office has run 6 months.",
+   "id": "R35",
+   "label": "Specialist effectiveness lift from the office",
+   "unit": "%"
+  },
+  {
+   "value": 6,
+   "status": "Assumed",
+   "source": "Office planning input, 2026-11-21",
+   "asOf": "2026-11",
+   "usedIn": "Office program",
+   "notes": "",
+   "id": "R36",
+   "label": "Months before the office lift starts",
+   "unit": "months"
+  },
+  {
+   "value": 0.1,
+   "status": "Assumed",
+   "source": "Office planning input, 2026-11-21",
+   "asOf": "2026-11",
+   "usedIn": "Office program, GP impact",
+   "notes": "Compounds each full year after launch: 10% after year 1, 21% after year 2.",
+   "id": "R37",
+   "label": "Campaign artifact lift on specialists per year",
+   "unit": "%"
+  },
+  {
+   "value": 8,
+   "status": "Assumed",
+   "source": "Office planning input, 2026-11-21",
+   "asOf": "2026-11",
+   "usedIn": "Large pursuits",
+   "notes": "",
+   "id": "R38",
+   "label": "Large deals the pursuits team touches per year",
+   "unit": "deals"
+  },
+  {
+   "value": 0.35,
+   "status": "Assumed",
+   "source": "Office planning input, 2026-11-21",
+   "asOf": "2026-11",
+   "usedIn": "Large pursuits",
+   "notes": "Relative lift: a 25% base win rate becomes 33.75%.",
+   "id": "R39",
+   "label": "Win rate lift on large deals with a focused team",
+   "unit": "%"
+  },
+  {
+   "value": 0.2,
+   "status": "Assumed",
+   "source": "Office planning input, 2026-11-21",
+   "asOf": "2026-11",
+   "usedIn": "Large pursuits",
+   "notes": "",
+   "id": "R40",
+   "label": "Growth on won large deals the team touches",
+   "unit": "%"
+  },
+  {
+   "value": 0.25,
+   "status": "Open",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Large pursuits",
+   "notes": "Placeholder. Replace with the large-deal win rate from Salesforce.",
+   "id": "R41",
+   "label": "Win rate on large deals today",
+   "low": 0.2,
+   "high": 0.3,
+   "unit": "%",
+   "conservativeBound": "low"
+  },
+  {
+   "value": 250000,
+   "status": "Open",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Large pursuits",
+   "notes": "Placeholder. Replace with average GP of won large deals.",
+   "id": "R42",
+   "label": "GP per large deal won",
+   "low": 150000,
+   "high": 400000,
+   "unit": "$",
+   "conservativeBound": "low"
+  },
+  {
+   "value": 0.5,
+   "status": "Open",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Large pursuits payback",
+   "notes": "Placeholder. Allocates office cost to pursuits.",
+   "id": "R43",
+   "label": "Share of office time spent on large pursuits",
+   "low": 0.4,
+   "high": 0.6,
+   "unit": "%",
+   "conservativeBound": "high"
+  },
+  {
+   "value": 6,
+   "status": "Open",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Large pursuits",
+   "notes": "Placeholder for the large-deal sales cycle.",
+   "id": "R44",
+   "label": "Months until pursued deals start closing",
+   "low": 3,
+   "high": 9,
+   "unit": "months",
    "conservativeBound": "high"
   },
   {
@@ -3233,6 +3365,28 @@
       "roleFamily": "Office",
       "title": "Curiosity and Technology Office",
       "team": "Curiosity and Technology Office"
+     }
+    },
+    {
+     "id": "b-office-launch",
+     "type": "program",
+     "month": 0,
+     "tags": [
+      "office"
+     ],
+     "params": {
+      "program": "office"
+     }
+    },
+    {
+     "id": "b-pursuits-launch",
+     "type": "program",
+     "month": 0,
+     "tags": [
+      "office"
+     ],
+     "params": {
+      "program": "pursuits"
      }
     },
     {

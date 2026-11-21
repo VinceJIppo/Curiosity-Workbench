@@ -431,7 +431,23 @@ const podAssign: ChangeType<PodAssignParams> = {
   },
 };
 
-export const BUILTIN_CHANGE_TYPES: ChangeType<any>[] = [hire, depart, move, backfill, comp, serviceStart, serviceEnd, tierShift, driver, overrideAssumption, podAssign];
+export interface ProgramParams {
+  program: 'office' | 'pursuits';
+}
+const program: ChangeType<ProgramParams> = {
+  type: 'program',
+  label: 'Launch a program',
+  short: 'Program',
+  fields: [{ key: 'program', label: 'Program', kind: 'select', options: ['office', 'pursuits'], help: 'office: specialists more effective after a delay, plus campaign lift each year. pursuits: more large deals won and grown. Numbers come from the register.' }],
+  defaults: () => ({ program: 'office' }),
+  describe: (p) => (p.program === 'pursuits' ? 'Launch large pursuits' : 'Launch strategy office'),
+  apply(state, p, ctx) {
+    const kind = p.program === 'pursuits' ? 'pursuits' : 'office';
+    state.programs.push({ kind, from: ctx.month, origin: ctx.change.id });
+  },
+};
+
+export const BUILTIN_CHANGE_TYPES: ChangeType<any>[] = [hire, depart, move, backfill, comp, serviceStart, serviceEnd, tierShift, driver, overrideAssumption, podAssign, program];
 
 export function createRegistry(extra: ChangeType<any>[] = []): Map<string, ChangeType<any>> {
   const m = new Map<string, ChangeType<any>>();

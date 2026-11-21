@@ -87,6 +87,16 @@ export function sampleAssumptions(): Assumption[] {
     A({ id: 'R30', label: 'Fractional revenue leader, monthly retainer', value: 9_000, low: 6_000, high: 12_500, unit: '$/mo', status: 'Stated', conservativeBound: 'high', usedIn: 'Buy option', notes: '12 months = 72,000 to 150,000.' }),
     A({ id: 'R31', label: 'Benchmark subscription, annual', value: 4_000, low: 4_000, high: 4_000, unit: '$/yr', status: 'Stated', usedIn: 'Buy option', notes: 'About 4,000 a year.' }),
     A({ id: 'R32', label: 'Specialist cash comp (base + variable)', value: 200_000, low: 180_000, high: 230_000, unit: '$/yr', conservativeBound: 'high', usedIn: 'Specialist hires' }),
+    A({ id: 'R35', label: 'Specialist effectiveness lift from the office', value: 0.3, unit: '%', source: 'Office planning input, 2026-11-21', usedIn: 'Office program, GP impact', notes: 'Specialists are 30% more effective once the office has run 6 months.' }),
+    A({ id: 'R36', label: 'Months before the office lift starts', value: 6, unit: 'months', source: 'Office planning input, 2026-11-21', usedIn: 'Office program' }),
+    A({ id: 'R37', label: 'Campaign artifact lift on specialists per year', value: 0.1, unit: '%', source: 'Office planning input, 2026-11-21', usedIn: 'Office program, GP impact', notes: 'Compounds each full year after launch: 10% after year 1, 21% after year 2.' }),
+    A({ id: 'R38', label: 'Large deals the pursuits team touches per year', value: 8, unit: 'deals', source: 'Office planning input, 2026-11-21', usedIn: 'Large pursuits' }),
+    A({ id: 'R39', label: 'Win rate lift on large deals with a focused team', value: 0.35, unit: '%', source: 'Office planning input, 2026-11-21', usedIn: 'Large pursuits', notes: 'Relative lift: a 25% base win rate becomes 33.75%.' }),
+    A({ id: 'R40', label: 'Growth on won large deals the team touches', value: 0.2, unit: '%', source: 'Office planning input, 2026-11-21', usedIn: 'Large pursuits' }),
+    A({ id: 'R41', label: 'Win rate on large deals today', value: 0.25, low: 0.2, high: 0.3, unit: '%', status: 'Open', conservativeBound: 'low', usedIn: 'Large pursuits', notes: 'Placeholder. Replace with the large-deal win rate from Salesforce.' }),
+    A({ id: 'R42', label: 'GP per large deal won', value: 250_000, low: 150_000, high: 400_000, unit: '$', status: 'Open', conservativeBound: 'low', usedIn: 'Large pursuits', notes: 'Placeholder. Replace with average GP of won large deals.' }),
+    A({ id: 'R43', label: 'Share of office time spent on large pursuits', value: 0.5, low: 0.4, high: 0.6, unit: '%', status: 'Open', conservativeBound: 'high', usedIn: 'Large pursuits payback', notes: 'Placeholder. Allocates office cost to pursuits.' }),
+    A({ id: 'R44', label: 'Months until pursued deals start closing', value: 6, low: 3, high: 9, unit: 'months', status: 'Open', conservativeBound: 'high', usedIn: 'Large pursuits', notes: 'Placeholder for the large-deal sales cycle.' }),
     A({ id: 'R33', label: 'Avant desk seller cash comp', value: 120_000, low: 100_000, high: 140_000, unit: '$/yr', conservativeBound: 'high', usedIn: 'Avant desk' }),
   ];
 }
@@ -115,6 +125,16 @@ export const SAMPLE_BINDINGS: Record<string, string> = {
   revenue_monthly: 'R23',
   specialist_comp: 'R32',
   avant_desk_comp: 'R33',
+  office_lift: 'R35',
+  office_lift_delay_months: 'R36',
+  campaign_lift: 'R37',
+  pursuits_deals_per_year: 'R38',
+  pursuits_win_lift: 'R39',
+  pursuits_deal_growth: 'R40',
+  large_deal_win_rate: 'R41',
+  large_deal_gp: 'R42',
+  pursuits_time_share: 'R43',
+  pursuits_cycle_months: 'R44',
 };
 
 export function samplePractices(): Practice[] {
@@ -244,6 +264,8 @@ export function sampleScenarios(): Scenario[] {
       { id: 'b-vince', type: 'move', month: 0, tags: ['office'], params: { personId: 'p-vince', roleFamily: 'Office', title: 'Curiosity and Technology Office', team: 'Curiosity and Technology Office' } },
       { id: 'b-sam', type: 'move', month: 0, tags: ['office'], params: { personId: 'p-sam', roleFamily: 'Office', title: 'Curiosity and Technology Office', team: 'Curiosity and Technology Office' } },
       { id: 'b-ryan', type: 'move', month: 0, tags: ['office'], params: { personId: 'p-ryan', roleFamily: 'Office', title: 'Curiosity and Technology Office', team: 'Curiosity and Technology Office' } },
+      { id: 'b-office-launch', type: 'program', month: 0, tags: ['office'], params: { program: 'office' } },
+      { id: 'b-pursuits-launch', type: 'program', month: 0, tags: ['office'], params: { program: 'pursuits' } },
       { id: 'b-kurt', type: 'move', month: 0, tags: ['office'], params: { personId: 'p-kurt', roleFamily: 'Director', title: 'Director of Solutions Architecture', team: 'Solutions Architecture' } },
       { id: 'b-kurt-bf', type: 'backfill', month: 0, tags: ['office'], params: { personId: 'p-kurt', name: 'Principal architect backfill' } },
       { id: 'b-troy', type: 'backfill', month: 0, tags: ['office'], params: { personId: 'p-vince', name: 'Troy Sorrento', lagMonths: 6 } },

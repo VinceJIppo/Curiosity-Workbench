@@ -42,11 +42,20 @@ export interface SimTierShift {
   origin: string;
 }
 
+export type ProgramKind = 'office' | 'pursuits';
+
+export interface SimProgram {
+  kind: ProgramKind;
+  from: number;
+  origin: string;
+}
+
 export interface SimState {
   people: Map<string, SimPerson>;
   services: SimService[];
   overrides: SimOverride[];
   tierShifts: SimTierShift[];
+  programs: SimProgram[];
 }
 
 export interface ApplyContext {
@@ -125,7 +134,24 @@ export interface MonthRow {
   gpPerSpecialistMonthly: number;
   upliftPct: number;
   driverFactor: number;
+  /** Specialist effectiveness from the office: (1 + office lift once past the delay) x (1 + campaign lift) ^ full years. */
+  effectiveness: number;
+  officeLift: number;
+  campaignFactor: number;
+  /** Specialist GP uplift, including effectiveness. */
   gpUplift: number;
+  /** The part of gpUplift that comes from office effectiveness. */
+  officeGP: number;
+  /** GP from large pursuits: deals that would otherwise be lost, plus growth on won deals. */
+  pursuitsGP: number;
+  /** Share of office and pursuits-team cost spent on large pursuits (an allocation, already inside total cost). */
+  pursuitsCost: number;
+  /** Expected extra GP per $1 of large-deal GP this month: deals/12 x (focused win rate x (1 + growth) - base win rate). */
+  pursuitsDealFactor: number;
+  cumPursuitsGP: number;
+  cumPursuitsCost: number;
+  /** gpUplift + pursuitsGP. Incremental GP compares this with the baseline. */
+  gpImpact: number;
   /** Filled when compared with the baseline run. */
   incCost: number;
   incGP: number;
@@ -193,6 +219,13 @@ export interface ScenarioSummary {
   gpByYear: number[];
   incGP2y: number;
   incGP3y: number;
+  officeGP2y: number;
+  pursuitsGP2y: number;
+  pursuitsCost2y: number;
+  /** First month cumulative pursuits GP covers the time spent on pursuits and stays ahead. Null without a pursuits program or no payback in the horizon. */
+  pursuitsPaybackMonth: number | null;
+  /** GP per large deal won at which 24 months of pursuits GP equals 24 months of time spent. */
+  pursuitsBreakEvenDealGP: number;
   paybackMonth: number | null;
   roiView: number;
   breakEvenGP: number;

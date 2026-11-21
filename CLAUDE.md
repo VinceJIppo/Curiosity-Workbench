@@ -137,7 +137,15 @@ totals, annual, payback, ROI, break-even, coverage at the view month).
   since month 0. Coverage groups (which role families count as sellers, specialists,
   architects) are settings.
 - GP uplift = ramped specialists x touched GP per specialist / 12 x uplift x driver
-  factor (win rate, attach rate and utilization relative to today).
+  factor (win rate, attach rate and utilization relative to today) x office effectiveness.
+- Programs (`program` change type): `office` makes specialists more effective
+  (1 + `office_lift` once `office_lift_delay_months` have passed) x (1 + `campaign_lift`)
+  ^ full years since launch. `pursuits` adds large pursuits GP: deals per year / 12 x
+  GP per large deal x (min(1, base win rate x (1 + win lift)) x (1 + deal growth) -
+  base win rate), after `pursuits_cycle_months`. Pursuits cost for its own payback is
+  an allocation (office cost x `pursuits_time_share` + anyone on team "Large pursuits")
+  and is not added to totals. Incremental GP compares `gpImpact` (specialist uplift +
+  pursuits GP) with the baseline. Option B launches both at M0; C inherits them.
 - Gates: a change with `gateId` waits for its gate. Manual gates pass unless marked
   a miss for that evaluation month; KPI gates evaluate an expression over the
   previous month's row and assumptions. A miss reruns after `retryMonths` (default

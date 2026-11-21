@@ -136,3 +136,35 @@ describe('sensitivity', () => {
     expect(total(b.high)).toBeGreaterThan(total(b.base));
   });
 });
+
+describe('office and large pursuits programs', () => {
+  const r = runScenario(ws, 'option-b', { caseKey: 'base' });
+  it('office makes specialists 30% more effective after 6 months, plus 10% a year from campaigns', () => {
+    expect(r.rows[5].effectiveness).toBe(1);
+    expect(r.rows[6].effectiveness).toBeCloseTo(1.3);
+    expect(r.rows[12].effectiveness).toBeCloseTo(1.3 * 1.1);
+    expect(r.rows[24].effectiveness).toBeCloseTo(1.3 * 1.21);
+    expect(r.rows[12].officeGP).toBeCloseTo(r.rows[12].gpUplift * (1 - 1 / (1.3 * 1.1)));
+  });
+  it('scenarios without the office get no lift', () => {
+    const a = runScenario(ws, 'option-a', { caseKey: 'base' });
+    expect(a.rows.every((x) => x.effectiveness === 1 && x.pursuitsGP === 0)).toBe(true);
+    expect(a.summary.pursuitsPaybackMonth).toBeNull();
+  });
+  it('large pursuits: 8 deals a year, 35% higher win rate, 20% larger wins, after the sales cycle', () => {
+    expect(r.rows[5].pursuitsGP).toBe(0);
+    // base: 8/12 x 250K x (0.25 x 1.35 x 1.2 - 0.25)
+    expect(r.rows[6].pursuitsGP).toBeCloseTo((8 / 12) * 250_000 * (0.25 * 1.35 * 1.2 - 0.25));
+    expect(r.rows[6].pursuitsCost).toBeGreaterThan(0);
+    // break-even deal GP makes 24 months of pursuits GP equal 24 months of time spent
+    const be = r.summary.pursuitsBreakEvenDealGP;
+    const f = r.rows.filter((x) => x.month < 24).reduce((s, x) => s + x.pursuitsDealFactor, 0);
+    expect(be * f).toBeCloseTo(r.summary.pursuitsCost2y);
+  });
+  it('incremental GP now includes office effectiveness and pursuits', () => {
+    const c = runScenario(ws, 'option-c', { caseKey: 'base' });
+    expect(c.summary.officeGP2y).toBeGreaterThan(0);
+    expect(c.summary.pursuitsGP2y).toBeGreaterThan(0);
+    expect(r.summary.paybackMonth).not.toBeNull();
+  });
+});

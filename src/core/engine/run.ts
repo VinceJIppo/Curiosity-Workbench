@@ -77,7 +77,7 @@ function initialState(ws: Workspace): SimState {
   const services = ws.entities.externalServices
     .filter((s) => s.startMonth != null)
     .map((s) => ({ key: `baseline:${s.id}`, service: s, start: s.startMonth as number, end: s.termMonths != null ? (s.startMonth as number) + s.termMonths : null, origin: 'baseline' }));
-  return { people, services, overrides: [], tierShifts: [] };
+  return { people, services, overrides: [], tierShifts: [], programs: [] };
 }
 
 const isActive = (p: SimPerson, m: number) => p.startMonth <= m && (p.endMonth == null || m < p.endMonth);
@@ -242,7 +242,17 @@ export function runScenario(ws: Workspace, scenarioId: string, opts: RunOptions 
       gpPerSpecialistMonthly: 0,
       upliftPct: 0,
       driverFactor: 1,
+      effectiveness: 1,
+      officeLift: 0,
+      campaignFactor: 1,
       gpUplift: 0,
+      officeGP: 0,
+      pursuitsGP: 0,
+      pursuitsCost: 0,
+      pursuitsDealFactor: 0,
+      cumPursuitsGP: 0,
+      cumPursuitsCost: 0,
+      gpImpact: 0,
       incCost: 0,
       incGP: 0,
       cumIncCost: 0,
@@ -252,6 +262,8 @@ export function runScenario(ws: Workspace, scenarioId: string, opts: RunOptions 
     };
     const burdenDefault = A('burden_pct');
     const ramp = A('ramp_months');
+    let officeCost = 0;
+    let pursuitsTeamCost = 0;
     for (const p of state.people.values()) {
       if (isOpenReq(p, m)) {
         row.openReqs += p.fte;
@@ -267,6 +279,8 @@ export function runScenario(ws: Workspace, scenarioId: string, opts: RunOptions 
       const monthly = ((p.base + p.variableTarget) * p.fte * (1 + (Number.isFinite(burden) ? burden : 0))) / 12;
       row.peopleCost += monthly;
       add(row.peopleCostByRole, p.roleFamily, monthly);
+      if (p.roleFamily === 'Office') officeCost += monthly;
+      else if ((p.team ?? '').toLowerCase() === 'large pursuits') pursuitsTeamCost += monthly;
       if (inGroup(p, groups.sellers)) row.sellersRoster += p.fte;
       if (inGroup(p, groups.specialists)) {
         row.specialists += p.fte;
@@ -319,8 +333,36 @@ export function runScenario(ws: Workspace, scenarioId: string, opts: RunOptions 
     row.gpPerSpecialistMonthly = A('gp_per_specialist') / 12;
     row.upliftPct = A('gp_uplift');
     row.driverFactor = driverFactor;
-    row.gpUplift = row.effSpecialists * row.gpPerSpecialistMonthly * row.upliftPct * driverFactor;
-    if (!Number.isFinite(row.gpUplift)) row.gpUplift = 0;
+
+    // Office program: specialists get more effective once the office has run for a while,
+    // and campaign artifacts add more each full year.
+    const office = state.programs.filter((x) => x.kind === 'office' && x.from <= m).sort((a, b) => a.from - b.from)[0];
+    if (office) {
+      const age = m - office.from;
+      row.officeLift = age >= A('office_lift_delay_months') ? A('office_lift') : 0;
+      row.campaignFactor = Math.pow(1 + A('campaign_lift'), Math.floor(age / 12));
+      row.effectiveness = (1 + row.officeLift) * row.campaignFactor;
+      if (!Number.isFinite(row.effectiveness)) row.effectiveness = 1;
+    }
+    const baseUplift = row.effSpecialists * row.gpPerSpecialistMonthly * row.upliftPct * driverFactor;
+    row.gpUplift = Number.isFinite(baseUplift) ? baseUplift * row.effectiveness : 0;
+    row.officeGP = Number.isFinite(baseUplift) ? baseUplift * (row.effectiveness - 1) : 0;
+
+    // Large pursuits program: a focused team wins more large deals and grows the ones it wins.
+    const pursuits = state.programs.filter((x) => x.kind === 'pursuits' && x.from <= m).sort((a, b) => a.from - b.from)[0];
+    if (pursuits) {
+      row.pursuitsCost = officeCost * A('pursuits_time_share') + pursuitsTeamCost;
+      if (m >= pursuits.from + A('pursuits_cycle_months')) {
+        const p0 = A('large_deal_win_rate');
+        const p1 = Math.min(1, p0 * (1 + A('pursuits_win_lift')));
+        const factor = (A('pursuits_deals_per_year') / 12) * (p1 * (1 + A('pursuits_deal_growth')) - p0);
+        row.pursuitsDealFactor = Number.isFinite(factor) ? factor : 0;
+        const v = factor * A('large_deal_gp');
+        row.pursuitsGP = Number.isFinite(v) ? v : 0;
+      }
+      if (!Number.isFinite(row.pursuitsCost)) row.pursuitsCost = 0;
+    }
+    row.gpImpact = row.gpUplift + row.pursuitsGP;
     return row;
   };
 
@@ -404,10 +446,16 @@ export function runScenario(ws: Workspace, scenarioId: string, opts: RunOptions 
   // Incremental vs baseline.
   let cumC = 0;
   let cumG = 0;
+  let cumPG = 0;
+  let cumPC = 0;
   for (const r of rows) {
     const b = baseline?.rows[r.month];
+    cumPG += r.pursuitsGP;
+    cumPC += r.pursuitsCost;
+    r.cumPursuitsGP = cumPG;
+    r.cumPursuitsCost = cumPC;
     r.incCost = b ? r.totalCost - b.totalCost : 0;
-    r.incGP = b ? r.gpUplift - b.gpUplift : 0;
+    r.incGP = b ? r.gpImpact - b.gpImpact : 0;
     cumC += r.incCost;
     cumG += r.incGP;
     r.cumIncCost = cumC;
@@ -490,6 +538,16 @@ export function summarize(r: ScenarioResult, viewMonths: number): ScenarioSummar
   } else payback = 0;
   const at = rows[Math.min(v, rows.length - 1)] ?? rows[rows.length - 1];
   const uplift = r.resolution.get('gp_uplift');
+  let pursuitsPayback: number | null = null;
+  if (rows.some((x) => x.pursuitsCost > 0 || x.pursuitsGP > 0)) {
+    for (let i = 0; i < rows.length; i++) {
+      const net = (x: MonthRow) => x.cumPursuitsGP - x.cumPursuitsCost;
+      if (rows[i].cumPursuitsGP > 0 && net(rows[i]) >= 0 && rows.slice(i).every((x) => net(x) >= 0)) {
+        pursuitsPayback = rows[i].month;
+        break;
+      }
+    }
+  }
   return {
     viewMonths: v,
     cost2y: sumRows(rows, 'totalCost', 0, 24),
@@ -501,6 +559,14 @@ export function summarize(r: ScenarioResult, viewMonths: number): ScenarioSummar
     gpByYear,
     incGP2y: sumRows(rows, 'incGP', 0, 24),
     incGP3y: sumRows(rows, 'incGP', 0, 36),
+    officeGP2y: sumRows(rows, 'officeGP', 0, 24),
+    pursuitsGP2y: sumRows(rows, 'pursuitsGP', 0, 24),
+    pursuitsCost2y: sumRows(rows, 'pursuitsCost', 0, 24),
+    pursuitsPaybackMonth: pursuitsPayback,
+    pursuitsBreakEvenDealGP: (() => {
+      const f = sumRows(rows, 'pursuitsDealFactor', 0, 24);
+      return f > 0 ? sumRows(rows, 'pursuitsCost', 0, 24) / f : NaN;
+    })(),
     paybackMonth: payback,
     roiView: incView > 0 ? (gpView - incView) / incView : NaN,
     breakEvenGP: incView,

@@ -11,6 +11,11 @@ import { tornado, TORNADO_METRICS, type TornadoResult } from '../core/engine/sen
 import { Num } from './math';
 import { Select } from './components';
 
+const cumulative = (xs: number[]) => {
+  let t = 0;
+  return xs.map((x) => (t += x));
+};
+
 const span = (ws: Workspace, r: ScenarioResult, months?: number) => r.rows.filter((x) => x.month <= (months ?? ws.settings.viewMonths));
 
 export function SummaryKpis({ ws, r, highlight = true }: { ws: Workspace; r: ScenarioResult; highlight?: boolean }) {
@@ -23,6 +28,10 @@ export function SummaryKpis({ ws, r, highlight = true }: { ws: Workspace; r: Sce
     { label: '24-month incremental GP', key: 'incGP2y', text: money(s.incGP2y) },
     { label: 'Payback month', key: 'paybackMonth', text: isBase ? 'n/a' : s.paybackMonth == null ? 'None' : `M${s.paybackMonth}` },
     { label: `ROI, months 0 to ${vm - 1}`, key: 'roiView', text: pct(s.roiView) },
+    { label: '24-month specialist GP from the office', key: 'officeGP2y', text: money(s.officeGP2y) },
+    { label: '24-month GP from large pursuits', key: 'pursuitsGP2y', text: money(s.pursuitsGP2y) },
+    { label: 'Large pursuits payback', key: 'pursuitsPaybackMonth', text: s.pursuitsGP2y === 0 && s.pursuitsCost2y === 0 ? 'n/a' : s.pursuitsPaybackMonth == null ? 'None' : `M${s.pursuitsPaybackMonth}` },
+    { label: 'Break-even GP per large deal', key: 'pursuitsBreakEvenDealGP', text: money(s.pursuitsBreakEvenDealGP) },
     { label: `Break-even GP over ${vm} months`, key: 'breakEvenGP', text: money(s.breakEvenGP) },
     { label: 'Break-even specialist-touched GP', key: 'breakEvenTouchedGP', text: money(s.breakEvenTouchedGP) },
     { label: `Sellers per specialist, M${vm}`, key: 'coverageAtView', text: ratio1(s.coverageAtView) },
@@ -305,6 +314,21 @@ export function GpView({ ws, r }: { ws: Workspace; r: ScenarioResult }) {
         markers={pb != null && pb > 0 && pb <= ws.settings.viewMonths ? [{ x: pb, label: `Payback M${pb}` }] : []}
         yFormat={money}
       />
+      <LineChart
+        title={`Where the GP comes from: ${r.scenarioName}`}
+        subtitle="Cumulative GP: office effectiveness on specialists, and large pursuits"
+        x={rows.map((x) => x.month)}
+        series={[
+          { name: 'Specialist GP from the office', values: cumulative(rows.map((x) => x.officeGP)), color: SERIES[0], dash: DASHES[0] },
+          { name: 'Large pursuits GP', values: rows.map((x) => x.cumPursuitsGP), color: SERIES[1], dash: DASHES[1] },
+          { name: 'Time spent on pursuits', values: rows.map((x) => x.cumPursuitsCost), color: SERIES[4], dash: DASHES[4] },
+        ]}
+        markers={r.summary.pursuitsPaybackMonth != null && r.summary.pursuitsPaybackMonth <= ws.settings.viewMonths ? [{ x: r.summary.pursuitsPaybackMonth, label: `Pursuits payback M${r.summary.pursuitsPaybackMonth}` }] : []}
+        yFormat={money}
+      />
+      <p class="small">
+        Office effectiveness at M{m}: <Num trace={explainMonth(ws, r, 'effectiveness', m)} text={`${r.rows[m].effectiveness.toFixed(2)}x`} />. Large pursuits GP at M{m}: <Num trace={explainMonth(ws, r, 'pursuitsGP', m)} text={money(r.rows[m].pursuitsGP)} /> a month for <Num trace={explainMonth(ws, r, 'pursuitsCost', m)} text={money(r.rows[m].pursuitsCost)} /> of time.
+      </p>
       <p class="small">
         GP uplift at M{m}: <Num trace={explainMonth(ws, r, 'gpUplift', m)} text={money(r.rows[m].gpUplift)} /> a month. Incremental vs baseline: <Num trace={explainMonth(ws, r, 'incGP', m)} text={money(r.rows[m].incGP)} />. Cumulative net:{' '}
         <Num trace={explainMonth(ws, r, 'cumNet', m)} text={money(r.rows[m].cumNet)} />.

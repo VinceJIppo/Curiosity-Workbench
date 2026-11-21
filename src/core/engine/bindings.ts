@@ -32,6 +32,16 @@ export const BINDINGS: BindingDef[] = [
   { key: 'tier3_hours', label: 'Hours per Tier 3 request', unit: 'hours', help: 'Effort per Tier 3 request.' },
   { key: 'specialist_comp', label: 'Specialist cash comp', unit: '$/yr', help: 'Used by specialist hires in the seed scenarios.' },
   { key: 'avant_desk_comp', label: 'Avant desk seller cash comp', unit: '$/yr', help: 'Used by the Avant pod or desk hire.' },
+  { key: 'office_lift', label: 'Specialist effectiveness lift from the office', unit: '%', help: 'Multiplies specialist GP uplift once the office has run past the delay.' },
+  { key: 'office_lift_delay_months', label: 'Months before the office lift starts', unit: 'months', help: 'Office lift applies from this many months after launch.' },
+  { key: 'campaign_lift', label: 'Campaign artifact lift per year', unit: '%', help: 'Compounds on specialist effectiveness for each full year the office has run.' },
+  { key: 'pursuits_deals_per_year', label: 'Large deals the pursuits team touches per year', unit: 'deals', help: 'Volume for the large pursuits program.' },
+  { key: 'pursuits_win_lift', label: 'Win rate lift on large deals with a focused team', unit: '%', help: 'Relative: focused win rate = base x (1 + lift).' },
+  { key: 'pursuits_deal_growth', label: 'Growth on won large deals the team touches', unit: '%', help: 'Won deal GP grows by this share.' },
+  { key: 'large_deal_win_rate', label: 'Win rate on large deals today', unit: '%', help: 'Base win rate before the pursuits team.' },
+  { key: 'large_deal_gp', label: 'GP per large deal won', unit: '$', help: 'Average GP of a won large deal today.' },
+  { key: 'pursuits_time_share', label: 'Share of office time spent on large pursuits', unit: '%', help: 'Allocates office cost to pursuits for its payback.' },
+  { key: 'pursuits_cycle_months', label: 'Months until pursued deals start closing', unit: 'months', help: 'No pursuits GP before this many months after launch.' },
   { key: 'revenue_monthly', label: 'Monthly revenue for % of revenue pricing', unit: '$/mo', help: 'Used by services priced as a share of revenue.' },
 ];
 
