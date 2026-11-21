@@ -10,12 +10,13 @@ import { compareModule } from './compare';
 import { assumptionsModule } from './assumptions';
 import { peopleModule } from './people';
 import { playsModule } from './plays';
+import { growthModule } from './growth';
 import { dataModule } from './data';
 import { workspaceModule } from './workspace';
 import { settingsModule } from './settings';
 import { printModule } from './print';
 
-const MODULES: ModuleManifest[] = [homeModule, scenariosModule, compareModule, assumptionsModule, peopleModule, playsModule, dataModule, workspaceModule, settingsModule, printModule];
+const MODULES: ModuleManifest[] = [homeModule, scenariosModule, compareModule, assumptionsModule, peopleModule, playsModule, growthModule, dataModule, workspaceModule, settingsModule, printModule];
 
 let registered = false;
 export function allModules(): ModuleManifest[] {

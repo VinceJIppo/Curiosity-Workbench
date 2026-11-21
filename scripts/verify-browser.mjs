@@ -168,6 +168,24 @@ const pitchPath = `${OUT}/${pitch.suggestedFilename()}`;
 await pitch.saveAs(pitchPath);
 check('pitch builder downloads a PPTX', pitch.suggestedFilename().endsWith('-redesign.pptx') && readFileSync(pitchPath).length > 2000, pitch.suggestedFilename());
 
+// Strategy and growth: scorecard, pursuits, gaps into the risk register, investment case
+await page.goto(`${FILE}#/growth/scorecard`);
+const card = await page.getByTestId('scorecard').innerText();
+check('OEM scorecard shows status by OEM', /Palo Alto Networks/.test(card) && /red/.test(card));
+await page.screenshot({ path: `${OUT}/12-scorecard.png`, fullPage: true });
+await page.goto(`${FILE}#/growth/pursuits`);
+const pt = await page.getByTestId('pursuits-table').innerText();
+check('pursuits tracker lists pursuits with practices involved', /SOC modernization/.test(pt) && /Practices/.test(pt));
+await page.goto(`${FILE}#/growth/risks`);
+await page.getByTestId('add-all-gaps').click();
+const reg = await page.getByTestId('risk-register').innerText();
+check('suggested gaps go into the risk register', /No certified NSX engineer/.test(reg) && /Palo Alto Networks/.test(reg));
+await page.screenshot({ path: `${OUT}/13-risks.png`, fullPage: true });
+await page.goto(`${FILE}#/growth/investment`);
+const inv = await page.getByTestId('investment-table').innerText();
+check('investment case pulls scenario cost, GP and payback', /Option C/.test(inv) && /\$/.test(inv));
+await page.screenshot({ path: `${OUT}/14-investment.png`, fullPage: true });
+
 // Knowledge: seed, import a pack, approve, export for Claude
 await page.goto(`${FILE}#/plays/knowledge`);
 await page.getByTestId('seed-knowledge').click();

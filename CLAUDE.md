@@ -238,6 +238,21 @@ Reps build a short redesign-branded deck for a customer call from OEM partner de
   `sample-pitch-mixed.pptx`;
   open it with python-pptx or render it with `soffice --headless --convert-to pdf`.
 
+## Strategy and growth (module `growth`)
+OEM scorecard, large pursuits tracker, gaps and risk register, investment case.
+- Data lives in entity collections `oemScores`, `pursuits` and `risks` (schemas in the
+  module manifest, so they work in the import wizard and Data > Browse). Settings
+  (amber tolerance, risk bands, concentration share) in `ws.modules.growth.settings`.
+- Logic is pure in `src/core/growth/growth.ts`: RAG by target and direction, latest
+  period and trend per OEM and metric, pursuit stats (win rate, practices involved,
+  pace, GP by OEM), `suggestGaps()` (red and amber metrics, gaps named on pursuits
+  weighted by lost GP, practices never in a pursuit, OEM concentration), risk score
+  (likelihood x impact) and heat map.
+- The pursuits tab compares tracker actuals with the planning assumptions (R38, R41,
+  R42 by binding) and can write an actual into the register as Measured, keeping the
+  old value as an alternate. The investment case links risks to scenarios and shows
+  each scenario's 24-month cost, GP and payback from the engine.
+
 ## Brand
 Black `#222222` on white. Lime `#C3FDAF` only as a single highlight: the active nav
 item and the one key number on a page (`.key-number`). Never body text, full

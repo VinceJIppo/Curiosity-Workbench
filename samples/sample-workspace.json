@@ -3184,6 +3184,375 @@
     "name": "Avant",
     "kind": "TSD"
    }
+  ],
+  "oemScores": [
+   {
+    "id": "sc-palo-alto-networks-fy26-q3-gp",
+    "oem": "Palo Alto Networks",
+    "period": "FY26 Q3",
+    "metric": "GP",
+    "actual": 1150000,
+    "target": 1100000,
+    "unit": "$",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-palo-alto-networks-fy26-q4-gp",
+    "oem": "Palo Alto Networks",
+    "period": "FY26 Q4",
+    "metric": "GP",
+    "actual": 1080000,
+    "target": 1100000,
+    "unit": "$",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-palo-alto-networks-fy26-q3-certified-engineers",
+    "oem": "Palo Alto Networks",
+    "period": "FY26 Q3",
+    "metric": "Certified engineers",
+    "actual": 6,
+    "target": 8,
+    "unit": "",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-palo-alto-networks-fy26-q4-certified-engineers",
+    "oem": "Palo Alto Networks",
+    "period": "FY26 Q4",
+    "metric": "Certified engineers",
+    "actual": 5,
+    "target": 8,
+    "unit": "",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-palo-alto-networks-fy26-q4-services-attach-rate",
+    "oem": "Palo Alto Networks",
+    "period": "FY26 Q4",
+    "metric": "Services attach rate",
+    "actual": 0.24,
+    "target": 0.25,
+    "unit": "%",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-broadcom-vmware-fy26-q3-gp",
+    "oem": "Broadcom/VMware",
+    "period": "FY26 Q3",
+    "metric": "GP",
+    "actual": 900000,
+    "target": 1100000,
+    "unit": "$",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-broadcom-vmware-fy26-q4-gp",
+    "oem": "Broadcom/VMware",
+    "period": "FY26 Q4",
+    "metric": "GP",
+    "actual": 980000,
+    "target": 1100000,
+    "unit": "$",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-broadcom-vmware-fy26-q3-certified-engineers",
+    "oem": "Broadcom/VMware",
+    "period": "FY26 Q3",
+    "metric": "Certified engineers",
+    "actual": 4,
+    "target": 5,
+    "unit": "",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-broadcom-vmware-fy26-q4-certified-engineers",
+    "oem": "Broadcom/VMware",
+    "period": "FY26 Q4",
+    "metric": "Certified engineers",
+    "actual": 5,
+    "target": 5,
+    "unit": "",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-broadcom-vmware-fy26-q4-services-attach-rate",
+    "oem": "Broadcom/VMware",
+    "period": "FY26 Q4",
+    "metric": "Services attach rate",
+    "actual": 0.24,
+    "target": 0.25,
+    "unit": "%",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-dell-fy26-q3-gp",
+    "oem": "Dell",
+    "period": "FY26 Q3",
+    "metric": "GP",
+    "actual": 700000,
+    "target": 800000,
+    "unit": "$",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-dell-fy26-q4-gp",
+    "oem": "Dell",
+    "period": "FY26 Q4",
+    "metric": "GP",
+    "actual": 760000,
+    "target": 800000,
+    "unit": "$",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-dell-fy26-q3-certified-engineers",
+    "oem": "Dell",
+    "period": "FY26 Q3",
+    "metric": "Certified engineers",
+    "actual": 3,
+    "target": 5,
+    "unit": "",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-dell-fy26-q4-certified-engineers",
+    "oem": "Dell",
+    "period": "FY26 Q4",
+    "metric": "Certified engineers",
+    "actual": 3,
+    "target": 5,
+    "unit": "",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-dell-fy26-q4-services-attach-rate",
+    "oem": "Dell",
+    "period": "FY26 Q4",
+    "metric": "Services attach rate",
+    "actual": 0.12,
+    "target": 0.25,
+    "unit": "%",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-microsoft-fy26-q3-gp",
+    "oem": "Microsoft",
+    "period": "FY26 Q3",
+    "metric": "GP",
+    "actual": 420000,
+    "target": 500000,
+    "unit": "$",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-microsoft-fy26-q4-gp",
+    "oem": "Microsoft",
+    "period": "FY26 Q4",
+    "metric": "GP",
+    "actual": 450000,
+    "target": 500000,
+    "unit": "$",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-microsoft-fy26-q3-certified-engineers",
+    "oem": "Microsoft",
+    "period": "FY26 Q3",
+    "metric": "Certified engineers",
+    "actual": 8,
+    "target": 5,
+    "unit": "",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-microsoft-fy26-q4-certified-engineers",
+    "oem": "Microsoft",
+    "period": "FY26 Q4",
+    "metric": "Certified engineers",
+    "actual": 9,
+    "target": 5,
+    "unit": "",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "sc-microsoft-fy26-q4-services-attach-rate",
+    "oem": "Microsoft",
+    "period": "FY26 Q4",
+    "metric": "Services attach rate",
+    "actual": 0.24,
+    "target": 0.25,
+    "unit": "%",
+    "direction": "higher",
+    "source": "Synthetic sample"
+   }
+  ],
+  "pursuits": [
+   {
+    "id": "lp-1",
+    "name": "SOC modernization (sample)",
+    "account": "Sample Customer 03",
+    "oems": [
+     "Palo Alto Networks"
+    ],
+    "practices": [
+     "cybersecurity",
+     "services"
+    ],
+    "stage": "Closed won",
+    "value": 1800000,
+    "gp": 420000,
+    "closeDate": "2026-02-20",
+    "owner": "Curiosity and Technology Office",
+    "gaps": []
+   },
+   {
+    "id": "lp-2",
+    "name": "Private cloud refresh (sample)",
+    "account": "Sample Customer 07",
+    "oems": [
+     "Broadcom/VMware",
+     "Dell"
+    ],
+    "practices": [
+     "services"
+    ],
+    "stage": "Closed lost",
+    "value": 2400000,
+    "gp": 380000,
+    "closeDate": "2026-05-15",
+    "owner": "Curiosity and Technology Office",
+    "gaps": [
+     "No certified NSX engineer",
+     "Delivery capacity in the quarter"
+    ],
+    "lossReason": "Competitor offered faster start"
+   },
+   {
+    "id": "lp-3",
+    "name": "SASE rollout (sample)",
+    "account": "Sample Customer 11",
+    "oems": [
+     "Palo Alto Networks"
+    ],
+    "practices": [
+     "networking",
+     "cybersecurity"
+    ],
+    "stage": "Closed lost",
+    "value": 1200000,
+    "gp": 260000,
+    "closeDate": "2026-08-30",
+    "owner": "Curiosity and Technology Office",
+    "gaps": [
+     "No certified Prisma SASE engineer"
+    ],
+    "lossReason": "Price"
+   },
+   {
+    "id": "lp-4",
+    "name": "XDR displacement (sample)",
+    "account": "Sample Customer 15",
+    "oems": [
+     "Palo Alto Networks"
+    ],
+    "practices": [
+     "cybersecurity",
+     "services",
+     "networking"
+    ],
+    "stage": "Propose",
+    "value": 1500000,
+    "gp": 330000,
+    "closeDate": "2027-02-28",
+    "owner": "Curiosity and Technology Office",
+    "gaps": []
+   },
+   {
+    "id": "lp-5",
+    "name": "Datacenter consolidation (sample)",
+    "account": "Sample Customer 19",
+    "oems": [
+     "Dell",
+     "Broadcom/VMware"
+    ],
+    "practices": [
+     "services",
+     "networking"
+    ],
+    "stage": "Develop",
+    "value": 3000000,
+    "gp": 450000,
+    "closeDate": "2027-04-30",
+    "owner": "Curiosity and Technology Office",
+    "gaps": [
+     "Delivery capacity in the quarter"
+    ]
+   },
+   {
+    "id": "lp-6",
+    "name": "Zero trust program (sample)",
+    "account": "Sample Customer 22",
+    "oems": [
+     "Palo Alto Networks"
+    ],
+    "practices": [
+     "cybersecurity"
+    ],
+    "stage": "Qualify",
+    "value": 900000,
+    "gp": 210000,
+    "closeDate": "2027-06-30",
+    "owner": "Curiosity and Technology Office",
+    "gaps": []
+   }
+  ],
+  "risks": [
+   {
+    "id": "rk-1",
+    "title": "Not enough certified engineers to meet OEM tier requirements (sample)",
+    "area": "Certification gap",
+    "oem": "Palo Alto Networks",
+    "likelihood": 4,
+    "impact": 4,
+    "status": "Open",
+    "owner": "Curiosity and Technology Office",
+    "mitigation": "Fund certifications through the office enablement plan",
+    "investment": 60000,
+    "scenarioId": "option-c",
+    "source": "Synthetic sample"
+   },
+   {
+    "id": "rk-2",
+    "title": "Large pursuits lost on delivery capacity (sample)",
+    "area": "Delivery capacity",
+    "likelihood": 3,
+    "impact": 4,
+    "status": "Mitigating",
+    "mitigation": "Pursuits team books delivery capacity before proposal",
+    "scenarioId": "option-b",
+    "source": "Synthetic sample"
+   }
   ]
  },
  "scenarios": [

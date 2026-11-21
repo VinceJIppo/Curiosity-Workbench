@@ -121,6 +121,20 @@ how fresh it is, and is marked prep only if it rests on an internal slide.
 
 The design behind this is in `docs/sales-knowledge-architecture.md`.
 
+## Strategy and growth
+
+- **OEM scorecard:** metrics per OEM per period (GP, revenue, certifications, attach
+  rate, and anything else you import) against target, red/amber/green, with the trend
+  from the prior period. Pull GP and revenue from your revenue data, or import rows.
+- **Large pursuits:** each pursuit with its OEMs, the practices involved, stage, GP,
+  and the gaps that hurt it. Tracker actuals sit beside the planning assumptions;
+  once there is enough history, put the actuals into the register in one click.
+- **Gaps and risks:** suggested gaps from red metrics, gaps named on lost pursuits,
+  practices that never join a pursuit, and OEM concentration. Add the real ones to a
+  scored risk register (likelihood x impact) with a heat map, owners and mitigations.
+- **Investment case:** high risks with a proposed investment and a linked scenario,
+  showing the scenario's 24-month cost, GP and payback. Export CSV or print.
+
 ## Brand assets (optional)
 
 - Licensed fonts: put Martina Plantijn and AF Atelier Sans files in `assets/fonts`

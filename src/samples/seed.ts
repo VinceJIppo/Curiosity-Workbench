@@ -373,6 +373,45 @@ export function sampleVendors(): Vendor[] {
   ];
 }
 
+export function sampleOemScores() {
+  const rows: Record<string, unknown>[] = [];
+  const add = (oem: string, period: string, metric: string, actual: number, target: number, unit: string, direction: 'higher' | 'lower' = 'higher') =>
+    rows.push({ id: `sc-${oem}-${period}-${metric}`.replace(/\W+/g, '-').toLowerCase(), oem, period, metric, actual, target, unit, direction, source: 'Synthetic sample' });
+  const plan: [string, number, number, number, number][] = [
+    // oem, GP Q3, GP Q4, certified Q3, certified Q4
+    ['Palo Alto Networks', 1_150_000, 1_080_000, 6, 5],
+    ['Broadcom/VMware', 900_000, 980_000, 4, 5],
+    ['Dell', 700_000, 760_000, 3, 3],
+    ['Microsoft', 420_000, 450_000, 8, 9],
+  ];
+  for (const [oem, gp3, gp4, c3, c4] of plan) {
+    add(oem, 'FY26 Q3', 'GP', gp3, 1_000_000 * (oem === 'Microsoft' ? 0.5 : oem === 'Dell' ? 0.8 : 1.1), '$');
+    add(oem, 'FY26 Q4', 'GP', gp4, 1_000_000 * (oem === 'Microsoft' ? 0.5 : oem === 'Dell' ? 0.8 : 1.1), '$');
+    add(oem, 'FY26 Q3', 'Certified engineers', c3, oem === 'Palo Alto Networks' ? 8 : 5, '');
+    add(oem, 'FY26 Q4', 'Certified engineers', c4, oem === 'Palo Alto Networks' ? 8 : 5, '');
+    add(oem, 'FY26 Q4', 'Services attach rate', oem === 'Dell' ? 0.12 : 0.24, 0.25, '%');
+  }
+  return rows;
+}
+
+export function samplePursuits() {
+  return [
+    { id: 'lp-1', name: 'SOC modernization (sample)', account: 'Sample Customer 03', oems: ['Palo Alto Networks'], practices: ['cybersecurity', 'services'], stage: 'Closed won', value: 1_800_000, gp: 420_000, closeDate: '2026-02-20', owner: 'Curiosity and Technology Office', gaps: [] },
+    { id: 'lp-2', name: 'Private cloud refresh (sample)', account: 'Sample Customer 07', oems: ['Broadcom/VMware', 'Dell'], practices: ['services'], stage: 'Closed lost', value: 2_400_000, gp: 380_000, closeDate: '2026-05-15', owner: 'Curiosity and Technology Office', gaps: ['No certified NSX engineer', 'Delivery capacity in the quarter'], lossReason: 'Competitor offered faster start' },
+    { id: 'lp-3', name: 'SASE rollout (sample)', account: 'Sample Customer 11', oems: ['Palo Alto Networks'], practices: ['networking', 'cybersecurity'], stage: 'Closed lost', value: 1_200_000, gp: 260_000, closeDate: '2026-08-30', owner: 'Curiosity and Technology Office', gaps: ['No certified Prisma SASE engineer'], lossReason: 'Price' },
+    { id: 'lp-4', name: 'XDR displacement (sample)', account: 'Sample Customer 15', oems: ['Palo Alto Networks'], practices: ['cybersecurity', 'services', 'networking'], stage: 'Propose', value: 1_500_000, gp: 330_000, closeDate: '2027-02-28', owner: 'Curiosity and Technology Office', gaps: [] },
+    { id: 'lp-5', name: 'Datacenter consolidation (sample)', account: 'Sample Customer 19', oems: ['Dell', 'Broadcom/VMware'], practices: ['services', 'networking'], stage: 'Develop', value: 3_000_000, gp: 450_000, closeDate: '2027-04-30', owner: 'Curiosity and Technology Office', gaps: ['Delivery capacity in the quarter'] },
+    { id: 'lp-6', name: 'Zero trust program (sample)', account: 'Sample Customer 22', oems: ['Palo Alto Networks'], practices: ['cybersecurity'], stage: 'Qualify', value: 900_000, gp: 210_000, closeDate: '2027-06-30', owner: 'Curiosity and Technology Office', gaps: [] },
+  ];
+}
+
+export function sampleRisks() {
+  return [
+    { id: 'rk-1', title: 'Not enough certified engineers to meet OEM tier requirements (sample)', area: 'Certification gap', oem: 'Palo Alto Networks', likelihood: 4, impact: 4, status: 'Open', owner: 'Curiosity and Technology Office', mitigation: 'Fund certifications through the office enablement plan', investment: 60_000, scenarioId: 'option-c', source: 'Synthetic sample' },
+    { id: 'rk-2', title: 'Large pursuits lost on delivery capacity (sample)', area: 'Delivery capacity', likelihood: 3, impact: 4, status: 'Mitigating', mitigation: 'Pursuits team books delivery capacity before proposal', scenarioId: 'option-b', source: 'Synthetic sample' },
+  ];
+}
+
 export const DEFAULT_DISPLAY_NAME = 'Curiosity and Technology Office';
 
 export function sampleWorkspace(now = '2026-11-20T00:00:00.000Z'): Workspace {
@@ -406,6 +445,9 @@ export function sampleWorkspace(now = '2026-11-20T00:00:00.000Z'): Workspace {
       initiatives: [],
       kpis: sampleKpis(),
       vendors: sampleVendors(),
+      oemScores: sampleOemScores(),
+      pursuits: samplePursuits(),
+      risks: sampleRisks(),
     },
     scenarios: sampleScenarios(),
     baselineScenarioId: 'baseline',
