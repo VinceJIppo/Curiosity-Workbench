@@ -165,6 +165,51 @@ export function relTarget(from: string, to: string): string {
   return [...Array(a.length - i).fill('..'), ...b.slice(i)].join('/');
 }
 
+
+/** Relationship types for review comments. Comments are internal and never go to customers. */
+const isCommentRel = (type: string) => /\/(comments|commentAuthors|authors)$/i.test(type) || /relationships\/comments$/i.test(type);
+
+/** Removes review comments from a slide: the relationships and the slide's pointers to them. */
+function stripComments(xml: string, rels: Rel[]): { xml: string; rels: Rel[] } {
+  const drop = rels.filter((r) => isCommentRel(r.type)).map((r) => r.id);
+  if (!drop.length) return { xml, rels };
+  let out = xml;
+  for (const id of drop) {
+    // Modern comments are linked from an extension block inside the slide.
+    out = out.replace(new RegExp(`<p:ext\\b[^>]*>(?:(?!</p:ext>)[\\s\\S])*?r:id="${escRe(id)}"[\\s\\S]*?</p:ext>`, 'g'), '');
+  }
+  out = out.replace(/<p:extLst>\s*<\/p:extLst>/g, '');
+  return { xml: out, rels: rels.filter((r) => !drop.includes(r.id)) };
+}
+
+export interface Scale {
+  f: number;
+  dx: number;
+  dy: number;
+}
+
+/** Scale factor and centering offset to fit a slide of one size onto another. */
+export function fitScale(src: { cx: number; cy: number }, dst: { cx: number; cy: number }): Scale | null {
+  if (src.cx === dst.cx && src.cy === dst.cy) return null;
+  const f = Math.min(dst.cx / src.cx, dst.cy / src.cy);
+  return { f, dx: (dst.cx - src.cx * f) / 2, dy: (dst.cy - src.cy * f) / 2 };
+}
+
+/**
+ * Rescales every position, size, font size and spacing in a slide, layout or master,
+ * so slides from a deck with a different page size keep their layout.
+ */
+export function scaleXml(xml: string, sc: Scale): string {
+  const r = (v: string) => String(Math.round(Number(v) * sc.f));
+  return xml
+    .replace(/<a:(off|chOff)\b([^>]*?)\sx="(-?\d+)"([^>]*?)\sy="(-?\d+)"/g, (_, tag, a, x, b, y) => `<a:${tag}${a} x="${Math.round(Number(x) * sc.f + sc.dx)}"${b} y="${Math.round(Number(y) * sc.f + sc.dy)}"`)
+    .replace(/<a:(ext|chExt)\b([^>]*?)\scx="(\d+)"([^>]*?)\scy="(\d+)"/g, (_, tag, a, cx, b, cy) => `<a:${tag}${a} cx="${r(cx)}"${b} cy="${r(cy)}"`)
+    .replace(/(<a:(?:rPr|defRPr|endParaRPr)\b[^>]*?\ssz=")(\d+)"/g, (_, a, v) => `${a}${Math.max(100, Math.round(Number(v) * sc.f))}"`)
+    .replace(/(<a:spcPts\b[^>]*?\sval=")(\d+)"/g, (_, a, v) => `${a}${r(v)}"`)
+    .replace(/(<a:ln\b[^>]*?\sw=")(\d+)"/g, (_, a, v) => `${a}${r(v)}"`)
+    .replace(/(\s(?:marL|marR|indent|lIns|tIns|rIns|bIns)=")(-?\d+)"/g, (_, a, v) => `${a}${r(v)}"`);
+}
+
 /**
  * Copies a slide from another deck with everything it depends on (layout, master,
  * theme, media, charts) under new part names, so decks can be mixed in one pitch.
@@ -178,6 +223,7 @@ class Importer {
     readonly src: Files,
     private readonly prefix: string,
     private readonly box: { ct: string },
+    private readonly scale: Scale | null = null,
   ) {
     this.srcCt = text(src, '[Content_Types].xml') ?? '';
   }
@@ -189,6 +235,7 @@ class Importer {
     while (this.dst[np]) np = np.replace(/(\.[^.]+)$/, 'x$1');
     this.map.set(part, np);
     this.dst[np] = this.src[part];
+    const visual = /^ppt\/(slides|slideLayouts|slideMasters)\/[^/]+\.xml$/.test(part);
     const ov = new RegExp(`<Override PartName="/${escRe(part)}" ContentType="([^"]+)"`).exec(this.srcCt)?.[1];
     if (ov) this.box.ct = this.box.ct.replace('</Types>', `<Override PartName="/${np}" ContentType="${ov}"/></Types>`);
     else {
@@ -197,7 +244,15 @@ class Importer {
       if (def && !new RegExp(`<Default Extension="${escRe(ext)}"`, 'i').test(this.box.ct)) this.box.ct = this.box.ct.replace(/(<Types\b[^>]*>)/, `$1<Default Extension="${ext}" ContentType="${def}"/>`);
     }
     if (/^ppt\/slideMasters\/[^/]+\.xml$/.test(part)) this.masters.push(np);
-    const rels = parseRels(text(this.src, relsPathFor(part)));
+    let rels = parseRels(text(this.src, relsPathFor(part)));
+    if (visual) {
+      let xml = text(this.src, part) ?? '';
+      const st = stripComments(xml, rels);
+      xml = st.xml;
+      rels = st.rels;
+      if (this.scale) xml = scaleXml(xml, this.scale);
+      this.dst[np] = strToU8(xml);
+    }
     if (rels.length) {
       const out: Rel[] = [];
       for (const r of rels) {
@@ -283,10 +338,11 @@ export function buildPitch(sources: PitchSource[], picks: SlideRef[], legal: Sli
     }
     let imp = importers.get(r.src);
     if (!imp) {
-      imp = new Importer(files, unzipSync(sources[r.src].bytes), `d${r.src}_`, box);
+      const srcFiles = unzipSync(sources[r.src].bytes);
+      const sz = slideSize(srcFiles);
+      imp = new Importer(files, srcFiles, `d${r.src}_`, box, fitScale(sz, { cx, cy }));
       importers.set(r.src, imp);
-      const sz = slideSize(imp.src);
-      if (sz.cx * cy !== sz.cy * cx) warnings.push(`${sources[r.src].sourceLabel} uses a different slide shape; its slides may look stretched`);
+      if (sz.cx * cy !== sz.cy * cx) warnings.push(`${sources[r.src].sourceLabel} uses a different slide shape; its slides were fitted with margins`);
     }
     const sl = slideList(imp.src)[r.index - 1];
     if (!sl?.part || !imp.src[sl.part]) {
@@ -348,6 +404,12 @@ export function buildPitch(sources: PitchSource[], picks: SlideRef[], legal: Sli
     const px = corner.endsWith('right') ? cx - edge - pillW : edge;
     const py = corner.startsWith('bottom') ? cy - edge - pillH : edge;
     let xml = text(files, s.part)!;
+    const relsPath0 = relsPathFor(s.part);
+    const stripped = stripComments(xml, parseRels(text(files, relsPath0)));
+    if (stripped.xml !== xml) {
+      xml = stripped.xml;
+      files[relsPath0] = strToU8(writeRels(stripped.rels));
+    }
     xml = xml.replace(/<a:t>([^<]*)<\/a:t>/g, (whole, t: string) => {
       const before = unesc(t);
       const after = sanitizeText(before);
@@ -462,7 +524,14 @@ export function checkPackage(bytes: Uint8Array): string[] {
       if (!files[target]) problems.push(`${p}: ${r.id} points at missing ${target}`);
     }
   }
-  for (const p of Object.keys(files)) if (/^ppt\/slides\/slide\d+\.xml$/.test(p) && !ct.includes(`PartName="/${p}"`)) problems.push(`No content type for ${p}`);
+  for (const p of Object.keys(files)) if (/^ppt\/slides\/[^/]+\.xml$/.test(p) && !ct.includes(`PartName="/${p}"`)) problems.push(`No content type for ${p}`);
+  // Every r:id, r:embed or r:link in a slide, layout or master must exist in its .rels.
+  // A dangling one is what makes PowerPoint offer to repair the file.
+  for (const p of Object.keys(files)) {
+    if (!/^ppt\/(slides|slideLayouts|slideMasters)\/[^/]+\.xml$/.test(p)) continue;
+    const ids = new Set(parseRels(text(files, relsPathFor(p))).map((r) => r.id));
+    for (const m of (text(files, p) ?? '').matchAll(/\sr:(?:id|embed|link|pict)="([^"]+)"/g)) if (!ids.has(m[1])) problems.push(`${p} refers to ${m[1]}, which has no relationship`);
+  }
   return problems;
 }
 

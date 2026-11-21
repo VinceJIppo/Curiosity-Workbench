@@ -332,7 +332,9 @@ export function importPack(kb: KnowledgeBase, pack: unknown, decks: DeckRef[], n
       else if (!d.slides.some((s) => s.index === Number(e.slide))) problems.push(`${where}: ${d.name} has no slide ${e.slide}`);
       else evidence.push({ deckId: d.id, slide: Number(e.slide) });
     }
-    const candidate = { kind: pn.kind as NodeKind, oem: pn.oem || undefined, text };
+    // Personas and redesign services are shared across OEMs.
+    const crossOem = pn.kind === 'persona' || pn.kind === 'service';
+    const candidate = { kind: pn.kind as NodeKind, oem: crossOem ? undefined : pn.oem || undefined, text };
     const existing = out.nodes.find((n) => nodeKey(n) === nodeKey(candidate));
     if (existing) {
       out = upsertNode(out, { ...existing, evidence: dedupeEvidence([...existing.evidence, ...evidence]), notes: existing.notes || pn.notes });

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { strFromU8, unzipSync } from 'fflate';
+import { strFromU8, unzipSync, zipSync } from 'fflate';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { makeSampleDeck, makeCompetitiveDeck, makeTechnicalDeck } from '../src/samples/pptx';
 import { readDeck, buildPitch, checkPackage, PptxError, type PitchSource } from '../src/core/pitch/pptx';
@@ -201,5 +201,48 @@ describe('module data migration', () => {
     expect(m.decks[0].category).toBe('competitive');
     expect(m.decks[0].slides[0].competitors).toEqual(['CrowdStrike']);
     expect(defaultPlays().map((p) => p.name)).toContain('Competitive displacement');
+  });
+});
+
+describe('real-world deck quirks', () => {
+  // A partner deck authored at a larger page size (20 x 11.25 in), with review comments.
+  function bigCommentedDeck(): Uint8Array {
+    const f = unzipSync(makeSampleDeck({ partner: PAN, product: 'Cortex XSIAM', otherProduct: 'Prisma Access' }));
+    const pres = strFromU8(f['ppt/presentation.xml']).replace(/<p:sldSz[^>]*\/>/, '<p:sldSz cx="24384000" cy="13716000"/>');
+    f['ppt/presentation.xml'] = new TextEncoder().encode(pres);
+    const slide = strFromU8(f['ppt/slides/slide3.xml']).replace('</p:sld>', '<p:extLst><p:ext uri="{6950BFC3-D8DA-4A85-94F7-54DA5524770B}"><p188:commentRel xmlns:p188="http://schemas.microsoft.com/office/powerpoint/2018/8/main" r:id="rId9"/></p:ext></p:extLst></p:sld>');
+    f['ppt/slides/slide3.xml'] = new TextEncoder().encode(slide);
+    const rels = strFromU8(f['ppt/slides/_rels/slide3.xml.rels']).replace('</Relationships>', '<Relationship Id="rId9" Type="http://schemas.microsoft.com/office/2018/10/relationships/comments" Target="../comments/modernComment_1.xml"/></Relationships>');
+    f['ppt/slides/_rels/slide3.xml.rels'] = new TextEncoder().encode(rels);
+    f['ppt/comments/modernComment_1.xml'] = new TextEncoder().encode('<?xml version="1.0"?><p188:cmLst xmlns:p188="http://schemas.microsoft.com/office/powerpoint/2018/8/main"/>');
+    const ct = strFromU8(f['[Content_Types].xml']).replace('</Types>', '<Override PartName="/ppt/comments/modernComment_1.xml" ContentType="application/vnd.ms-powerpoint.comments+xml"/></Types>');
+    f['[Content_Types].xml'] = new TextEncoder().encode(ct);
+    return zipSync(f);
+  }
+  const big = bigCommentedDeck();
+
+  it('fits slides from a larger deck to the pitch page instead of cropping them', () => {
+    const out = buildPitch([src(deck, 'Overview'), src(big, 'XSIAM deck')], [{ src: 0, index: 3 }, { src: 1, index: 4 }], [], brand);
+    expect(checkPackage(out.bytes)).toEqual([]);
+    const info = readDeck(out.bytes);
+    const xml = strFromU8(unzipSync(out.bytes)[info.slides[2].part]);
+    // The title sat at 0.6 in on a 20 in page; on a 13.33 in page it lands at 0.3 in (half), same proportion.
+    expect(xml).toContain('<a:off x="274320" y="228600"/>');
+    expect(xml).toMatch(/sz="1600"/); // 32 pt title scaled to 16 pt
+  });
+  it('strips review comments from imported and base slides', () => {
+    for (const out of [buildPitch([src(deck, 'O'), src(big, 'X')], [{ src: 0, index: 3 }, { src: 1, index: 3 }], [], brand), buildPitch([src(big, 'X')], [{ src: 0, index: 3 }], [], brand)]) {
+      const files = unzipSync(out.bytes);
+      expect(checkPackage(out.bytes)).toEqual([]);
+      for (const p of Object.keys(files)) {
+        if (/^ppt\/slides\/[^/]+\.xml$/.test(p)) expect(strFromU8(files[p])).not.toContain('commentRel');
+        if (/^ppt\/slides\/_rels\//.test(p)) expect(strFromU8(files[p])).not.toContain('relationships/comments');
+      }
+    }
+  });
+  it('the package check catches dangling references', () => {
+    const f = unzipSync(deck);
+    f['ppt/slides/slide3.xml'] = new TextEncoder().encode(strFromU8(f['ppt/slides/slide3.xml']).replace('</p:spTree>', '<p:pic><p:blipFill><a:blip r:embed="rIdNope"/></p:blipFill></p:pic></p:spTree>'));
+    expect(checkPackage(zipSync(f)).join()).toMatch(/refers to rIdNope/);
   });
 });

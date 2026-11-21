@@ -110,6 +110,11 @@ describe('knowledge packs', () => {
     expect(r.problems.join('\n')).toMatch(/cannot "has"/);
     expect(r.problems.join('\n')).toMatch(/unknown node "missing"/);
   });
+  it('personas are shared across OEMs, so a pack persona merges with the starter one', () => {
+    const r2 = importPack(seeded, { kind: 'cto-workbench-knowledge-pack', version: 1, nodes: [{ ref: 'x', kind: 'persona', oem: PAN, text: 'CISO' }], edges: [] }, decks, ids, 'p');
+    expect(r2.merged).toBe(1);
+    expect(r2.kb.nodes.filter((x) => x.kind === 'persona' && x.text === 'CISO')).toHaveLength(1);
+  });
   it('rejects files that are not packs', () => {
     expect(() => importPack(seeded, { nodes: [] }, decks, ids, 'x')).toThrow(KnowledgeError);
   });
