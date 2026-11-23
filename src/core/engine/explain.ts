@@ -134,7 +134,7 @@ export function explainMonth(ws: Workspace, result: ScenarioResult, key: string,
     case 'gpImpact':
       return mk(key, label, v, '$', 'specialist GP uplift + large pursuits GP', [{ label: 'Specialist GP uplift', value: row.gpUplift, unit: '$' }, { label: 'Large pursuits GP', value: row.pursuitsGP, unit: '$' }]);
     case 'gpUplift':
-      return mk(key, label, v, '$', 'ramped specialists x touched GP per specialist / 12 x uplift x driver factor x office effectiveness', [
+      return mk(key, label, v, '$', 'ramped specialists x specialty GP per specialist / 12 x share credited x driver factor x office effectiveness', [
         { label: 'Office effectiveness', value: row.effectiveness },
         { label: 'Ramped specialists', value: row.effSpecialists },
         assumptionInput(res, 'gp_per_specialist'),
@@ -179,6 +179,8 @@ export const SUMMARY_METRICS: Record<string, { label: string; unit: string }> = 
   pursuitsGP2y: { label: '24-month GP from large pursuits', unit: '$' },
   pursuitsPaybackMonth: { label: 'Large pursuits payback month', unit: 'month' },
   pursuitsBreakEvenDealGP: { label: 'Break-even GP per large deal', unit: '$' },
+  companyGP1y: { label: 'Company GP, year 1', unit: '$' },
+  specialtyGP1y: { label: 'Specialty GP, year 1', unit: '$' },
   coverageAtView: { label: 'Sellers per specialist at end of view', unit: 'ratio' },
   architectCoverageAtView: { label: 'Sellers per architect at end of view', unit: 'ratio' },
 };
@@ -202,6 +204,10 @@ export function explainSummary(ws: Workspace, result: ScenarioResult, key: strin
     case 'cost2y':
     case 'cost3y':
       return mk(key, meta.label, v, '$', `sum of total cost, months 0 to ${key === 'cost2y' ? 23 : 35}`, [{ label: 'Total cost', value: sumOf('totalCost', key === 'cost2y' ? 24 : 36), unit: '$' }, assumptionInput(res, 'burden_pct')]);
+    case 'companyGP1y':
+      return mk(key, meta.label, v, '$', 'company GP plan for months 0 to 11 + this scenario\'s incremental GP', [assumptionInput(res, 'company_gp'), { label: 'Incremental GP, year 1', value: s.gpByYear[0] ?? 0, unit: '$' }, assumptionInput(res, 'gp_growth_after')], ['Company GP plan = last year x growth multiplier.']);
+    case 'specialtyGP1y':
+      return mk(key, meta.label, v, '$', 'sum of months 0 to 11: ramped specialists x specialty GP per specialist / 12 x share credited x drivers x office effectiveness', [assumptionInput(res, 'specialty_gp'), assumptionInput(res, 'gp_per_specialist'), assumptionInput(res, 'gp_uplift'), assumptionInput(res, 'office_lift'), { label: 'Share of company GP', value: s.specialtyShare1y, unit: '%' }]);
     case 'officeGP2y':
       return mk(key, meta.label, v, '$', 'sum of months 0 to 23: specialist GP uplift before the office x (effectiveness - 1)', [assumptionInput(res, 'office_lift'), assumptionInput(res, 'office_lift_delay_months'), assumptionInput(res, 'campaign_lift'), assumptionInput(res, 'gp_per_specialist'), assumptionInput(res, 'gp_uplift')]);
     case 'pursuitsGP2y':

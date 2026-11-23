@@ -168,3 +168,26 @@ describe('office and large pursuits programs', () => {
     expect(r.summary.paybackMonth).not.toBeNull();
   });
 });
+
+describe('company and specialty GP anchors', () => {
+  const base = runScenario(ws, 'baseline', { caseKey: 'base' });
+  it('company GP this year is 150% of $77M; specialty GP 150% of $10M', () => {
+    expect(base.resolution.get('company_gp')).toBe(115_500_000);
+    expect(base.resolution.get('specialty_gp')).toBe(15_000_000);
+    expect(base.resolution.get('gp_per_specialist')).toBe(3_000_000);
+    expect(base.summary.companyGP1y).toBeCloseTo(115_500_000);
+    expect(base.summary.specialtyGP1y).toBeCloseTo(15_000_000);
+    expect(base.summary.specialtyShare1y).toBeCloseTo(15 / 115.5);
+  });
+  it('scenario company GP is the plan plus incremental GP', () => {
+    const b = runScenario(ws, 'option-b', { caseKey: 'base' });
+    expect(b.summary.companyGP1y).toBeCloseTo(115_500_000 + b.summary.gpByYear[0]);
+  });
+  it('later-year growth applies when set', () => {
+    const w = structuredClone(ws);
+    w.assumptions.find((a) => a.id === 'R50')!.value = 0.1;
+    const r = runScenario(w, 'baseline', { caseKey: 'base' });
+    expect(r.rows[12].companyGPPlan).toBeCloseTo((115_500_000 / 12) * 1.1);
+    expect(r.rows[12].gpUplift).toBeCloseTo(r.rows[0].gpUplift * 1.1);
+  });
+});

@@ -253,6 +253,9 @@ export function runScenario(ws: Workspace, scenarioId: string, opts: RunOptions 
       cumPursuitsGP: 0,
       cumPursuitsCost: 0,
       gpImpact: 0,
+      companyGPPlan: 0,
+      companyGP: 0,
+      gpGrowthFactor: 1,
       incCost: 0,
       incGP: 0,
       cumIncCost: 0,
@@ -330,7 +333,11 @@ export function runScenario(ws: Workspace, scenarioId: string, opts: RunOptions 
       const then = base.get(k);
       return f * (Number.isFinite(now) && Number.isFinite(then) && then !== 0 ? now / then : 1);
     }, 1);
-    row.gpPerSpecialistMonthly = A('gp_per_specialist') / 12;
+    const growth = A('gp_growth_after');
+    row.gpGrowthFactor = Number.isFinite(growth) ? Math.pow(1 + growth, Math.floor(m / 12)) : 1;
+    row.gpPerSpecialistMonthly = (A('gp_per_specialist') / 12) * row.gpGrowthFactor;
+    const plan = A('company_gp');
+    row.companyGPPlan = Number.isFinite(plan) ? (plan / 12) * row.gpGrowthFactor : 0;
     row.upliftPct = A('gp_uplift');
     row.driverFactor = driverFactor;
 
@@ -456,6 +463,7 @@ export function runScenario(ws: Workspace, scenarioId: string, opts: RunOptions 
     r.cumPursuitsCost = cumPC;
     r.incCost = b ? r.totalCost - b.totalCost : 0;
     r.incGP = b ? r.gpImpact - b.gpImpact : 0;
+    r.companyGP = r.companyGPPlan + r.incGP;
     cumC += r.incCost;
     cumG += r.incGP;
     r.cumIncCost = cumC;
@@ -563,6 +571,12 @@ export function summarize(r: ScenarioResult, viewMonths: number): ScenarioSummar
     pursuitsGP2y: sumRows(rows, 'pursuitsGP', 0, 24),
     pursuitsCost2y: sumRows(rows, 'pursuitsCost', 0, 24),
     pursuitsPaybackMonth: pursuitsPayback,
+    companyGP1y: sumRows(rows, 'companyGP', 0, 12),
+    specialtyGP1y: sumRows(rows, 'gpUplift', 0, 12),
+    specialtyShare1y: (() => {
+      const c = sumRows(rows, 'companyGP', 0, 12);
+      return c > 0 ? sumRows(rows, 'gpUplift', 0, 12) / c : NaN;
+    })(),
     pursuitsBreakEvenDealGP: (() => {
       const f = sumRows(rows, 'pursuitsDealFactor', 0, 24);
       return f > 0 ? sumRows(rows, 'pursuitsCost', 0, 24) / f : NaN;

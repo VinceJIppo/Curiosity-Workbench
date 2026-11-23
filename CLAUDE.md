@@ -139,8 +139,16 @@ totals, annual, payback, ROI, break-even, coverage at the view month).
 - Sellers in coverage = register value (`headcountAnchors.sellers`) + roster change
   since month 0. Coverage groups (which role families count as sellers, specialists,
   architects) are settings.
-- GP uplift = ramped specialists x touched GP per specialist / 12 x uplift x driver
-  factor (win rate, attach rate and utilization relative to today) x office effectiveness.
+- GP anchors (2026-11-23): company GP last year $77M (R45), this year x1.5 (R46) =
+  $115.5M (R47, `company_gp`); specialty GP last year $10M (R48) x the same
+  multiplier = $15M (R49, `specialty_gp`); per specialist = R49 / specialists today
+  (R10, `gp_per_specialist`, $3M); share credited to specialists R11 = 100%; later-year
+  growth R50 (`gp_growth_after`, Open, 0).
+- Specialist GP (`gpUplift`) = ramped specialists x specialty GP per specialist / 12 x
+  share credited x driver factor (win rate, attach rate and utilization relative to
+  today) x office effectiveness x later-year growth. Rows also carry the company GP
+  plan and company GP with the scenario (plan + incremental GP); the summary shows
+  year-1 company GP, specialty GP and specialty share.
 - Programs (`program` change type): `office` makes specialists more effective
   (1 + `office_lift` once `office_lift_delay_months` have passed) x (1 + `campaign_lift`)
   ^ full years since launch. `pursuits` adds large pursuits GP: deals per year / 12 x

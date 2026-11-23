@@ -19,6 +19,8 @@ export const COMPARE_ROWS: { label: string; key: string; fmt: (r: ScenarioResult
   { label: '2-year total cost', key: 'cost2y', fmt: (r) => money(r.summary.cost2y) },
   { label: '3-year total cost', key: 'cost3y', fmt: (r) => money(r.summary.cost3y) },
   { label: '24-month incremental GP', key: 'incGP2y', fmt: (r) => money(r.summary.incGP2y) },
+  { label: 'Company GP, year 1', key: 'companyGP1y', fmt: (r) => money(r.summary.companyGP1y) },
+  { label: 'Specialty GP, year 1', key: 'specialtyGP1y', fmt: (r) => `${money(r.summary.specialtyGP1y)} (${pct(r.summary.specialtyShare1y, 1)})` },
   { label: '24-month specialist GP from the office', key: 'officeGP2y', fmt: (r) => money(r.summary.officeGP2y) },
   { label: '24-month GP from large pursuits', key: 'pursuitsGP2y', fmt: (r) => money(r.summary.pursuitsGP2y) },
   { label: 'Large pursuits payback', key: 'pursuitsPaybackMonth', fmt: (r) => (r.summary.pursuitsGP2y === 0 && r.summary.pursuitsCost2y === 0 ? 'n/a' : r.summary.pursuitsPaybackMonth == null ? 'None' : `M${r.summary.pursuitsPaybackMonth}`) },

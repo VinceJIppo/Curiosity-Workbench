@@ -35,6 +35,9 @@
    "revenue_monthly": "R23",
    "specialist_comp": "R32",
    "avant_desk_comp": "R33",
+   "company_gp": "R47",
+   "specialty_gp": "R49",
+   "gp_growth_after": "R50",
    "office_lift": "R35",
    "office_lift_delay_months": "R36",
    "campaign_lift": "R37",
@@ -179,32 +182,27 @@
    "conservativeBound": "high"
   },
   {
-   "value": 5000000,
+   "value": null,
    "status": "Assumed",
    "source": "Sample register (synthetic). Replace with your register import.",
    "asOf": "2026-11",
    "usedIn": "GP impact",
-   "notes": "",
+   "notes": "Specialty GP this year spread over the specialists today.",
    "id": "R10",
-   "label": "Specialist-touched GP per specialist per year",
-   "low": 4000000,
-   "high": 6000000,
+   "label": "Specialty GP per specialist this year",
    "unit": "$/yr",
-   "conservativeBound": "low"
+   "formula": "R49 / R02"
   },
   {
-   "value": 0.12,
+   "value": 1,
    "status": "Assumed",
    "source": "Sample register (synthetic). Replace with your register import.",
    "asOf": "2026-11",
    "usedIn": "GP impact, break-even",
-   "notes": "",
+   "notes": "All specialty GP is credited to the specialty team. Lower it to credit only part, or add a low and high to test it.",
    "id": "R11",
-   "label": "GP uplift on specialist-touched deals",
-   "low": 0.08,
-   "high": 0.15,
-   "unit": "%",
-   "conservativeBound": "low"
+   "label": "Share of specialty GP credited to specialists",
+   "unit": "%"
   },
   {
    "value": 0.3,
@@ -592,6 +590,74 @@
    "high": 9,
    "unit": "months",
    "conservativeBound": "high"
+  },
+  {
+   "value": 77000000,
+   "status": "Stated",
+   "source": "Office planning input, 2026-11-23",
+   "asOf": "2026-11",
+   "usedIn": "Company GP context",
+   "notes": "",
+   "id": "R45",
+   "label": "Company GP last year",
+   "unit": "$/yr"
+  },
+  {
+   "value": 1.5,
+   "status": "Stated",
+   "source": "Office planning input, 2026-11-23",
+   "asOf": "2026-11",
+   "usedIn": "Company GP, specialty GP",
+   "notes": "This year is expected at 150% of last year. Specialty GP uses the same multiplier.",
+   "id": "R46",
+   "label": "GP growth multiplier this year vs last year",
+   "unit": "ratio"
+  },
+  {
+   "value": null,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Company GP context",
+   "notes": "",
+   "id": "R47",
+   "label": "Company GP this year",
+   "unit": "$/yr",
+   "formula": "R45 * R46"
+  },
+  {
+   "value": 10000000,
+   "status": "Stated",
+   "source": "Office planning input, 2026-11-23",
+   "asOf": "2026-11",
+   "usedIn": "Specialty GP",
+   "notes": "",
+   "id": "R48",
+   "label": "Specialty GP last year",
+   "unit": "$/yr"
+  },
+  {
+   "value": null,
+   "status": "Assumed",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "GP impact",
+   "notes": "Same multiplier as company GP.",
+   "id": "R49",
+   "label": "Specialty GP this year",
+   "unit": "$/yr",
+   "formula": "R48 * R46"
+  },
+  {
+   "value": 0,
+   "status": "Open",
+   "source": "Sample register (synthetic). Replace with your register import.",
+   "asOf": "2026-11",
+   "usedIn": "Company and specialty GP in later years",
+   "notes": "Zero keeps every model year at this year's level. Set a rate to grow company and specialty GP each year.",
+   "id": "R50",
+   "label": "Annual GP growth after this year",
+   "unit": "%"
   },
   {
    "value": 120000,

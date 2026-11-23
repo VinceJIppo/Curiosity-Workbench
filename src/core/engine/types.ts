@@ -152,6 +152,12 @@ export interface MonthRow {
   cumPursuitsCost: number;
   /** gpUplift + pursuitsGP. Incremental GP compares this with the baseline. */
   gpImpact: number;
+  /** Plan company GP this month (this year's plan, grown by later-year growth). */
+  companyGPPlan: number;
+  /** Company GP with this scenario: plan + incremental GP. */
+  companyGP: number;
+  /** Growth factor applied to GP for this model year. */
+  gpGrowthFactor: number;
   /** Filled when compared with the baseline run. */
   incCost: number;
   incGP: number;
@@ -226,6 +232,10 @@ export interface ScenarioSummary {
   pursuitsPaybackMonth: number | null;
   /** GP per large deal won at which 24 months of pursuits GP equals 24 months of time spent. */
   pursuitsBreakEvenDealGP: number;
+  /** Year 1 (months 0 to 11). */
+  companyGP1y: number;
+  specialtyGP1y: number;
+  specialtyShare1y: number;
   paybackMonth: number | null;
   roiView: number;
   breakEvenGP: number;

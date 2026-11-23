@@ -28,6 +28,8 @@ export function SummaryKpis({ ws, r, highlight = true }: { ws: Workspace; r: Sce
     { label: '24-month incremental GP', key: 'incGP2y', text: money(s.incGP2y) },
     { label: 'Payback month', key: 'paybackMonth', text: isBase ? 'n/a' : s.paybackMonth == null ? 'None' : `M${s.paybackMonth}` },
     { label: `ROI, months 0 to ${vm - 1}`, key: 'roiView', text: pct(s.roiView) },
+    { label: 'Company GP, year 1', key: 'companyGP1y', text: money(s.companyGP1y) },
+    { label: 'Specialty GP, year 1', key: 'specialtyGP1y', text: `${money(s.specialtyGP1y)} (${pct(s.specialtyShare1y, 1)})` },
     { label: '24-month specialist GP from the office', key: 'officeGP2y', text: money(s.officeGP2y) },
     { label: '24-month GP from large pursuits', key: 'pursuitsGP2y', text: money(s.pursuitsGP2y) },
     { label: 'Large pursuits payback', key: 'pursuitsPaybackMonth', text: s.pursuitsGP2y === 0 && s.pursuitsCost2y === 0 ? 'n/a' : s.pursuitsPaybackMonth == null ? 'None' : `M${s.pursuitsPaybackMonth}` },

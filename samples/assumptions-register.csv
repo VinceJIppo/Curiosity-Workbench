@@ -8,8 +8,8 @@ R06,"Reference coverage, sellers per specialist (Alexander Group average)",4,,,r
 R07,"Field strain line, sellers per specialist",8,,,ratio,Stated,Sample register (synthetic). Replace with your register import.,2026-11,"Coverage chart, specialists needed",,
 R08,"Hiring lag, release to start",3,2,6,months,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Hires without their own lag,,
 R09,Specialist ramp to full productivity,6,4,9,months,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,GP impact,,
-R10,Specialist-touched GP per specialist per year,5000000,4000000,6000000,$/yr,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,GP impact,,
-R11,GP uplift on specialist-touched deals,0.12,0.08,0.15,%,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,"GP impact, break-even",,
+R10,Specialty GP per specialist this year,,,,$/yr,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,GP impact,Specialty GP this year spread over the specialists today.,R49 / R02
+R11,Share of specialty GP credited to specialists,1,,,%,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,"GP impact, break-even","All specialty GP is credited to the specialty team. Lower it to credit only part, or add a low and high to test it.",
 R12,Win rate,0.3,0.25,0.35,%,Measured,Sample register (synthetic). Replace with your register import.,2026-11,GP driver,,
 R13,Services attach rate,0.25,0.2,0.3,%,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,GP driver,,
 R14,Specialist utilization,0.75,0.65,0.85,%,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,GP driver,,
@@ -41,4 +41,10 @@ R41,Win rate on large deals today,0.25,0.2,0.3,%,Open,Sample register (synthetic
 R42,GP per large deal won,250000,150000,400000,$,Open,Sample register (synthetic). Replace with your register import.,2026-11,Large pursuits,Placeholder. Replace with average GP of won large deals.,
 R43,Share of office time spent on large pursuits,0.5,0.4,0.6,%,Open,Sample register (synthetic). Replace with your register import.,2026-11,Large pursuits payback,Placeholder. Allocates office cost to pursuits.,
 R44,Months until pursued deals start closing,6,3,9,months,Open,Sample register (synthetic). Replace with your register import.,2026-11,Large pursuits,Placeholder for the large-deal sales cycle.,
+R45,Company GP last year,77000000,,,$/yr,Stated,"Office planning input, 2026-11-23",2026-11,Company GP context,,
+R46,GP growth multiplier this year vs last year,1.5,,,ratio,Stated,"Office planning input, 2026-11-23",2026-11,"Company GP, specialty GP",This year is expected at 150% of last year. Specialty GP uses the same multiplier.,
+R47,Company GP this year,,,,$/yr,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Company GP context,,R45 * R46
+R48,Specialty GP last year,10000000,,,$/yr,Stated,"Office planning input, 2026-11-23",2026-11,Specialty GP,,
+R49,Specialty GP this year,,,,$/yr,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,GP impact,Same multiplier as company GP.,R48 * R46
+R50,Annual GP growth after this year,0,,,%,Open,Sample register (synthetic). Replace with your register import.,2026-11,Company and specialty GP in later years,Zero keeps every model year at this year's level. Set a rate to grow company and specialty GP each year.,
 R33,Avant desk seller cash comp,120000,100000,140000,$/yr,Assumed,Sample register (synthetic). Replace with your register import.,2026-11,Avant desk,,
